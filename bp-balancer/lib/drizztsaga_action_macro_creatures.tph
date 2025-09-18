@@ -1,0 +1,602 @@
+DEFINE_ACTION_MACRO ~drizztsaga_action_macro_creatures~ BEGIN
+
+	LOCAL_SET "pl_base" = "%patch_base%"
+	LOCAL_SET "pl_plus1" = ((%patch_base% + (((100 - %patch_base%) / 4) * 1)) * %patch_base%) / %patch_base%
+	LOCAL_SET "pl_plus2" = ((%patch_base% + (((100 - %patch_base%) / 4) * 2)) * %patch_base%) / %patch_base%
+	LOCAL_SET "pl_plus3" = ((%patch_base% + (((100 - %patch_base%) / 4) * 3)) * %patch_base%) / %patch_base%
+	PRINT "Patch Basis: %pl_base% pct, Plus1: %pl_plus1%, Plus2: %pl_plus2%, Plus3: %pl_plus3%"
+	
+	//Drow Waffen werden durch vom Spiel vorgesehene Drow Waffen ausgetauscht. Diese zerfallen dann auch wirklich, ODER unstealable&undroppable
+	
+		COPY_EXISTING ~DEATHK1.CRE~ ~override~
+			//Name: Dämonenritter (ist bis auf BGSH wie original. Das F_DEATHS.ITM ist nicht droppable, somit ok)
+			//HELM02 (Helm der Gesinnungsumkehr)
+			//REPLACE_CRE_ITEM ~HELM02~ #0 #0 #0 ~NONE~ ~helmet~
+			//PLAT05 (Prunkharnisch +1)
+			//REPLACE_CRE_ITEM ~PLAT05~ #0 #0 #0 ~NONE~ ~armor~
+			//SHLD06 (Langschild +1)
+			//REPLACE_CRE_ITEM ~SHLD06~ #0 #0 #0 ~NONE~ ~shield~
+			REPLACE_CRE_ITEM ~SW2H01~ #0 #0 #0 ~NONE~ ~inv1~
+		BUT_ONLY_IF_IT_CHANGES
+		
+		COPY_EXISTING ~F_ARTEMI.CRE~ ~override~ // Wir lassen Artemis so stark wie er ist. Wir machen seine Gegenstände aber unstealable&undroppable! Allerdings auch auf Random base.
+			//Name: Artemis Entreri
+			WRITE_SHORT 0x14 ~3600~ //XP (was: 12000)
+			//F_ALEAT (Snake Soul)
+			//PATCH_IF (RANDOM(0 99) < %pl_base%) BEGIN
+			REPLACE_CRE_ITEM ~F_ALEAT~ #0 #0 #0 ~unstealable&undroppable~ ~armor~
+			//END
+			//RING05 (Unsichtbarkeitsring)
+			REPLACE_CRE_ITEM ~RING05~ #0 #0 #0 ~unstealable&undroppable~ ~lring~
+			//RING07 (Schutzring +2)
+			REPLACE_CRE_ITEM ~RING07~ #0 #0 #0 ~unstealable&undroppable~ ~rring~
+			//F_BOOTHS (Boots of Haste)
+			//PATCH_IF (RANDOM(0 99) < %pl_base%) BEGIN
+			REPLACE_CRE_ITEM ~F_BOOTHS~ #0 #0 #0 ~unstealable&undroppable~ ~boots~
+			//END
+			//F_ADAGGR (Vampiric Dagger +5)
+			PATCH_IF (RANDOM(0 99) < %pl_base%) BEGIN
+				REPLACE_CRE_ITEM ~F_ADAGGR~ #0 #0 #0 ~unstealable&undroppable~ ~weapon1~
+			END
+			//F_ARTSWD (Snake Bite)
+			PATCH_IF (RANDOM(0 99) < %pl_base%) BEGIN
+				REPLACE_CRE_ITEM ~F_ARTSWD~ #0 #0 #0 ~unstealable&undroppable~ ~inv1~
+			END
+		BUT_ONLY_IF_IT_CHANGES
+		
+		COPY_EXISTING ~F_BEARFM.cre~ ~override~
+			//Name: Bear Tribe Woman
+			WRITE_SHORT 0x14 ~15~ //XP (was: 65)
+		BUT_ONLY_IF_IT_CHANGES
+		
+		COPY_EXISTING ~F_BEAROL.cre~ ~override~
+			//Name: Bear Tribe Elder
+			WRITE_SHORT 0x14 ~600~ //XP (was: 2000)
+			//LEAT02 (Lederrüstung +1)
+			PATCH_IF (RANDOM(0 99) < %pl_base%) BEGIN
+			  REPLACE_CRE_ITEM ~LEAT01~ #0 #0 #0 ~NONE~ ~armor~
+			END
+			//BLUN11 (<Invalid Strref -1>)
+			PATCH_IF (RANDOM(0 99) < %pl_base%) BEGIN
+			  REPLACE_CRE_ITEM ~BLUN04~ #0 #0 #0 ~NONE~ ~weapon1~
+			END
+			//BLUN03 (Flegel +1)
+			PATCH_IF (RANDOM(0 99) < %pl_base%) BEGIN
+			  REPLACE_CRE_ITEM ~BLUN02~ #0 #0 #0 ~NONE~ ~qitem1~
+			END
+			//MISC53 (Schale der Herrschaft über Wasserelementare) seems to be a questitem
+			//Diese Schale bekommt man von den Fischern für Telya im original BG1 Spiel. Keine gze Idee, das nochmal zu bekommen.... Wir machen es daher unstealable&undroppable. Vielleicht macht der ja was damit...
+			REPLACE_CRE_ITEM ~MISC53~ #0 #0 #0 ~unstealable&undroppable~ ~qitem2~
+		BUT_ONLY_IF_IT_CHANGES
+		
+		COPY_EXISTING ~F_BEARSU.CRE~ ~override~
+			//Name: Spirit Bear
+			WRITE_SHORT 0x14 ~600~ //XP (was: 2000)
+		BUT_ONLY_IF_IT_CHANGES
+		
+		COPY_EXISTING ~F_BEARW2.cre~ ~override~
+			//Name: Bear Tribe Warrior
+			WRITE_SHORT 0x14 ~120~ //XP (was: 400)
+		BUT_ONLY_IF_IT_CHANGES
+		
+		COPY_EXISTING ~F_BEARW1.cre~ ~override~
+			//Name: Bear Tribe Warrior
+			WRITE_SHORT 0x14 ~120~ //XP (was: 400)
+		BUT_ONLY_IF_IT_CHANGES
+		
+		COPY_EXISTING ~F_BRUENO.CRE~ ~override~ //Kein Encounter. Etwas zu stark.
+			//Name: Bruenor
+			//SHLD02 (Kleiner Schild +1)
+			PATCH_IF (RANDOM(0 99) < %pl_base%) BEGIN
+			  REPLACE_CRE_ITEM ~SHLD01~ #0 #0 #0 ~NONE~ ~shield~
+			END
+			//F_BRUEHL (Bruenor Battlehammer's Helmet)
+			REPLACE_CRE_ITEM ~F_BRUEHL~ #0 #0 #0 ~unstealable&undroppable~ ~helmet~
+			//F_BRUEPL (Mithril Field Plate Armor +2)
+			REPLACE_CRE_ITEM ~F_BRUEPL~ #0 #0 #0 ~unstealable&undroppable~ ~armor~
+			//F_BRUEAX (Battle Axe +3)
+			REPLACE_CRE_ITEM ~F_BRUEAX~ #0 #0 #0 ~unstealable&undroppable~ ~weapon1~ EQUIP
+			//BRAC10 (Handschuhe der Waffenkunst)
+			REPLACE_CRE_ITEM ~BRAC10~ #0 #0 #0 ~unstealable&undroppable~ ~gloves~
+			PATCH_IF (RANDOM(0 99) < %pl_base%) BEGIN
+			  REPLACE_CRE_ITEM ~BRAC05~ #0 #0 #0 ~NONE~ ~gloves~
+			END
+			//BOLT06 (Bolzen +2) // Die lassen wir. Gehen eh aus.
+			//REPLACE_CRE_ITEM ~BOLT06~ #0 #0 #0 ~NONE~ ~quiver1~
+			//XBOW02 (Schwere Armbrust +1)
+			PATCH_IF (RANDOM(0 99) < %pl_base%) BEGIN
+			  REPLACE_CRE_ITEM ~XBOW01~ #0 #0 #0 ~NONE~ ~inv1~
+			END
+		BUT_ONLY_IF_IT_CHANGES
+		
+		COPY_EXISTING ~F_CATTIB.CRE~ ~override~ //Kein encounter. Aber zu stark.
+			//Name: Catti-Brie
+			//CHAN07 (Kettenhemd +3)
+			REPLACE_CRE_ITEM ~CHAN07~ #0 #0 #0 ~unstealable&undroppable~ ~armor~
+			PATCH_IF (RANDOM(0 99) < %pl_base%) BEGIN
+			  REPLACE_CRE_ITEM ~CHAN03~ #0 #0 #0 ~NONE~ ~armor~ // +2 reicht!
+			END
+			//BRAC04 (Armbänder der Bogenschützen)
+			REPLACE_CRE_ITEM ~BRAC04~ #0 #0 #0 ~unstealable&undroppable~ ~gloves~
+			PATCH_IF (RANDOM(0 99) < %pl_base%) BEGIN
+			  REPLACE_CRE_ITEM ~BRAC05~ #0 #0 #0 ~NONE~ ~gloves~
+			END
+			//F_CATSBW (Taurmaril)
+			REPLACE_CRE_ITEM ~F_CATSBW~ #0 #0 #0 ~unstealable&undroppable~ ~weapon1~ EQUIP
+			PATCH_IF (RANDOM(0 99) < %pl_base%) BEGIN
+			  REPLACE_CRE_ITEM ~BOW04~ #0 #0 #0 ~NONE~ ~weapon1~
+			END
+			//F_CATARW (Cattie-Brie Quiver)
+			REPLACE_CRE_ITEM ~F_CATARW~ #0 #0 #0 ~unstealable&undroppable~ ~quiver1~
+			//F_CATSWD (Cattie-Brie Quiver)
+			REPLACE_CRE_ITEM ~F_CATSWD~ #0 #0 #0 ~unstealable&undroppable~ ~weapon2~
+		BUT_ONLY_IF_IT_CHANGES
+		
+		COPY_EXISTING ~F_DEADM2.CRE~ ~override~
+			//Name: Wounded Man
+			WRITE_SHORT 0x14 ~15~ //XP (was: 65)
+		BUT_ONLY_IF_IT_CHANGES
+		
+		COPY_EXISTING ~F_deathl.CRE~ ~override~
+			//Name: Lesser Demonknight
+			WRITE_SHORT 0x14 ~600~ //XP (was: 2000)
+			//F_SW2H08 (Durlag's Pride)
+			PATCH_IF (RANDOM(0 99) < %pl_base%) BEGIN
+				REPLACE_CRE_ITEM ~F_SW2H08~ #0 #0 #0 ~unstealable&undroppable~ ~weapon1~
+			END
+		BUT_ONLY_IF_IT_CHANGES
+		
+		COPY_EXISTING ~F_DEMDRG.CRE~ ~override~
+			//Name: Greater Tanari
+			WRITE_SHORT 0x14 ~7500~ //XP (was: 25000)
+		BUT_ONLY_IF_IT_CHANGES
+		
+		COPY_EXISTING ~F_DEMSPI.CRE~ ~override~
+			//Name: Demonic Astral Spider
+			WRITE_SHORT 0x14 ~1200~ //XP (was: 4000)
+		BUT_ONLY_IF_IT_CHANGES
+		
+		COPY_EXISTING ~F_DEMWAR.CRE~ ~override~
+			//Name: Demonic Guardian
+			WRITE_SHORT 0x14 ~1200~ //XP (was: 4000)
+		BUT_ONLY_IF_IT_CHANGES
+		
+		COPY_EXISTING ~F_DIPNOS.cre~ ~override~
+			//Name: Nibby "Dipnose"
+			//LEAT02 (Lederrüstung +1)
+			PATCH_IF (RANDOM(0 99) < %pl_base%) BEGIN			
+			  REPLACE_CRE_ITEM ~LEAT01~ #0 #0 #0 ~NONE~ ~armor~
+			END
+			//SW1H08 (Kurzschwert +1)
+			PATCH_IF (RANDOM(0 99) < %pl_base%) BEGIN
+			  REPLACE_CRE_ITEM ~SW1H07~ #0 #0 #0 ~NONE~ ~weapon1~
+			END
+		BUT_ONLY_IF_IT_CHANGES
+		
+		COPY_EXISTING ~F_DRAGON.CRE~ ~override~
+			//Name: Baby Dragon
+			WRITE_SHORT 0x14 ~1500~ //XP (was: 5000)
+		BUT_ONLY_IF_IT_CHANGES
+		
+		COPY_EXISTING ~F_DRIZZT.CRE~ ~override~ //Der ist viel zu stark in der party.
+			//Name: Drizzt
+			//F_DRIWP2 (Scimitar +5, Defender)
+			REPLACE_CRE_ITEM ~F_DRIWP2~ #0 #0 #0 ~unstealable&undroppable~ ~shield~
+			//F_DRIWP3 (Scimitar +3, Frostbrand)
+			REPLACE_CRE_ITEM ~F_DRIWP3~ #0 #0 #0 ~unstealable&undroppable~ ~weapon1~ EQUIP			
+			//F_PANTH (Black Panther Figurine)
+			REPLACE_CRE_ITEM ~F_PANTH~ #0 #0 #0 ~unstealable&undroppable~ ~qitem1~			
+			//CHAN06 (Kettenhemd +4)
+			REPLACE_CRE_ITEM ~CHAN06~ #0 #0 #0 ~unstealable&undroppable~ ~armor~
+			PATCH_IF (RANDOM(0 99) < %pl_base%) BEGIN
+			  REPLACE_CRE_ITEM ~CHAN02~ #0 #0 #0 ~NONE~ ~armor~ //aber +1 reicht echt!
+			END
+			//AMUL17 (Grünsteinamulett)
+			REPLACE_CRE_ITEM ~AMUL17~ #0 #0 #0 ~unstealable&undroppable~ ~amulet~
+			PATCH_IF (RANDOM(0 99) < %pl_base%) BEGIN
+			  REPLACE_CRE_ITEM ~AMUL08~ #0 #0 #0 ~NONE~ ~amulet~
+			END
+			//BOOT01 (Siebenmeilenstiefel)
+			REPLACE_CRE_ITEM ~BOOT01~ #0 #0 #0 ~unstealable&undroppable~ ~boots~
+			PATCH_IF (RANDOM(0 99) < %pl_base%) BEGIN
+			  REPLACE_CRE_ITEM ~BOOT06~ #0 #0 #0 ~NONE~ ~boots~
+			END
+			//F_ELFCLK (Cloak of Elvenkind)
+			//PATCH_IF (RANDOM(0 99) < %pl_base%) BEGIN // Der ist ok. Schwächer als der des original Spiels
+			REPLACE_CRE_ITEM ~F_ELFCLK~ #0 #0 #0 ~unstealable&undroppable~ ~cloak~
+			//END
+		BUT_ONLY_IF_IT_CHANGES
+		
+		COPY_EXISTING ~F_DROMAG.CRE~ ~override~
+			//Name: Drow Battle Mage
+			WRITE_SHORT 0x14 ~600~ //XP (was: 2000)
+			//CLCK10 (Feuerschutzrobe)
+			//REPLACE_CRE_ITEM ~CLCK10~ #0 #0 #0 ~NONE~ ~armor~
+			//F_SCIM03 (Scimitar +3)
+			//PATCH_IF (RANDOM(0 99) < %pl_base%) BEGIN
+			REPLACE_CRE_ITEM ~DWSW1H01~ #0 #0 #0 ~NONE~ ~weapon1~
+			//END
+			//F_POTN52 (Potion of Extra Healing)
+			PATCH_IF (RANDOM(0 99) < %pl_base%) BEGIN
+				REPLACE_CRE_ITEM ~POTN08~ #0 #0 #0 ~NONE~ ~qitem1~
+			END
+		BUT_ONLY_IF_IT_CHANGES
+		
+		COPY_EXISTING ~F_DROWAR.CRE~ ~override~
+			//Name: Drow Warrior
+			WRITE_SHORT 0x14 ~600~ //XP (was: 2000)
+			//F_SCIM03 (Scimitar +3)
+			//PATCH_IF (RANDOM(0 99) < %pl_base%) BEGIN //Drow weapons immer austauschen! Damit sie zerfallen....
+				REPLACE_CRE_ITEM ~DWSW1H01~ #0 #0 #0 ~NONE~ ~weapon1~
+			//END
+		BUT_ONLY_IF_IT_CHANGES
+		
+		COPY_EXISTING ~F_DROWPR.CRE~ ~override~
+			//Name: Drow Priestess
+			WRITE_SHORT 0x14 ~600~ //XP (was: 2000)
+			//HAMM03 (Kriegshammer +2)
+			REPLACE_CRE_ITEM ~HAMM02~ #0 #0 #0 ~NONE~ ~weapon1~
+			PATCH_IF (RANDOM(0 99) < %pl_base%) BEGIN
+				REPLACE_CRE_ITEM ~HAMM01~ #0 #0 #0 ~NONE~ ~weapon1~
+			END
+		BUT_ONLY_IF_IT_CHANGES
+		
+		COPY_EXISTING ~F_DRSCUL.CRE~ ~override~
+			//Name: Dragon Golem Scull
+			WRITE_SHORT 0x14 ~1500~ //XP (was: 5000)
+		BUT_ONLY_IF_IT_CHANGES
+		
+		COPY_EXISTING ~F_DWSMIT.CRE~ ~override~
+			//Name: Varlag Silverhammer
+			//CHAN02 (Kettenhemd +1)
+			PATCH_IF (RANDOM(0 99) < %pl_base%) BEGIN
+			  REPLACE_CRE_ITEM ~CHAN01~ #0 #0 #0 ~NONE~ ~armor~
+			END
+			//HAMM02 (Kriegshammer +1)
+			PATCH_IF (RANDOM(0 99) < %pl_base%) BEGIN
+			  REPLACE_CRE_ITEM ~HAMM01~ #0 #0 #0 ~NONE~ ~weapon1~
+			END
+		BUT_ONLY_IF_IT_CHANGES
+		
+		COPY_EXISTING ~F_ELMINS.CRE~ ~override~
+			//Name: Elminster
+			WRITE_SHORT 0x14 ~7800~ //XP (was: 26000)
+		BUT_ONLY_IF_IT_CHANGES
+		
+		COPY_EXISTING ~F_ERRTU.CRE~ ~override~
+			//Name: Errtu
+			WRITE_SHORT 0x14 ~4500~ //XP (was: 15000)
+		BUT_ONLY_IF_IT_CHANGES
+		
+		COPY_EXISTING ~F_GHOST.CRE~ ~override~
+			//Name: Ghost
+			WRITE_SHORT 0x14 ~600~ //XP (was: 2000)
+		BUT_ONLY_IF_IT_CHANGES
+		
+		COPY_EXISTING ~F_JARLAX.cre~ ~override~
+			//Name: Jarlaxle
+			WRITE_SHORT 0x14 ~3600~ //XP (was: 12000)
+			//F_JARLPL (Jarlaxle’s Personal Plate)
+			//PATCH_IF (RANDOM(0 99) < %pl_base%) BEGIN
+			REPLACE_CRE_ITEM ~F_JARLPL~ #0 #0 #0 ~unstealable&undroppable~ ~armor~
+			//END
+			//BRAC10 (Handschuhe der Waffenkunst)
+			REPLACE_CRE_ITEM ~BRAC10~ #0 #0 #0 ~unstealable&undroppable~ ~gloves~
+			PATCH_IF (RANDOM(0 99) < %pl_base%) BEGIN
+				REPLACE_CRE_ITEM ~BRAC05~ #0 #0 #0 ~NONE~ ~gloves~
+			END
+			//BOOT01 (Siebenmeilenstiefel)
+			REPLACE_CRE_ITEM ~BOOT01~ #0 #0 #0 ~unstealable&undroppable~ ~boots~
+			PATCH_IF (RANDOM(0 99) < %pl_base%) BEGIN
+				REPLACE_CRE_ITEM ~BOOT06~ #0 #0 #0 ~NONE~ ~boots~
+			END
+			//F_JARLAX (Battleaxe of Dispelling Fire)
+			//PATCH_IF (RANDOM(0 99) < %pl_base%) BEGIN
+			REPLACE_CRE_ITEM ~F_JARLAX~ #0 #0 #0 ~unstealable&undroppable~ ~weapon1~
+			//END
+			//F_POTN52 (Potion of Extra Healing)
+			PATCH_IF (RANDOM(0 99) < %pl_base%) BEGIN
+				REPLACE_CRE_ITEM ~POTN08~ #0 #0 #0 ~NONE~ ~qitem1~
+			END
+		BUT_ONLY_IF_IT_CHANGES
+		
+		COPY_EXISTING ~F_REGIS2.CRE~ ~override~
+			//Name: Regis
+			//LEAT07 (Beschlagenes Lederwams +2)
+			REPLACE_CRE_ITEM ~LEAT07~ #0 #0 #0 ~unstealable&undroppable~ ~armor~
+			PATCH_IF (RANDOM(0 99) < %pl_base%) BEGIN
+				REPLACE_CRE_ITEM ~LEAT04~ #0 #0 #0 ~NONE~ ~armor~
+			END
+			//SW1H10 (Kurzschwert der Heimtücke)
+			REPLACE_CRE_ITEM ~SW1H10~ #0 #0 #0 ~unstealable&undroppable~ ~weapon1~
+			PATCH_IF (RANDOM(0 99) < %pl_base%) BEGIN
+				REPLACE_CRE_ITEM ~SW1H08~ #0 #0 #0 ~NONE~ ~weapon1~
+			END
+		BUT_ONLY_IF_IT_CHANGES
+		
+		COPY_EXISTING ~F_REGIS.CRE~ ~override~
+			//Name: Regis
+			//LEAT07 (Beschlagenes Lederwams +2)
+			REPLACE_CRE_ITEM ~LEAT07~ #0 #0 #0 ~unstealable&undroppable~ ~armor~
+			PATCH_IF (RANDOM(0 99) < %pl_base%) BEGIN
+				REPLACE_CRE_ITEM ~LEAT04~ #0 #0 #0 ~NONE~ ~armor~
+			END
+			//BOOT01 (Siebenmeilenstiefel)
+			REPLACE_CRE_ITEM ~BOOT01~ #0 #0 #0 ~unstealable&undroppable~ ~boots~
+			PATCH_IF (RANDOM(0 99) < %pl_base%) BEGIN
+				REPLACE_CRE_ITEM ~BOOT06~ #0 #0 #0 ~NONE~ ~boots~
+			END
+			//SW1H09 (Kurzschwert +2)
+			REPLACE_CRE_ITEM ~SW1H10~ #0 #0 #0 ~unstealable&undroppable~ ~weapon1~
+			PATCH_IF (RANDOM(0 99) < %pl_base%) BEGIN
+				REPLACE_CRE_ITEM ~SW1H08~ #0 #0 #0 ~NONE~ ~weapon1~
+			END
+		BUT_ONLY_IF_IT_CHANGES
+		
+		COPY_EXISTING ~F_ROBED2.CRE~ ~override~
+			//Name: Robed Figure
+			WRITE_SHORT 0x14 ~6000~ //XP (was: 20000)
+		BUT_ONLY_IF_IT_CHANGES
+		
+		COPY_EXISTING ~F_ROBED.CRE~ ~override~
+			//Name: Robed Figure
+			WRITE_SHORT 0x14 ~240~ //XP (was: 800)
+		BUT_ONLY_IF_IT_CHANGES
+		
+		COPY_EXISTING ~F_SLAYSH.cre~ ~override~
+			//Name: Slayer Shadow
+			WRITE_SHORT 0x14 ~2700~ //XP (was: 9000)
+		BUT_ONLY_IF_IT_CHANGES
+		
+		COPY_EXISTING ~F_SPIBEA.CRE~ ~override~
+			//Name: Spirit Bear
+			WRITE_SHORT 0x14 ~600~ //XP (was: 2000)
+		BUT_ONLY_IF_IT_CHANGES
+		
+		COPY_EXISTING ~F_SPIDQU.CRE~ ~override~
+			//Name: Demonic Spider Queen
+			WRITE_SHORT 0x14 ~2400~ //XP (was: 8000)
+			//F_AMSPID (Spider Figurine)
+			PATCH_IF (RANDOM(0 99) < %pl_base%) BEGIN
+				REPLACE_CRE_ITEM ~F_AMSPID~ #0 #0 #0 ~unstealable&undroppable~ ~qitem1~
+			END
+		BUT_ONLY_IF_IT_CHANGES
+		
+		COPY_EXISTING ~F_SUMSPI.CRE~ ~override~
+			//Name: Phase Spider
+			WRITE_SHORT 0x14 ~420~ //XP (was: 1400)
+		BUT_ONLY_IF_IT_CHANGES
+		
+		COPY_EXISTING ~F_TANARI.CRE~ ~override~
+			//Name: Tanari
+			WRITE_SHORT 0x14 ~2700~ //XP (was: 9000)
+		BUT_ONLY_IF_IT_CHANGES
+		
+		COPY_EXISTING ~F_TANSUM.CRE~ ~override~
+			//Name: Tanari
+			WRITE_SHORT 0x14 ~2700~ //XP (was: 9000)
+		BUT_ONLY_IF_IT_CHANGES
+		
+		COPY_EXISTING ~F_WERECH.CRE~ ~override~
+			//Name: Greater Werewolf Leader
+			WRITE_SHORT 0x14 ~2700~ //XP (was: 9000)
+		BUT_ONLY_IF_IT_CHANGES
+		
+		COPY_EXISTING ~F_WLFSPR.cre~ ~override~
+			//Name: Were Winterwolf Spirit
+			WRITE_SHORT 0x14 ~600~ //XP (was: 2000)
+		BUT_ONLY_IF_IT_CHANGES
+		
+		COPY_EXISTING ~F_WULFGA.CRE~ ~override~
+			//Name: Wulfgar
+			//F_MITHCH (Mithril Chain Mail +4) //Vollkommen überzogen!
+			REPLACE_CRE_ITEM ~F_MITHCH~ #0 #0 #0 ~unstealable&undroppable~ ~armor~
+			REPLACE_CRE_ITEM ~F_WULFHM~ #0 #0 #0 ~unstealable&undroppable~ ~weapon1~ EQUIP
+			PATCH_IF (RANDOM(0 99) < %pl_base%) BEGIN
+				REPLACE_CRE_ITEM ~CHAN03~ #0 #0 #0 ~NONE~ ~armor~
+			END
+			//SHLD02 (Kleiner Schild +1)
+			PATCH_IF (RANDOM(0 99) < %pl_base%) BEGIN
+				REPLACE_CRE_ITEM ~SHLD01~ #0 #0 #0 ~NONE~ ~shield~
+			END
+		BUT_ONLY_IF_IT_CHANGES
+		
+		COPY_EXISTING ~F_DEATHK.CRE~ ~override~
+			//Name: Demonknight
+			WRITE_SHORT 0x14 ~4500~ //XP (was: 15000)
+			//PLAT05 (Prunkharnisch +1)
+			//REPLACE_CRE_ITEM ~PLAT05~ #0 #0 #0 ~NONE~ ~armor~
+			//BGSW2H07 (Zweihänder +3)
+			REPLACE_CRE_ITEM ~SW2H01~ #0 #0 #0 ~NONE~ ~inv1~
+		BUT_ONLY_IF_IT_CHANGES
+		
+		COPY_EXISTING ~F_ETTIN.cre~ ~override~
+			//Name: Ettin
+			WRITE_SHORT 0x14 ~900~ //XP (was: 3000)
+		BUT_ONLY_IF_IT_CHANGES
+		
+		COPY_EXISTING ~F_GIANTF.cre~ ~override~
+			//Name: Frost Giant
+			WRITE_SHORT 0x14 ~3000~ //XP (was: 10000)
+			//F_POTN52 (Potion of Extra Healing)
+			PATCH_IF (RANDOM(0 99) < %pl_base%) BEGIN
+				REPLACE_CRE_ITEM ~POTN08~ #0 #0 #0 ~NONE~ ~inv1~
+			END
+		BUT_ONLY_IF_IT_CHANGES
+		
+		COPY_EXISTING ~F_CORN.CRE~ ~override~
+			//Name: Cornugon
+			WRITE_SHORT 0x14 ~3600~ //XP (was: 12000)
+		BUT_ONLY_IF_IT_CHANGES
+		
+		COPY_EXISTING ~F_CORN02.CRE~ ~override~
+			//Name: Cornugon
+			WRITE_SHORT 0x14 ~3600~ //XP (was: 12000)
+			//F_GOCLAW (Claw of Cornugon)
+			PATCH_IF (RANDOM(0 99) < %pl_base%) BEGIN
+				REPLACE_CRE_ITEM ~F_GOCLAW~ #0 #0 #0 ~unstealable&undroppable~ ~inv1~
+			END
+		BUT_ONLY_IF_IT_CHANGES
+		
+		COPY_EXISTING ~F_orc.cre~ ~override~
+			//Name: Orc
+			WRITE_SHORT 0x14 ~80~ //XP (was: 270)
+		BUT_ONLY_IF_IT_CHANGES
+		
+		COPY_EXISTING ~F_BEL.CRE~ ~override~
+			//Name: Belhifet
+			WRITE_SHORT 0x14 ~8000~ //XP (was: 45000) //VOLLKOMMEN ÜBERZOGEN!
+			//F_SW2H17 (Belhifet’s Sword of Grief +5)
+			PATCH_IF (RANDOM(0 99) < %pl_base%) BEGIN
+				REPLACE_CRE_ITEM ~F_SW2H17~ #0 #0 #0 ~unstealable&undroppable~ ~inv1~ //XP müssen verdient werden, also lassen wir es. aber er sollte es nicht fallen lassen.
+			END
+		BUT_ONLY_IF_IT_CHANGES
+		COPY_EXISTING ~F_CYCLOP.cre~ ~override~
+			//Name: Cyclops
+			WRITE_SHORT 0x14 ~1200~ //XP (was: 4000)
+		BUT_ONLY_IF_IT_CHANGES
+		
+		COPY_EXISTING ~F_MARI.cre~ ~override~
+			//Name: Marilith
+			WRITE_SHORT 0x14 ~2700~ //XP (was: 9000)
+		BUT_ONLY_IF_IT_CHANGES
+		
+		COPY_EXISTING ~F_GUEN.CRE~ ~override~
+			//Name: Guenhwyvar
+		BUT_ONLY_IF_IT_CHANGES
+		
+		COPY_EXISTING ~F_HARPY.CRE~ ~override~
+			//Name: Harpy
+			WRITE_SHORT 0x14 ~600~ //XP (was: 2000)
+		BUT_ONLY_IF_IT_CHANGES
+		
+		COPY_EXISTING ~F_GOBELE.CRE~ ~override~
+			//Name: Goblin Elite
+			WRITE_SHORT 0x14 ~10~ //XP (was: 45)
+			//SW1H08 (Kurzschwert +1)
+			REPLACE_CRE_ITEM ~SW1H07~ #0 #0 #0 ~NONE~ ~weapon2~
+		BUT_ONLY_IF_IT_CHANGES
+		
+		COPY_EXISTING ~F_GOBLIN.CRE~ ~override~
+			//Name: Goblin
+			WRITE_SHORT 0x14 ~10~ //XP (was: 35)
+		BUT_ONLY_IF_IT_CHANGES
+		
+		COPY_EXISTING ~F_LICH.cre~ ~override~
+			//Name: Kangaxx the Lich
+			WRITE_SHORT 0x14 ~2400~ //XP (was: 8000)
+			//F_GAXRNG (Ring of Kangaxx) ts! der is unique!!! man man man.... den machen wir wohl mal in jedem fall unstealable&undroppable. Naja... patch base.
+			//PATCH_IF (RANDOM(0 99) < %pl_base%) BEGIN
+			REPLACE_CRE_ITEM ~F_GAXRNG~ #0 #0 #0 ~unstealable&undroppable~ ~inv1~
+			//END
+		BUT_ONLY_IF_IT_CHANGES
+		
+		COPY_EXISTING ~F_MUMMY.CRE~ ~override~
+			//Name: Mummy
+			WRITE_SHORT 0x14 ~900~ //XP (was: 3000)
+		BUT_ONLY_IF_IT_CHANGES
+		
+		COPY_EXISTING ~F_SHFIEN.CRE~ ~override~
+			//Name: Shadow Fiend
+			WRITE_SHORT 0x14 ~600~ //XP (was: 2000)
+		BUT_ONLY_IF_IT_CHANGES
+		
+		COPY_EXISTING ~F_VALEN.CRE~ ~override~
+			//Name: Valen
+			WRITE_SHORT 0x14 ~2550~ //XP (was: 8500)
+		BUT_ONLY_IF_IT_CHANGES
+		
+		COPY_EXISTING ~F_VAMPF.CRE~ ~override~
+			//Name: Valen
+			WRITE_SHORT 0x14 ~2550~ //XP (was: 8500)
+		BUT_ONLY_IF_IT_CHANGES
+		
+		COPY_EXISTING ~F_WERWGR.CRE~ ~override~
+			//Name: Greater Werewolf
+			WRITE_SHORT 0x14 ~2700~ //XP (was: 9000)
+		BUT_ONLY_IF_IT_CHANGES
+		
+		COPY_EXISTING ~F_WLFWGR.CRE~ ~override~
+			//Name: Greater Wolfwere
+			WRITE_SHORT 0x14 ~2400~ //XP (was: 8000)
+		BUT_ONLY_IF_IT_CHANGES
+		
+		COPY_EXISTING ~F_DEADBO.cre~ ~override~
+			//Name: Dead Child
+			WRITE_SHORT 0x14 ~15~ //XP (was: 65)
+		BUT_ONLY_IF_IT_CHANGES
+		
+		COPY_EXISTING ~F_DEADMA.cre~ ~override~
+			//Name: Wounded Man
+			WRITE_SHORT 0x14 ~15~ //XP (was: 65)
+		BUT_ONLY_IF_IT_CHANGES
+		
+		COPY_EXISTING ~F_DEADWM.cre~ ~override~
+			//Name: Dead Woman
+			WRITE_SHORT 0x14 ~15~ //XP (was: 65)
+		BUT_ONLY_IF_IT_CHANGES
+		
+		COPY_EXISTING ~F_NIB.cre~ ~override~
+			//Name: Nib Jansen
+		BUT_ONLY_IF_IT_CHANGES
+		
+		COPY_EXISTING ~F_WAILIN.CRE~ ~override~
+			//Name: Wailing Death
+			WRITE_SHORT 0x14 ~2550~ //XP (was: 8500)
+		BUT_ONLY_IF_IT_CHANGES
+			
+		COPY_EXISTING ~F_SW2H17.itm~ ~override~ // nerfing weapon into "only" +3 weapon
+			WRITE_SHORT 0x60 3
+			WRITE_SHORT 0x84 8			  
+			WRITE_SHORT 0x86 3
+			WRITE_SHORT 0x8c 3
+			LPF ALTER_EFFECT INT_VAR match_opcode = 12 dicenumber = 1 END
+			PATCH_FOR_EACH offset IN 0xc 0x54 BEGIN
+			  READ_LONG ~%offset%~ desc_strref
+			  PATCH_IF (desc_strref >= 0 && desc_strref < 2147483646) BEGIN
+			  READ_STRREF ~%offset%~ desc
+			  INNER_PATCH_SAVE desc ~%desc%~ BEGIN
+				REPLACE_TEXTUALLY CASE_INSENSITIVE EXACT_MATCH ~+5~ ~+3~ // change tach0 and damage modifier in name and description to +3
+				END
+			  END
+			  SAY_EVALUATED offset ~%desc%~
+			END
+		BUT_ONLY_IF_IT_CHANGES
+		
+		COPY_EXISTING ~F_ADAGGR.itm~ ~override~ // nerfing weapon into "only" +3 weapon
+			WRITE_SHORT 0x60 3
+			WRITE_SHORT 0x86 3
+			WRITE_SHORT 0x8c 3
+			LPF ALTER_EFFECT INT_VAR match_opcode = 17 parameter1 = 2 END
+			LPF ALTER_EFFECT INT_VAR match_opcode = 12 parameter1 = 2 END
+			PATCH_FOR_EACH offset IN 0xc 0x54 BEGIN
+			  READ_LONG ~%offset%~ desc_strref
+			  PATCH_IF (desc_strref >= 0 && desc_strref < 2147483646) BEGIN
+			  READ_STRREF ~%offset%~ desc
+			  INNER_PATCH_SAVE desc ~%desc%~ BEGIN
+				REPLACE_TEXTUALLY CASE_INSENSITIVE EXACT_MATCH ~+5~ ~+3~ // change tach0 and damage modifier in name and description to +3
+				REPLACE_TEXTUALLY CASE_INSENSITIVE EXACT_MATCH ~ 5 ~ ~ 2 ~ // change poison damage in description to 2
+				END
+			  END
+			  SAY_EVALUATED offset ~%desc%~
+			END
+		BUT_ONLY_IF_IT_CHANGES
+		
+		COPY_EXISTING ~F_ARTSWD.itm~ ~override~ // nerfing weapon into "only" +3 weapon
+			WRITE_SHORT 0x60 3
+			WRITE_SHORT 0x86 3
+			WRITE_SHORT 0x8c 3
+			LPF ALTER_EFFECT INT_VAR match_opcode = 25 parameter1 = 1 END
+			PATCH_FOR_EACH offset IN 0xc 0x54 BEGIN
+			  READ_LONG ~%offset%~ desc_strref
+			  PATCH_IF (desc_strref >= 0 && desc_strref < 2147483646) BEGIN
+			  READ_STRREF ~%offset%~ desc
+			  INNER_PATCH_SAVE desc ~%desc%~ BEGIN
+				REPLACE_TEXTUALLY CASE_INSENSITIVE EXACT_MATCH ~+4~ ~+3~ // change tach0 and damage modifier in name and description to +3
+				END
+			  END
+			  SAY_EVALUATED offset ~%desc%~
+			END
+		BUT_ONLY_IF_IT_CHANGES
+	
+END	

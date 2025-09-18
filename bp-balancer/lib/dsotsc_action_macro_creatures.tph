@@ -1,0 +1,796 @@
+DEFINE_ACTION_MACRO ~dsotsc_action_macro_creatures~ BEGIN
+
+	LOCAL_SET "pl_base" = "%patch_base%"
+	LOCAL_SET "pl_plus1" = ((%patch_base% + (((100 - %patch_base%) / 4) * 1)) * %patch_base%) / %patch_base%
+	LOCAL_SET "pl_plus2" = ((%patch_base% + (((100 - %patch_base%) / 4) * 2)) * %patch_base%) / %patch_base%
+	LOCAL_SET "pl_plus3" = ((%patch_base% + (((100 - %patch_base%) / 4) * 3)) * %patch_base%) / %patch_base%
+	PRINT "Patch Basis: %pl_base% pct, Plus1: %pl_plus1%, Plus2: %pl_plus2%, Plus3: %pl_plus3%"
+	
+	COPY_EXISTING ~DSARCHDR.cre~ ~override~
+		//Name: Der Erzdruide
+		//WRITE_SHORT 0x14 ~3000~ //XP (was: 7500)
+		//DSCDRUID (Krone der Erzdruiden)
+		PATCH_IF (RANDOM(0 99) < %pl_base%) BEGIN
+			REPLACE_CRE_ITEM ~#BLHELM1~ #0 #0 #0 ~NONE~ ~helmet~
+		END
+		//DSWRKARM (Sturmwolke)
+		PATCH_IF (RANDOM(0 99) < %pl_base%) BEGIN
+			REPLACE_CRE_ITEM ~LEAT04~ #0 #0 #0 ~NONE~ ~armor~
+		END
+		//DSRNGFSH (Ring des Feuerschildes)
+		PATCH_IF (RANDOM(0 99) < %pl_base%) BEGIN
+			REPLACE_CRE_ITEM ~RING11~ #0 #0 #0 ~NONE~ ~lring~
+		END
+		//DSAMUL01 (Herz des Waldes)
+		PATCH_IF (RANDOM(0 99) < %pl_base%) BEGIN
+			REPLACE_CRE_ITEM ~AMUL05~ #0 #0 #0 ~NONE~ ~amulet~
+		END
+		//DSTEARS (Krummsäbel +3, "Yarrows Tränen")
+		PATCH_IF (RANDOM(0 99) < %pl_base%) BEGIN
+			REPLACE_CRE_ITEM ~SW1H22~ #0 #0 #0 ~NONE~ ~weapon1~
+		END
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~DSBANSHE.cre~ ~override~
+		//Name: Banshee
+		//WRITE_SHORT 0x14 ~2400~ //XP (was: 6000)
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~DSBARDO.cre~ ~override~
+		//Name: Bardo Furfoot
+		//WRITE_SHORT 0x14 ~1000~ //XP (was: 2500)
+		//LEAT09 (Lederrüstung +3)
+		REPLACE_CRE_ITEM ~LEAT02~ #0 #0 #0 ~NONE~ ~armor~
+		//BRAC04 (Armbänder der Bogenschützen)
+		REPLACE_CRE_ITEM ~BRAC05~ #0 #0 #0 ~NONE~ ~gloves~
+		//RING07 (Schutzring +2)
+		REPLACE_CRE_ITEM ~RING11~ #0 #0 #0 ~NONE~ ~rring~
+		//BOW06 (Kurzbogen +1)
+		REPLACE_CRE_ITEM ~BOW05~ #0 #0 #0 ~NONE~ ~weapon2~
+		//AROW02 (Pfeile +1)
+		//REPLACE_CRE_ITEM ~AROW02~ #0 #0 #0 ~NONE~ ~quiver2~
+		//DSARROW1 (Pfeile der Drachentötung)
+		//PATCH_IF (RANDOM(0 99) < %pl_base%) BEGIN
+			//REPLACE_CRE_ITEM ~DSARROW1~ #0 #0 #0 ~NONE~ ~quiver3~
+		//END
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~DSBLANE.cre~ ~override~
+		//Name: Priester Blane
+		//WRITE_SHORT 0x14 ~120~ //XP (was: 300)
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~DSBUB.cre~ ~override~
+		//Name: Bub Snikt
+		//WRITE_SHORT 0x14 ~0~ //XP (was: 0)
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~DSBUB6.cre~ ~override~
+		//Name: Bub Snikt
+		//WRITE_SHORT 0x14 ~0~ //XP (was: 0)
+		//CHAN05 (Schienenpanzer +1)
+		REPLACE_CRE_ITEM ~CHAN04~ #0 #0 #0 ~NONE~ ~armor~
+		//SW1H02 (Bastardschwert +1)
+		REPLACE_CRE_ITEM ~SW1H01~ #0 #0 #0 ~NONE~ ~weapon1~
+		//BOW04 (Langbogen +1)
+		REPLACE_CRE_ITEM ~BOW03~ #0 #0 #0 ~NONE~ ~weapon2~
+		//AROW02 (Pfeile +1)
+		//REPLACE_CRE_ITEM ~AROW02~ #0 #0 #0 ~NONE~ ~quiver3~
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~DSCLARS.cre~ ~override~
+		//Name: Clairis
+		//WRITE_SHORT 0x14 ~3400~ //XP (was: 8500)
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING_REGEXP GLOB ~^DSCONCH.*\.cre~ ~override~
+		//Name: Conchobhair Starkklinge
+		//WRITE_SHORT 0x14 ~0~ //XP (was: 0)
+		//DSCOHELM (Conchobhairs Helm des Mutes)
+		PATCH_IF (RANDOM(0 99) < %pl_base%) BEGIN
+			REPLACE_CRE_ITEM ~HELM01~ #0 #0 #0 ~NONE~ ~helmet~
+		END
+		//DSCOARM (Conchobhairs gesegneter Plattenpanzer)
+		PATCH_IF (RANDOM(0 99) < %pl_base%) BEGIN
+			REPLACE_CRE_ITEM ~PLAT01~ #0 #0 #0 ~NONE~ ~armor~
+		END
+		//DSCOSWD (Conchobhairs Drachentöter)
+		//PATCH_IF (RANDOM(0 99) < %pl_base%) BEGIN
+			//REPLACE_CRE_ITEM ~DSCOSWD~ #0 #0 #0 ~NONE~ ~weapon1~
+		//END
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~DSCOOSHE.cre~ ~override~
+		//Name: Cooshee
+		//WRITE_SHORT 0x14 ~105~ //XP (was: 270)
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING_REGEXP GLOB ~^DSCUCH.*\.cre~ ~override~
+		//Name: CúChoinneach
+		//WRITE_SHORT 0x14 ~0~ //XP (was: 0)
+		//DSCUARM (CúChoinneachs Lederrüstung +4)
+		//PATCH_IF (RANDOM(0 99) < %pl_base%) BEGIN
+			//REPLACE_CRE_ITEM ~DSCUARM~ #0 #0 #0 ~NONE~ ~armor~
+		//END
+		//DSCUSHLD (CúChoinneachs Schild +3 "Der Mond")
+		//PATCH_IF (RANDOM(0 99) < %pl_base%) BEGIN
+			//REPLACE_CRE_ITEM ~DSCUSHLD~ #0 #0 #0 ~NONE~ ~shield~
+		//END
+		//DSCUSWD (Mairial "Der Todesjäger")
+		//PATCH_IF (RANDOM(0 99) < %pl_base%) BEGIN
+			//REPLACE_CRE_ITEM ~DSCUSWD~ #0 #0 #0 ~NONE~ ~weapon1~
+		//END
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~DSDEAZLE.cre~ ~override~
+		//Name: Deazle
+		//WRITE_SHORT 0x14 ~0~ //XP (was: 7)
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~DSDROW01.cre~ ~override~
+		//Name: Drow Waffenmeister
+		//WRITE_SHORT 0x14 ~390~ //XP (was: 975)
+		//DWCHAN02 (Drow-Kettenhemd +5) seems to be a questitem
+		//BOOT04 (Stiefel der Vermeidung)
+		REPLACE_CRE_ITEM ~BOOT06~ #0 #0 #0 ~NONE~ ~boots~
+		//DWSW1H01 (Drow-Krummsäbel +3) seems to be a questitem
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~DSDROW02.cre~ ~override~
+		//Name: Drow Magier
+		//WRITE_SHORT 0x14 ~4400~ //XP (was: 11000)
+		//DSROBE05 (Drow Zauberumhang) seems to be a questitem
+		//STAF15 (Luftstecken)
+		REPLACE_CRE_ITEM ~STAF01~ #0 #0 #0 ~NONE~ ~weapon1~
+		//DSDAGG03 (Drow Adamantit-Dolch +3) seems to be a questitem
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~DSDROW03.cre~ ~override~
+		//Name: Drow Krieger
+		//WRITE_SHORT 0x14 ~250~ //XP (was: 625)
+		//DWCHAN01 (Drow-Kettenhemd +3) seems to be a questitem
+		//DWSW1H02 (Drow-Langschwert +3) seems to be a questitem
+		//DWXBOW01 (Drow-Schnellschussarmbrust) seems to be a questitem
+		//DWBOLT01 (Drow-Schlafbolzen) seems to be a questitem
+		//DWSHLD01 (Drow-Schild +3) seems to be a questitem
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~DSDROW04.cre~ ~override~
+		//Name: Drow Elite
+		//WRITE_SHORT 0x14 ~250~ //XP (was: 625)
+		//DWPLAT01 (Drow-Prunkharnisch +5) seems to be a questitem
+		//DWSW1H01 (Drow-Krummsäbel +3) seems to be a questitem
+		//DWXBOW01 (Drow-Schnellschussarmbrust) seems to be a questitem
+		//DWBOLT01 (Drow-Schlafbolzen) seems to be a questitem
+		//DWBOLT02 (Drow-Betäubungsbolzen) seems to be a questitem
+		//DWSHLD01 (Drow-Schild +3) seems to be a questitem
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~DSDUEGM1.cre~ ~override~
+		//Name: Duergar Kämpfer
+		//WRITE_SHORT 0x14 ~165~ //XP (was: 420)
+		//LEAT07 (Beschlagenes Lederwams +2)
+		REPLACE_CRE_ITEM ~LEAT04~ #0 #0 #0 ~NONE~ ~armor~
+		//XBOW05 (Leichte Armbrust +1)
+		REPLACE_CRE_ITEM ~XBOW04~ #0 #0 #0 ~NONE~ ~weapon1~
+		//AX1H02 (Streitaxt +1)
+		REPLACE_CRE_ITEM ~AX1H01~ #0 #0 #0 ~NONE~ ~weapon2~
+		//BOLT03 (Gewitterbolzen)
+		REPLACE_CRE_ITEM ~BOLT02~ #0 #0 #0 ~NONE~ ~quiver1~
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~DSDUEGMA.cre~ ~override~
+		//Name: Duergar Magier
+		//WRITE_SHORT 0x14 ~710~ //XP (was: 1785)
+		//STAF18 (Kampfstab +2)
+		REPLACE_CRE_ITEM ~STAF01~ #0 #0 #0 ~NONE~ ~weapon1~
+		//SLNG04 (Schleuder +2)
+		REPLACE_CRE_ITEM ~SLNG01~ #0 #0 #0 ~NONE~ ~weapon2~
+		//BULL02 (Kugeln +1)
+		//REPLACE_CRE_ITEM ~BULL02~ #0 #0 #0 ~NONE~ ~quiver1~
+		//BULL03 (Kugeln +2)
+		REPLACE_CRE_ITEM ~BULL01~ #0 #0 #0 ~NONE~ ~quiver2~
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~DSDUEGSK.cre~ ~override~
+		//Name: Duergar Totenbeschwörer
+		//WRITE_SHORT 0x14 ~1445~ //XP (was: 3620)
+		//DWCHAN01 (Drow-Kettenhemd +3) seems to be a questitem
+		//STAF05 (Schlagstecken)
+		REPLACE_CRE_ITEM ~STAF01~ #0 #0 #0 ~NONE~ ~weapon1~
+		//SLNG02 (Schleuder +1)
+		REPLACE_CRE_ITEM ~SLNG01~ #0 #0 #0 ~NONE~ ~weapon2~
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~DSDUERG1.cre~ ~override~
+		//Name: Duergar Dieb
+		//WRITE_SHORT 0x14 ~540~ //XP (was: 1355)
+		//LEAT12 (Lederrüstung +3)
+		REPLACE_CRE_ITEM ~LEAT04~ #0 #0 #0 ~NONE~ ~armor~
+		//SW1H29 (Kurzschwert +2)
+		REPLACE_CRE_ITEM ~SW1H07~ #0 #0 #0 ~NONE~ ~weapon1~
+		//SLNG02 (Schleuder +1)
+		REPLACE_CRE_ITEM ~SLNG01~ #0 #0 #0 ~NONE~ ~weapon2~
+		//BULL02 (Kugeln +1)
+		REPLACE_CRE_ITEM ~BULL01~ #0 #0 #0 ~NONE~ ~quiver1~
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~DSDUERG2.cre~ ~override~
+		//Name: Duergar Wache
+		//WRITE_SHORT 0x14 ~545~ //XP (was: 1370)
+		//CHAN02 (Kettenhemd +1)
+		REPLACE_CRE_ITEM ~CHAN01~ #0 #0 #0 ~NONE~ ~armor~
+		//HAMM02 (Kriegshammer +1)
+		REPLACE_CRE_ITEM ~HAMM01~ #0 #0 #0 ~NONE~ ~weapon1~
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~DSDUERG3.cre~ ~override~
+		//Name: Duergar Priester
+		//WRITE_SHORT 0x14 ~865~ //XP (was: 2170)
+		//CHAN05 (Schienenpanzer +1)
+		REPLACE_CRE_ITEM ~CHAN04~ #0 #0 #0 ~NONE~ ~armor~
+		//SLNG02 (Schleuder +1)
+		REPLACE_CRE_ITEM ~SLNG01~ #0 #0 #0 ~NONE~ ~weapon2~
+		//BULL02 (Kugeln +1)
+		REPLACE_CRE_ITEM ~BULL01~ #0 #0 #0 ~NONE~ ~quiver1~
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~DSDUERGA.cre~ ~override~
+		//Name: Duergar Mienenarbeiter
+		//WRITE_SHORT 0x14 ~145~ //XP (was: 370)
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~DSFERTH.cre~ ~override~
+		//Name: Ferthgil Trolltöter
+		//WRITE_SHORT 0x14 ~0~ //XP (was: 0)
+		//DSFEHELM (Ferthgils Helm)
+		//PATCH_IF (RANDOM(0 99) < %pl_base%) BEGIN
+			//REPLACE_CRE_ITEM ~DSFEHELM~ #0 #0 #0 ~NONE~ ~helmet~
+		//END
+		//DSFEARM (Ferthgils zwergischer Mithril-Plattenpanzer)
+		PATCH_IF (RANDOM(0 99) < %pl_base%) BEGIN
+			REPLACE_CRE_ITEM ~PLAT01~ #0 #0 #0 ~NONE~ ~armor~
+		END
+		//DSFEAXE (Ferthgils Streitaxt +3)
+		//PATCH_IF (RANDOM(0 99) < %pl_base%) BEGIN
+			//REPLACE_CRE_ITEM ~DSFEAXE~ #0 #0 #0 ~NONE~ ~weapon1~
+		//END
+		//DSHAMM01 (Tearlacs Kriegshammer "Gigantenfäller") seems to be a questitem
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~DSFEYDO.cre~ ~override~
+		//Name: Fey'doch
+		//WRITE_SHORT 0x14 ~480~ //XP (was: 1200)
+		//LEAT20 (Lederharnisch +3)
+		REPLACE_CRE_ITEM ~LEAT10~ #0 #0 #0 ~NONE~ ~armor~
+		//DSGBBOW (Elfenbogen "Goblins Verderben") seems to be a questitem
+		//SPER02 (Speer +1)
+		REPLACE_CRE_ITEM ~SPER01~ #0 #0 #0 ~NONE~ ~weapon2~
+		//DART04 (Verletzungspfeil)
+		REPLACE_CRE_ITEM ~DART01~ #0 #0 #0 ~NONE~ ~weapon3~
+		//AROW11 (Pfeile +2)
+		REPLACE_CRE_ITEM ~AROW01~ #0 #0 #0 ~NONE~ ~quiver1~
+		//AROW11 (Pfeile +2)
+		REPLACE_CRE_ITEM ~AROW02~ #0 #0 #0 ~NONE~ ~quiver2~
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~DSFORDRG.cre~ ~override~
+		//Name: Walddrache
+		//WRITE_SHORT 0x14 ~4000~ //XP (was: 10000)
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~DSFRDRGB.cre~ ~override~
+		//Name: Baby Walddrache
+		//WRITE_SHORT 0x14 ~140~ //XP (was: 350)
+		//AMUL14 (Schutzamulett +1)
+		REPLACE_CRE_ITEM ~AMUL02~ #0 #0 #0 ~NONE~ ~amulet~
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~DSGILIAN.cre~ ~override~
+		//Name: Gillian Ghastkill
+		//WRITE_SHORT 0x14 ~5~ //XP (was: 15)
+		//RING06 (Schutzring +1)
+		//REPLACE_CRE_ITEM ~RING06~ #0 #0 #0 ~NONE~ ~qitem1~
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~DSGNOLLC.cre~ ~override~
+		//Name: Gnoll-Häuptling
+		//WRITE_SHORT 0x14 ~45~ //XP (was: 120)
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~DSGOBCHF.cre~ ~override~
+		//Name: Goblin-Anführer
+		//WRITE_SHORT 0x14 ~10~ //XP (was: 35)
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~DSGRUNK.cre~ ~override~
+		//Name: Grog
+		//WRITE_SHORT 0x14 ~300~ //XP (was: 750)
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~DSHALF01.cre~ ~override~
+		//Name: Gandolar Glücksfuß
+		//WRITE_SHORT 0x14 ~25~ //XP (was: 65)
+		//PLAT05 (Prunkharnisch +1)
+		REPLACE_CRE_ITEM ~PLAT04~ #0 #0 #0 ~NONE~ ~armor~
+		//RING06 (Schutzring +1)
+		REPLACE_CRE_ITEM ~RING11~ #0 #0 #0 ~NONE~ ~lring~
+		//SW1H05 (Langschwert +1)
+		REPLACE_CRE_ITEM ~SW1H04~ #0 #0 #0 ~NONE~ ~weapon1~
+		//SLNG02 (Schleuder +1)
+		REPLACE_CRE_ITEM ~SLNG01~ #0 #0 #0 ~NONE~ ~weapon2~
+		//BLUN03 (Flegel +1)
+		REPLACE_CRE_ITEM ~BLUN02~ #0 #0 #0 ~NONE~ ~weapon3~
+		//BULL03 (Kugeln +2)
+		REPLACE_CRE_ITEM ~BULL02~ #0 #0 #0 ~NONE~ ~quiver1~
+		//SCRL06 (Schutzformel gegen Feuer)
+		//REPLACE_CRE_ITEM ~SCRL06~ #0 #0 #0 ~NONE~ ~qitem1~
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~DSHALF02.cre~ ~override~
+		//Name: Halbling-Kämpfer
+		//WRITE_SHORT 0x14 ~25~ //XP (was: 65)
+		//LEAT09 (Lederrüstung +3)
+		REPLACE_CRE_ITEM ~LEAT01~ #0 #0 #0 ~NONE~ ~armor~
+		//RING05 (Unsichtbarkeitsring)
+		REPLACE_CRE_ITEM ~RING14~ #0 #0 #0 ~NONE~ ~lring~
+		//BELT03 (Gürtel der Stumpfheit)
+		REPLACE_CRE_ITEM ~BELT01~ #0 #0 #0 ~NONE~ ~belt~
+		//SW1H05 (Langschwert +1)
+		REPLACE_CRE_ITEM ~SW1H04~ #0 #0 #0 ~NONE~ ~weapon1~
+		//SLNG02 (Schleuder +1)
+		REPLACE_CRE_ITEM ~SLNG01~ #0 #0 #0 ~NONE~ ~weapon2~
+		//SCRL06 (Schutzformel gegen Feuer)
+		//REPLACE_CRE_ITEM ~SCRL06~ #0 #0 #0 ~NONE~ ~qitem1~
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~DSHALF03.cre~ ~override~
+		//Name: Halbling-Kämpfer
+		//WRITE_SHORT 0x14 ~25~ //XP (was: 65)
+		//CHAN05 (Schienenpanzer +1)
+		REPLACE_CRE_ITEM ~CHAN04~ #0 #0 #0 ~NONE~ ~armor~
+		//SHLD02 (Kleiner Schild +1)
+		REPLACE_CRE_ITEM ~SHLD01~ #0 #0 #0 ~NONE~ ~shield~
+		//BLUN05 (Streitkolben +1)
+		REPLACE_CRE_ITEM ~BLUN04~ #0 #0 #0 ~NONE~ ~weapon1~
+		//SLNG03 (Schleuder +3)
+		REPLACE_CRE_ITEM ~SLNG01~ #0 #0 #0 ~NONE~ ~weapon2~
+		//BULL04 (Sonnenstein-Kugeln +1)
+		//REPLACE_CRE_ITEM ~BULL04~ #0 #0 #0 ~NONE~ ~quiver1~
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~DSHALF04.cre~ ~override~
+		//Name: Halbling-Dieb
+		//WRITE_SHORT 0x14 ~25~ //XP (was: 65)
+		//LEAT09 (Lederrüstung +3)
+		REPLACE_CRE_ITEM ~LEAT01~ #0 #0 #0 ~NONE~ ~armor~
+		//BRAC04 (Armbänder der Bogenschützen)
+		REPLACE_CRE_ITEM ~BRAC05~ #0 #0 #0 ~NONE~ ~gloves~
+		//RING07 (Schutzring +2)
+		REPLACE_CRE_ITEM ~RING10~ #0 #0 #0 ~NONE~ ~lring~
+		//BOW06 (Kurzbogen +1)
+		REPLACE_CRE_ITEM ~BOW05~ #0 #0 #0 ~NONE~ ~weapon1~
+		//AROW03 (Todespfeil)
+		REPLACE_CRE_ITEM ~AROW01~ #0 #0 #0 ~NONE~ ~quiver1~
+		//AROW02 (Pfeile +1)
+		//REPLACE_CRE_ITEM ~AROW02~ #0 #0 #0 ~NONE~ ~quiver2~
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~DSHALF05.cre~ ~override~
+		//Name: Halbling-Dieb
+		//WRITE_SHORT 0x14 ~25~ //XP (was: 65)
+		//CHAN02 (Kettenhemd +1)
+		REPLACE_CRE_ITEM ~CHAN01~ #0 #0 #0 ~NONE~ ~armor~
+		//BRAC07 (Geschicklichkeitshandschuhe)
+		REPLACE_CRE_ITEM ~BRAC05~ #0 #0 #0 ~NONE~ ~gloves~
+		//RING22 (Ring der Heiligkeit)
+		REPLACE_CRE_ITEM ~RING11~ #0 #0 #0 ~NONE~ ~lring~
+		//RING06 (Schutzring +1)
+		REPLACE_CRE_ITEM ~RING14~ #0 #0 #0 ~NONE~ ~rring~
+		//BELT04 (Gürtel der Durchdringung)
+		REPLACE_CRE_ITEM ~BELT01~ #0 #0 #0 ~NONE~ ~belt~
+		//BLUN10 (Keule gegen unnatürliche Wesen)
+		REPLACE_CRE_ITEM ~BLUN01~ #0 #0 #0 ~NONE~ ~weapon1~
+		//SLNG03 (Schleuder +3)
+		REPLACE_CRE_ITEM ~SLNG01~ #0 #0 #0 ~NONE~ ~weapon2~
+		//BULL03 (Kugeln +2)
+		REPLACE_CRE_ITEM ~BULL02~ #0 #0 #0 ~NONE~ ~quiver1~
+		//SCRL06 (Schutzformel gegen Feuer)
+		//REPLACE_CRE_ITEM ~SCRL06~ #0 #0 #0 ~NONE~ ~cloak~
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~DSHALFD2.cre~ ~override~
+		//Name: Halbling-Kämpfer
+		//WRITE_SHORT 0x14 ~0~ //XP (was: 0)
+		//RING05 (Unsichtbarkeitsring)
+		REPLACE_CRE_ITEM ~RING14~ #0 #0 #0 ~NONE~ ~lring~
+		//BELT09 (Gürtel der Zähigkeit)
+		REPLACE_CRE_ITEM ~BELT01~ #0 #0 #0 ~NONE~ ~belt~
+		//SW1H05 (Langschwert +1)
+		REPLACE_CRE_ITEM ~SW1H04~ #0 #0 #0 ~NONE~ ~weapon1~
+		//SLNG02 (Schleuder +1)
+		REPLACE_CRE_ITEM ~SLNG01~ #0 #0 #0 ~NONE~ ~weapon2~
+		//SCRL03 (Schutzformel gegen Säure)
+		//REPLACE_CRE_ITEM ~SCRL03~ #0 #0 #0 ~NONE~ ~qitem1~
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~DSHALFDD.cre~ ~override~
+		//Name: Halbling-Kämpfer
+		//WRITE_SHORT 0x14 ~0~ //XP (was: 0)
+		//AROW02 (Pfeile +1)
+		REPLACE_CRE_ITEM ~AROW01~ #0 #0 #0 ~NONE~ ~quiver1~
+		//AROW02 (Pfeile +1)
+		//REPLACE_CRE_ITEM ~AROW02~ #0 #0 #0 ~NONE~ ~quiver2~
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~DSJABB.cre~ ~override~
+		//Name: Jabress Xaendrassa Auvryndar
+		//WRITE_SHORT 0x14 ~3400~ //XP (was: 8500)
+		//DSROBE05 (Drow Zauberumhang) seems to be a questitem
+		//BRAC10 (Handschuhe der Waffenkunst)
+		REPLACE_CRE_ITEM ~BRAC05~ #0 #0 #0 ~NONE~ ~gloves~
+		//DSRNG04 (Priesterring von Ghaunadaur)
+		PATCH_IF (RANDOM(0 99) < %pl_base%) BEGIN
+			REPLACE_CRE_ITEM ~RING14~ #0 #0 #0 ~NONE~ ~lring~
+		END
+		//AMUL14 (Schutzamulett +1)
+		REPLACE_CRE_ITEM ~AMUL06~ #0 #0 #0 ~NONE~ ~amulet~
+		//BELT02 (Goldener Gürtel)
+		REPLACE_CRE_ITEM ~BELT01~ #0 #0 #0 ~NONE~ ~belt~
+		//BOOT01 (Siebenmeilenstiefel)
+		REPLACE_CRE_ITEM ~BOOT06~ #0 #0 #0 ~NONE~ ~boots~
+		//DWXBOW01 (Drow-Schnellschussarmbrust) seems to be a questitem
+		//DSDAGG03 (Drow Adamantit-Dolch +3) seems to be a questitem
+		//DWBOLT02 (Drow-Betäubungsbolzen) seems to be a questitem
+		//DWBOLT01 (Drow-Schlafbolzen) seems to be a questitem
+		//CLCK02 (Schutzumhang +2)
+		REPLACE_CRE_ITEM ~CLCK01~ #0 #0 #0 ~NONE~ ~cloak~
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~DSJAREN.cre~ ~override~
+		//Name: Morgenfürst Jarent des Lathander
+		//WRITE_SHORT 0x14 ~45~ //XP (was: 120)
+		//CHAN07 (Kettenhemd +3)
+		REPLACE_CRE_ITEM ~CHAN01~ #0 #0 #0 ~NONE~ ~armor~
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~DSJEREMY.cre~ ~override~
+		//Name: Jeremy
+		//WRITE_SHORT 0x14 ~0~ //XP (was: 7)
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING_REGEXP GLOB ~^DSJETL.*\.cre~ ~override~
+		//Name: Jet'laya
+		//WRITE_SHORT 0x14 ~0~ //XP (was: 0)
+		//DSJEARM (Jet'layas Kettenhemd)
+		//PATCH_IF (RANDOM(0 99) < %pl_base%) BEGIN
+			//REPLACE_CRE_ITEM ~DSJEARM~ #0 #0 #0 ~NONE~ ~armor~
+		//END
+		//DSJESHLD (Jet'layas Schild +2)
+		//PATCH_IF (RANDOM(0 99) < %pl_base%) BEGIN
+			//REPLACE_CRE_ITEM ~DSJESHLD~ #0 #0 #0 ~NONE~ ~shield~
+		//END
+		//DSAMUL08 (Amulett des Glaubens)
+		PATCH_IF (RANDOM(0 99) < %pl_base%) BEGIN
+			REPLACE_CRE_ITEM ~AMUL08~ #0 #0 #0 ~NONE~ ~amulet~
+		END
+		//BELT03 (Gürtel der Stumpfheit)
+		REPLACE_CRE_ITEM ~BELT01~ #0 #0 #0 ~NONE~ ~belt~
+		//DSMACE04 (Streitkolben der Reue +3)
+		//PATCH_IF (RANDOM(0 99) < %pl_base%) BEGIN
+			//REPLACE_CRE_ITEM ~DSMACE04~ #0 #0 #0 ~NONE~ ~weapon1~
+		//END
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~DSJULES.cre~ ~override~
+		//Name: Jules
+		//WRITE_SHORT 0x14 ~35~ //XP (was: 90)
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~DSKALANN.cre~ ~override~
+		//Name: Kalannar
+		//WRITE_SHORT 0x14 ~2600~ //XP (was: 6500)
+		//HELM16 (Intelligenzhelm)
+		REPLACE_CRE_ITEM ~HELM01~ #0 #0 #0 ~NONE~ ~helmet~
+		//DWCHAN01 (Drow-Kettenhemd +3) seems to be a questitem
+		//DSSWD01 (Krummsäbel +2)
+		PATCH_IF (RANDOM(0 99) < %pl_base%) BEGIN
+			REPLACE_CRE_ITEM ~SW1H22~ #0 #0 #0 ~NONE~ ~shield~
+		END
+		//BOOT01 (Siebenmeilenstiefel)
+		REPLACE_CRE_ITEM ~BOOT06~ #0 #0 #0 ~NONE~ ~boots~
+		//DWSW1H02 (Drow-Langschwert +3) seems to be a questitem
+		//DSDAGG03 (Drow Adamantit-Dolch +3) seems to be a questitem
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~DSKATERI.cre~ ~override~
+		//Name: Katerin
+		//WRITE_SHORT 0x14 ~0~ //XP (was: 7)
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING_REGEXP GLOB ~^DSKEIR.*\.cre~ ~override~
+		//Name: Keiria Silbersaite
+		//WRITE_SHORT 0x14 ~0~ //XP (was: 0)
+		//DSKEARM (Keirias Bardenrüstung +1)
+		//PATCH_IF (RANDOM(0 99) < %pl_base%) BEGIN
+			//REPLACE_CRE_ITEM ~DSKEARM~ #0 #0 #0 ~NONE~ ~armor~
+		//END
+		//DSBARDR (Bardenring)
+		PATCH_IF (RANDOM(0 99) < %pl_base%) BEGIN
+			REPLACE_CRE_ITEM ~RING14~ #0 #0 #0 ~NONE~ ~lring~
+		END
+		//SW1H05 (Langschwert +1)
+		REPLACE_CRE_ITEM ~SW1H04~ #0 #0 #0 ~NONE~ ~weapon1~
+		//DSKEXBOW (Keirias Schnellschussarmbrust)
+		//PATCH_IF (RANDOM(0 99) < %pl_base%) BEGIN
+			//REPLACE_CRE_ITEM ~DSKEXBOW~ #0 #0 #0 ~NONE~ ~weapon2~
+		//END
+		//DSBOLT01 (Bolzen des Zauberbruchs +1)
+		PATCH_IF (RANDOM(0 99) < %pl_base%) BEGIN
+			REPLACE_CRE_ITEM ~BOLT01~ #0 #0 #0 ~NONE~ ~quiver2~
+		END
+		//BOLT03 (Gewitterbolzen)
+		REPLACE_CRE_ITEM ~BOLT01~ #0 #0 #0 ~NONE~ ~quiver3~
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~DSKENB.cre~ ~override~
+		//Name: Ken der Bäcker
+		//WRITE_SHORT 0x14 ~0~ //XP (was: 3)
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~DSLENNAN.cre~ ~override~
+		//Name: Lennan
+		//WRITE_SHORT 0x14 ~40~ //XP (was: 100)
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~DSLICH.cre~ ~override~
+		//Name: Der Finstere
+		//WRITE_SHORT 0x14 ~0~ //XP (was: 0)
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~DSLICH1.cre~ ~override~
+		//Name: Der Finstere
+		//WRITE_SHORT 0x14 ~0~ //XP (was: 0)
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~DSLICH2.cre~ ~override~
+		//Name: Der Finstere
+		//WRITE_SHORT 0x14 ~0~ //XP (was: 0)
+		//DSMISC08 (Seelenbehälter) seems to be a questitem
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~DSLICH3.cre~ ~override~
+		//Name: Der Finstere
+		//WRITE_SHORT 0x14 ~0~ //XP (was: 0)
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~DSMAID.cre~ ~override~
+		//Name: Koch
+		//WRITE_SHORT 0x14 ~0~ //XP (was: 5)
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~DSMEGAN.cre~ ~override~
+		//Name: Megan
+		//WRITE_SHORT 0x14 ~0~ //XP (was: 7)
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~DSMOPPY.cre~ ~override~
+		//Name: Mopap, das zirpende Eichhörnchen
+		//WRITE_SHORT 0x14 ~0~ //XP (was: 1)
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~DSMORTUS.cre~ ~override~
+		//Name: Mortius
+		//WRITE_SHORT 0x14 ~3800~ //XP (was: 9500)
+		//DSCROWN1 (Krone der Shar'DuKha)
+		PATCH_IF (RANDOM(0 99) < %pl_base%) BEGIN
+			REPLACE_CRE_ITEM ~DSCROWN1~ #0 #0 #0 ~unstealable&undroppable~ ~helmet~
+		END
+		//DSROBE03 (Robe von Dh'arlo'me)
+		PATCH_IF (RANDOM(0 99) < %pl_base%) BEGIN
+			REPLACE_CRE_ITEM ~CLCK11~ #0 #0 #0 ~NONE~ ~armor~
+		END
+		//BRAC15 (Abwehrarmschützer RK 3)
+		REPLACE_CRE_ITEM ~BRAC03~ #0 #0 #0 ~NONE~ ~gloves~
+		//DSRNG01 (Ring der Ahnen)
+		PATCH_IF (RANDOM(0 99) < %pl_base%) BEGIN
+			REPLACE_CRE_ITEM ~RING16~ #0 #0 #0 ~NONE~ ~lring~
+		END
+		//DSSTAF03 (Ethric)
+		PATCH_IF (RANDOM(0 99) < %pl_base%) BEGIN
+			REPLACE_CRE_ITEM ~STAF02~ #0 #0 #0 ~NONE~ ~weapon1~
+		END
+		//DSBRAC03 (Armreif der Magier)
+		PATCH_IF (RANDOM(0 99) < %pl_base%) BEGIN
+			REPLACE_CRE_ITEM ~BRAC05~ #0 #0 #0 ~NONE~ ~qitem2~
+		END
+		//SCRLDS11 (Luftorb) seems to be a questitem
+		//SCRLDS81 (Höllenfeuer)
+		PATCH_IF (RANDOM(0 99) < %pl_base%) BEGIN
+			REPLACE_CRE_ITEM ~SCRL1G~ #0 #0 #0 ~NONE~ ~inv2~
+		END
+		//SCRLDS32 (Vereinte Armee)
+		PATCH_IF (RANDOM(0 99) < %pl_base%) BEGIN
+			REPLACE_CRE_ITEM ~SCRL98~ #0 #0 #0 ~NONE~ ~inv3~
+		END
+		//SCRLDS51 (Melfs explosive Meteoriten)
+		PATCH_IF (RANDOM(0 99) < %pl_base%) BEGIN
+			REPLACE_CRE_ITEM ~SCRLA5~ #0 #0 #0 ~NONE~ ~inv4~
+		END
+		//SCRLDS83 (Miasma)
+		PATCH_IF (RANDOM(0 99) < %pl_base%) BEGIN
+			REPLACE_CRE_ITEM ~SCRL97~ #0 #0 #0 ~NONE~ ~inv5~
+		END
+		//SCRLDS61 (Geas "Magische Bindung")
+		PATCH_IF (RANDOM(0 99) < %pl_base%) BEGIN
+			REPLACE_CRE_ITEM ~SCRL5n~ #0 #0 #0 ~NONE~ ~inv8~
+		END
+		//SCRLDS31 (Froststrahl)
+		PATCH_IF (RANDOM(0 99) < %pl_base%) BEGIN
+			REPLACE_CRE_ITEM ~SCRL2f~ #0 #0 #0 ~NONE~ ~inv9~
+		END
+		//DSWAND01 (Ettins Zauberstab) seems to be a questitem
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~DSNORBY.cre~ ~override~
+		//Name: Fürst Norby Boozluck
+		//WRITE_SHORT 0x14 ~5~ //XP (was: 15)
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~DSORC01.cre~ ~override~
+		//Name: Ork
+		//WRITE_SHORT 0x14 ~50~ //XP (was: 125)
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~DSOTHO.cre~ ~override~
+		//Name: Otho Getreuhammer
+		//WRITE_SHORT 0x14 ~2000~ //XP (was: 5000)
+		//DSMACE01 (Othos Streitkolben +1) seems to be a questitem
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~DSPHANT1.cre~ ~override~
+		//Name: Phantom
+		//WRITE_SHORT 0x14 ~0~ //XP (was: 0)
+		//SHLD06 (Langschild +1)
+		REPLACE_CRE_ITEM ~SHLD15~ #0 #0 #0 ~NONE~ ~shield~
+		//SW1H05 (Langschwert +1)
+		REPLACE_CRE_ITEM ~SW1H04~ #0 #0 #0 ~NONE~ ~weapon1~
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~DSPHANT2.cre~ ~override~
+		//Name: Phantom
+		//WRITE_SHORT 0x14 ~0~ //XP (was: 0)
+		//HELM03 (Helm des Ruhmes)
+		REPLACE_CRE_ITEM ~HELM01~ #0 #0 #0 ~NONE~ ~helmet~
+		//PLAT02 (Plattenpanzer +1)
+		REPLACE_CRE_ITEM ~PLAT01~ #0 #0 #0 ~NONE~ ~armor~
+		//SHLD04 (Mittlerer Schild +1)
+		REPLACE_CRE_ITEM ~SHLD03~ #0 #0 #0 ~NONE~ ~shield~
+		//SW1H05 (Langschwert +1)
+		REPLACE_CRE_ITEM ~SW1H04~ #0 #0 #0 ~NONE~ ~weapon1~
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~DSPHANT3.cre~ ~override~
+		//Name: Phantom
+		//WRITE_SHORT 0x14 ~0~ //XP (was: 0)
+		//HELM05 (Infravisionshelm)
+		REPLACE_CRE_ITEM ~HELM01~ #0 #0 #0 ~NONE~ ~helmet~
+		//PLAT02 (Plattenpanzer +1)
+		REPLACE_CRE_ITEM ~PLAT01~ #0 #0 #0 ~NONE~ ~armor~
+		//HAMM02 (Kriegshammer +1)
+		REPLACE_CRE_ITEM ~HAMM01~ #0 #0 #0 ~NONE~ ~weapon1~
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~DSPHANT4.cre~ ~override~
+		//Name: Phantom
+		//WRITE_SHORT 0x14 ~0~ //XP (was: 0)
+		//SW1H06 (Langschwert +2)
+		REPLACE_CRE_ITEM ~SW1H05~ #0 #0 #0 ~NONE~ ~weapon1~
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~DSPHANT5.cre~ ~override~
+		//Name: Phantom
+		//WRITE_SHORT 0x14 ~0~ //XP (was: 0)
+		//HELM06 (Helm zum Schutz vor Bezauberung)
+		REPLACE_CRE_ITEM ~HELM01~ #0 #0 #0 ~NONE~ ~helmet~
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~DSPHANT6.cre~ ~override~
+		//Name: Phantom
+		//WRITE_SHORT 0x14 ~0~ //XP (was: 0)
+		//LEAT06 (Beschlagenes Lederwams +2)
+		REPLACE_CRE_ITEM ~LEAT04~ #0 #0 #0 ~NONE~ ~armor~
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~DSROACH.cre~ ~override~
+		//Name: Atr'Jkslad'Roa'CH
+		//WRITE_SHORT 0x14 ~8800~ //XP (was: 22000)
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~DSSHAR.cre~ ~override~
+		//Name: Shar Nadal
+		//WRITE_SHORT 0x14 ~4800~ //XP (was: 12000)
+		//HELM20 (Hellgrüner Ionenstein)
+		REPLACE_CRE_ITEM ~HELM19~ #0 #0 #0 ~NONE~ ~helmet~
+		//DWPLAT01 (Drow-Prunkharnisch +5) seems to be a questitem
+		//DSBRAC01 (Otrad Atwah: "Armschützer der Magie")
+		PATCH_IF (RANDOM(0 99) < %pl_base%) BEGIN
+			REPLACE_CRE_ITEM ~BRAC01~ #0 #0 #0 ~NONE~ ~gloves~
+		END
+		//DSRNG04 (Priesterring von Ghaunadaur)
+		PATCH_IF (RANDOM(0 99) < %pl_base%) BEGIN
+			REPLACE_CRE_ITEM ~RING14~ #0 #0 #0 ~NONE~ ~lring~
+		END
+		//DSRNGFSH (Ring des Feuerschildes)
+		PATCH_IF (RANDOM(0 99) < %pl_base%) BEGIN
+			REPLACE_CRE_ITEM ~RING17~ #0 #0 #0 ~NONE~ ~rring~
+		END
+		//DSAMUL07 (Blausteinkette der Geschicklichkeit)
+		PATCH_IF (RANDOM(0 99) < %pl_base%) BEGIN
+			REPLACE_CRE_ITEM ~AMUL05~ #0 #0 #0 ~NONE~ ~amulet~
+		END
+		//BOOT01 (Siebenmeilenstiefel)
+		REPLACE_CRE_ITEM ~BOOT06~ #0 #0 #0 ~NONE~ ~boots~
+		//DWXBOW01 (Drow-Schnellschussarmbrust) seems to be a questitem
+		//SW2H15 (Silberschwert) seems to be a questitem //but not here. should be replaced as it should be unique
+		REPLACE_CRE_ITEM ~SW2H02~ #0 #0 #0 ~NONE~ ~weapon2~
+		//DSDAGG03 (Drow Adamantit-Dolch +3) seems to be a questitem
+		//DWBOLT01 (Drow-Schlafbolzen) seems to be a questitem
+		//DSCLCK04 (Schutzumhang +3)
+		PATCH_IF (RANDOM(0 99) < %pl_base%) BEGIN
+			REPLACE_CRE_ITEM ~CLCK01~ #0 #0 #0 ~NONE~ ~cloak~
+		END
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING_REGEXP GLOB ~^DSSKEE.*\.cre~ ~override~
+		//Name: Skeezer Lumpkin VI
+		//WRITE_SHORT 0x14 ~0~ //XP (was: 0)
+		//DSSKHELM (Skeezer Lumpkins Zwergen-Kriegshelm)
+		//PATCH_IF (RANDOM(0 99) < %pl_base%) BEGIN
+			//REPLACE_CRE_ITEM ~DSSKHELM~ #0 #0 #0 ~NONE~ ~helmet~
+		//END
+		//DSSKROBE (Skeezer Lumpkins Zauberrobe)
+		//PATCH_IF (RANDOM(0 99) < %pl_base%) BEGIN
+			//REPLACE_CRE_ITEM ~DSSKROBE~ #0 #0 #0 ~NONE~ ~armor~
+		//END
+		//RING08 (Zauberring)
+		REPLACE_CRE_ITEM ~RING11~ #0 #0 #0 ~NONE~ ~lring~
+		//SCRLA6 (Spuk)
+		//REPLACE_CRE_ITEM ~SCRLA6~ #0 #0 #0 ~NONE~ ~qitem3~
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~DSSPEC.cre~ ~override~
+		//Name: Spec
+		//WRITE_SHORT 0x14 ~5~ //XP (was: 15)
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~DSTHOMIC.cre~ ~override~
+		//Name: Thomic
+		//WRITE_SHORT 0x14 ~0~ //XP (was: 7)
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~DSTORQUI.cre~ ~override~
+		//Name: Torquil
+		//WRITE_SHORT 0x14 ~165~ //XP (was: 420)
+		//SPER02 (Speer +1)
+		REPLACE_CRE_ITEM ~SPER01~ #0 #0 #0 ~NONE~ ~weapon1~
+		//SHLD04 (Mittlerer Schild +1)
+		REPLACE_CRE_ITEM ~SHLD03~ #0 #0 #0 ~NONE~ ~inv1~
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~DSTRUNGL.cre~ ~override~
+		//Name: Trungle
+		//WRITE_SHORT 0x14 ~0~ //XP (was: 7)
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~DSVAMPF1.cre~ ~override~
+		//Name: Frischer Vampir
+		//WRITE_SHORT 0x14 ~3400~ //XP (was: 8500)
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~DSVAMPF2.cre~ ~override~
+		//Name: Frischer Vampir
+		//WRITE_SHORT 0x14 ~3400~ //XP (was: 8500)
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~DSVAMPM.cre~ ~override~
+		//Name: Fürst Daerthmac
+		//WRITE_SHORT 0x14 ~5600~ //XP (was: 14000)
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~DSWELF1.cre~ ~override~
+		//Name: Waldelf-Krieger
+		//WRITE_SHORT 0x14 ~165~ //XP (was: 420)
+		//LEAT05 (Beschlagenes Lederwams +1)
+		REPLACE_CRE_ITEM ~LEAT04~ #0 #0 #0 ~NONE~ ~armor~
+		//DSGBBOW (Elfenbogen "Goblins Verderben") seems to be a questitem //but should also be unique at one person (done above)
+		REPLACE_CRE_ITEM ~BOW05~ #0 #0 #0 ~NONE~ ~weapon1~
+		//DART04 (Verletzungspfeil)
+		REPLACE_CRE_ITEM ~DART01~ #0 #0 #0 ~NONE~ ~weapon3~
+		//AROW11 (Pfeile +2)
+		REPLACE_CRE_ITEM ~AROW01~ #0 #0 #0 ~NONE~ ~quiver1~
+		//AROW11 (Pfeile +2)
+		REPLACE_CRE_ITEM ~AROW02~ #0 #0 #0 ~NONE~ ~quiver2~
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~DSWELF1E.cre~ ~override~
+		//Name: Waldelf-Elite
+		//WRITE_SHORT 0x14 ~340~ //XP (was: 850)
+		//LEAT05 (Beschlagenes Lederwams +1)
+		REPLACE_CRE_ITEM ~LEAT04~ #0 #0 #0 ~NONE~ ~armor~
+		//DSGBBOW (Elfenbogen "Goblins Verderben") seems to be a questitem //but should also be unique at one person (done above)
+		REPLACE_CRE_ITEM ~BOW05~ #0 #0 #0 ~NONE~ ~weapon1~
+		//DART04 (Verletzungspfeil)
+		REPLACE_CRE_ITEM ~DART01~ #0 #0 #0 ~NONE~ ~weapon3~
+		//AROW11 (Pfeile +2)
+		REPLACE_CRE_ITEM ~AROW01~ #0 #0 #0 ~NONE~ ~quiver1~
+		//AROW11 (Pfeile +2)
+		REPLACE_CRE_ITEM ~AROW02~ #0 #0 #0 ~NONE~ ~quiver2~
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~DSWELF2.cre~ ~override~
+		//Name: Waldelf-Krieger
+		//WRITE_SHORT 0x14 ~165~ //XP (was: 420)
+		//LEAT05 (Beschlagenes Lederwams +1)
+		REPLACE_CRE_ITEM ~LEAT04~ #0 #0 #0 ~NONE~ ~armor~
+		//DSGBBOW (Elfenbogen "Goblins Verderben") seems to be a questitem //but should also be unique at one person (done above)
+		REPLACE_CRE_ITEM ~BOW05~ #0 #0 #0 ~NONE~ ~weapon1~
+		//SPER02 (Speer +1)
+		REPLACE_CRE_ITEM ~SPER01~ #0 #0 #0 ~NONE~ ~weapon2~
+		//DART04 (Verletzungspfeil)
+		REPLACE_CRE_ITEM ~DART01~ #0 #0 #0 ~NONE~ ~weapon3~
+		//AROW11 (Pfeile +2)
+		REPLACE_CRE_ITEM ~AROW01~ #0 #0 #0 ~NONE~ ~quiver1~
+		//AROW11 (Pfeile +2)
+		REPLACE_CRE_ITEM ~AROW02~ #0 #0 #0 ~NONE~ ~quiver2~
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~DSWELF2E.cre~ ~override~
+		//Name: Waldelf-Elite
+		//WRITE_SHORT 0x14 ~340~ //XP (was: 850)
+		//LEAT05 (Beschlagenes Lederwams +1)
+		REPLACE_CRE_ITEM ~LEAT04~ #0 #0 #0 ~NONE~ ~armor~
+		//DSGBBOW (Elfenbogen "Goblins Verderben") seems to be a questitem //but should also be unique at one person (done above)
+		REPLACE_CRE_ITEM ~BOW05~ #0 #0 #0 ~NONE~ ~weapon1~
+		//SPER02 (Speer +1)
+		REPLACE_CRE_ITEM ~SPER01~ #0 #0 #0 ~NONE~ ~weapon2~
+		//DART04 (Verletzungspfeil)
+		REPLACE_CRE_ITEM ~DART01~ #0 #0 #0 ~NONE~ ~weapon3~
+		//AROW11 (Pfeile +2)
+		REPLACE_CRE_ITEM ~AROW01~ #0 #0 #0 ~NONE~ ~quiver1~
+		//AROW11 (Pfeile +2)
+		REPLACE_CRE_ITEM ~AROW02~ #0 #0 #0 ~NONE~ ~quiver2~
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~DSWOLF1.cre~ ~override~
+		//Name: Madadh n'Sgàil
+		//WRITE_SHORT 0x14 ~0~ //XP (was: 0)
+		//DSCUARM (CúChoinneachs Lederrüstung +4)
+		//PATCH_IF (RANDOM(0 99) < %pl_base%) BEGIN
+			//REPLACE_CRE_ITEM ~DSCUARM~ #0 #0 #0 ~NONE~ ~armor~
+		//END
+	BUT_ONLY_IF_IT_CHANGES
+	
+END	

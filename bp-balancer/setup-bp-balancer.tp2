@@ -1,0 +1,851 @@
+BACKUP ~BP-Balancer\backup~
+AUTHOR ~Manduran mailto:bgtproject@medienkultur.de~
+VERSION ~v0.35~
+/*******************************************************
+- CONPONENT: -------------------------------------------
+- Spell Learning, Lock Picking and Traps XP Balancing --
+*******************************************************/
+
+ALWAYS
+	ACTION_IF NOT VARIABLE_IS_SET xplvl BEGIN // check to make this happen only once per install
+
+	//Display current stats!
+	SILENT COPY_EXISTING ~XPBONUS.2da~ ~override/XPBONUS.2da~
+		COUNT_REGEXP_INSTANCES "40 +41 +42 +43 +44 +45 +46 +47 +48 +49 +50" "high"
+		PATCH_IF ("%high%" = 1) BEGIN
+			SET "xplvl" = 50
+			READ_2DA_ENTRY 3 1 50 "spells"
+			READ_2DA_ENTRY 2 1 50 "traps"
+			READ_2DA_ENTRY 1 1 50 "pockets"
+		END ELSE BEGIN
+			READ_2DA_ENTRY 3 1 40 "spells"
+			READ_2DA_ENTRY 2 1 40 "traps"
+			READ_2DA_ENTRY 1 1 40 "pockets"
+			SET "xplvl" = 40
+		END
+		PATCH_PRINT ~ # This component is automatically installed.
+ # It will not change your game in any way, it just informs you about:
+ # -----------------------------------------------------------------------
+ # YOUR CURRENT XP SETTINGS
+ # -----------------------------------------------------------------------
+ #   Your xp level system is based on %xplvl% levels
+ #   You currently gain %spells% xp for spell learning at level 1
+ #   You currently gain %traps% xp for traps at level 1
+ #   You currently gain %pockets% xp for picking pockets  at level 1
+ # -----------------------------------------------------------------------~
+	BUT_ONLY_IF_IT_CHANGES
+	END
+END
+
+BEGIN ~Reading your current game configuration~ 
+DESIGNATED 0
+DEPRECATED ~install by default can mess a whole installation... Add in a always block instead~
+/*INSTALL_BY_DEFAULT
+NO_LOG_RECORD
+GROUP ~Balancing game engine XP~
+	//Display current stats!
+	SILENT COPY_EXISTING ~XPBONUS.2da~ ~override/XPBONUS.2da~
+		COUNT_REGEXP_INSTANCES "40 +41 +42 +43 +44 +45 +46 +47 +48 +49 +50" "high"
+		PATCH_IF ("%high%" = 1) BEGIN
+			SET "xplvl" = 50
+			READ_2DA_ENTRY 3 1 50 "spells"
+			READ_2DA_ENTRY 2 1 50 "traps"
+			READ_2DA_ENTRY 1 1 50 "pockets"
+		END ELSE BEGIN
+			READ_2DA_ENTRY 3 1 40 "spells"
+			READ_2DA_ENTRY 2 1 40 "traps"
+			READ_2DA_ENTRY 1 1 40 "pockets"
+			SET "xplvl" = 40
+		END
+		PATCH_PRINT ~ # This component is automatically installed.
+ # It will not change your game in any way, it just informs you about:
+ # -----------------------------------------------------------------------
+ # YOUR CURRENT XP SETTINGS
+ # -----------------------------------------------------------------------
+ #   Your xp level system is based on %xplvl% levels
+ #   You currently gain %spells% xp for spell learning at level 1
+ #   You currently gain %traps% xp for traps at level 1
+ #   You currently gain %pockets% xp for picking pockets  at level 1
+ # -----------------------------------------------------------------------~
+	BUT_ONLY_IF_IT_CHANGES*/
+	
+//--------------------------------------------------------------- Spell Learning at 50%
+BEGIN ~At 50% from your current configuration~ 
+DESIGNATED 1
+REQUIRE_PREDICATE FILE_EXISTS_IN_GAME ~XPBONUS.2da~ ~No 'XPBONUS.2DA' found. Skipping installation...~
+SUBCOMPONENT ~XP for Spell Learning~
+GROUP ~Balancing game engine XP~
+		INCLUDE ~BP-Balancer\Lib\2da_action_macro_xpbonus.tph~
+		OUTER_SET "patch_row" = 3
+		OUTER_SET "patch_base" = 50
+		LAUNCH_ACTION_MACRO ~2da_action_macro_xpbonus~
+		
+//--------------------------------------------------------------- Spell Learning at 10%
+BEGIN ~At 10% from your current configuration~ 
+DESIGNATED 2
+SUBCOMPONENT ~XP for Spell Learning~
+GROUP ~Balancing game engine XP~
+	INCLUDE ~BP-Balancer\Lib\2da_action_macro_xpbonus.tph~
+		OUTER_SET "patch_row" = 3
+		OUTER_SET "patch_base" = 10
+		LAUNCH_ACTION_MACRO ~2da_action_macro_xpbonus~
+//--------------------------------------------------------------- Spell Learning at 4%
+BEGIN ~At 4% from your current configuration~ 
+DESIGNATED 3
+SUBCOMPONENT ~XP for Spell Learning~
+GROUP ~Balancing game engine XP~	
+	INCLUDE ~BP-Balancer\Lib\2da_action_macro_xpbonus.tph~
+		OUTER_SET "patch_row" = 3
+		OUTER_SET "patch_base" = 4
+		LAUNCH_ACTION_MACRO ~2da_action_macro_xpbonus~
+//--------------------------------------------------------------- Spell Learning at no XP
+BEGIN ~None (Original BG1, recommended... hehehe...)~ 
+DESIGNATED 4
+SUBCOMPONENT ~XP for Spell Learning~
+GROUP ~Balancing game engine XP~
+	INCLUDE ~BP-Balancer\Lib\2da_action_macro_xpbonus.tph~
+		OUTER_SET "patch_row" = 3
+		OUTER_SET "patch_base" = 0
+		LAUNCH_ACTION_MACRO ~2da_action_macro_xpbonus~
+//--------------------------------------------------------------- Spell Learning at original BG1
+BEGIN ~Original BG2~ 
+DESIGNATED 5
+SUBCOMPONENT ~XP for Spell Learning~
+GROUP ~Balancing game engine XP~
+	INCLUDE ~BP-Balancer\Lib\2da_action_macro_xpbonus.tph~
+		OUTER_SET "patch_row" = 3
+		OUTER_SET "patch_base" = 100
+		LAUNCH_ACTION_MACRO ~2da_action_macro_xpbonus~		
+//--------------------------------------------------------------- Disarm Trap at 50%
+BEGIN ~At 50% from your current configuration~ 
+DESIGNATED 6
+REQUIRE_PREDICATE FILE_EXISTS_IN_GAME ~XPBONUS.2da~ ~No 'XPBONUS.2DA' found. Skipping installation...~
+SUBCOMPONENT ~XP for Disarming Traps~
+GROUP ~Balancing game engine XP~	
+	INCLUDE ~BP-Balancer\Lib\2da_action_macro_xpbonus.tph~
+		OUTER_SET "patch_row" = 2
+		OUTER_SET "patch_base" = 50
+		LAUNCH_ACTION_MACRO ~2da_action_macro_xpbonus~
+//--------------------------------------------------------------- Disarm Trap at 10%
+BEGIN ~At 10% from your current configuration~ 
+DESIGNATED 7
+SUBCOMPONENT ~XP for Disarming Traps~
+GROUP ~Balancing game engine XP~
+	INCLUDE ~BP-Balancer\Lib\2da_action_macro_xpbonus.tph~
+		OUTER_SET "patch_row" = 2
+		OUTER_SET "patch_base" = 10
+		LAUNCH_ACTION_MACRO ~2da_action_macro_xpbonus~
+//--------------------------------------------------------------- Disarm Trap at 4%
+BEGIN ~At 4% from your current configuration~ 
+DESIGNATED 8
+SUBCOMPONENT ~XP for Disarming Traps~
+GROUP ~Balancing game engine XP~
+	INCLUDE ~BP-Balancer\Lib\2da_action_macro_xpbonus.tph~
+		OUTER_SET "patch_row" = 2
+		OUTER_SET "patch_base" = 4
+		LAUNCH_ACTION_MACRO ~2da_action_macro_xpbonus~
+//--------------------------------------------------------------- Disarm Trap at no XP
+BEGIN ~None (Original BG1, recommended... hehehe...)~ 
+DESIGNATED 9
+SUBCOMPONENT ~XP for Disarming Traps~
+GROUP ~Balancing game engine XP~
+	INCLUDE ~BP-Balancer\Lib\2da_action_macro_xpbonus.tph~
+		OUTER_SET "patch_row" = 2
+		OUTER_SET "patch_base" = 0
+		LAUNCH_ACTION_MACRO ~2da_action_macro_xpbonus~
+//--------------------------------------------------------------- Disarm Trap at original BG1
+BEGIN ~Original BG2~ 
+DESIGNATED 10
+SUBCOMPONENT ~XP for Disarming Traps~
+GROUP ~Balancing game engine XP~
+	INCLUDE ~BP-Balancer\Lib\2da_action_macro_xpbonus.tph~
+		OUTER_SET "patch_row" = 2
+		OUTER_SET "patch_base" = 100
+		LAUNCH_ACTION_MACRO ~2da_action_macro_xpbonus~				
+//--------------------------------------------------------------- Pick Pocket at 50%
+BEGIN ~At 50% from your current configuration~ 
+DESIGNATED 11
+REQUIRE_PREDICATE FILE_EXISTS_IN_GAME ~XPBONUS.2da~ ~No 'XPBONUS.2DA' found. Skipping installation...~
+SUBCOMPONENT ~XP for Pick Pocket~
+GROUP ~Balancing game engine XP~
+	INCLUDE ~BP-Balancer\Lib\2da_action_macro_xpbonus.tph~
+		OUTER_SET "patch_row" = 1
+		OUTER_SET "patch_base" = 50
+		LAUNCH_ACTION_MACRO ~2da_action_macro_xpbonus~
+//--------------------------------------------------------------- Pick Pocket at 10%
+BEGIN ~At 10% from your current configuration~ 
+DESIGNATED 12
+SUBCOMPONENT ~XP for Pick Pocket~
+GROUP ~Balancing game engine XP~	
+	INCLUDE ~BP-Balancer\Lib\2da_action_macro_xpbonus.tph~
+		OUTER_SET "patch_row" = 1
+		OUTER_SET "patch_base" = 10
+		LAUNCH_ACTION_MACRO ~2da_action_macro_xpbonus~
+//--------------------------------------------------------------- Pick Pocket at 4%
+BEGIN ~At 4% from your current configuration~ 
+DESIGNATED 13
+SUBCOMPONENT ~XP for Pick Pocket~
+GROUP ~Balancing game engine XP~	
+	INCLUDE ~BP-Balancer\Lib\2da_action_macro_xpbonus.tph~
+		OUTER_SET "patch_row" = 1
+		OUTER_SET "patch_base" = 4
+		LAUNCH_ACTION_MACRO ~2da_action_macro_xpbonus~
+//--------------------------------------------------------------- Pick Pocket at no XP
+BEGIN ~None (Original BG1, recommended... hehehe...)~ 
+DESIGNATED 14
+SUBCOMPONENT ~XP for Pick Pocket~
+GROUP ~Balancing game engine XP~
+	INCLUDE ~BP-Balancer\Lib\2da_action_macro_xpbonus.tph~
+		OUTER_SET "patch_row" = 1
+		OUTER_SET "patch_base" = 0
+		LAUNCH_ACTION_MACRO ~2da_action_macro_xpbonus~
+//--------------------------------------------------------------- Pick Pocket at original BG1
+BEGIN ~Original BG2~ 
+DESIGNATED 15
+SUBCOMPONENT ~XP for Pick Pocket~
+GROUP ~Balancing game engine XP~
+	INCLUDE ~BP-Balancer\Lib\2da_action_macro_xpbonus.tph~
+		OUTER_SET "patch_row" = 1
+		OUTER_SET "patch_base" = 100
+		LAUNCH_ACTION_MACRO ~2da_action_macro_xpbonus~
+
+
+
+/*********************************************
+COMPONENT: ALL MODS
+*********************************************/
+
+BEGIN ~Installing files needed for the components of the group "Balancing XP and items of several mods"~ 
+DESIGNATED 16
+DEPRECATED ~This component is not needed anymore, item is nomore used and price have been inclued directly in bg1_action_macro_creatures_restore~ // IR also change the price
+INSTALL_BY_DEFAULT
+/*GROUP ~Balancing XP and items of several mods~
+	
+	//Add a replacement for too powerful mage wearable helmets and ion stones
+	COPY ~BP-Balancer/Common/BL#HELM1.ITM~ ~override~
+		SAY NAME1 ~Goldener Stirnreif~
+		SAY NAME2 ~Goldener Stirnreif~
+		SAY UNIDENTIFIED_DESC ~Dieser mit Edelsteinen verzierte Goldreif könnte auch als Krone durchgehen.
+Außer, dass er hübsch anzusehen ist, hat er keine besonderen Eigenschaften.~
+		SAY DESC ~Dieser mit Edelsteinen verzierte Goldreif könnte auch als Krone durchgehen.
+Außer, dass er hübsch anzusehen ist, hat er keine besonderen Eigenschaften.~
+	//Correct price for Protection Cloak +1 (was: 5000)
+	COPY_EXISTING ~clck01.itm~ ~override~
+		WRITE_LONG 0x34 500
+	BUT_ONLY_IF_IT_CHANGES*/
+
+	
+BEGIN ~Keep custom items from other Mods~  
+DESIGNATED 17
+SUBCOMPONENT ~Restore original BG1 creatures' XP and items~
+GROUP ~Balancing XP and items of several mods~
+		
+	/*********************************************
+	 - Restore original BG1 creatures' XP and
+	   items (excl. custom items)
+	*********************************************/
+	INCLUDE ~BP-Balancer\Lib\bg1_action_macro_creatures_restore.tph~
+	OUTER_SET ~patch_base~ = 0
+	LAUNCH_ACTION_MACRO ~bg1_action_macro_creatures_restore~
+	
+
+BEGIN ~Also remove SOME (partly random) overpowered custom items from other Mods~  
+DESIGNATED 18
+SUBCOMPONENT ~Restore original BG1 creatures' XP and items~
+GROUP ~Balancing XP and items of several mods~
+	
+	/*********************************************
+	 - Restore original BG1 creatures' XP and
+	   items (incl. random custom items)
+	*********************************************/		
+	INCLUDE ~BP-Balancer\Lib\bg1_action_macro_creatures_restore.tph~
+	OUTER_SET ~patch_base~ = 50
+	LAUNCH_ACTION_MACRO ~bg1_action_macro_creatures_restore~
+	
+
+BEGIN ~Also remove ALL custom items from other Mods (will not affect quest relevanted items)~ 
+DESIGNATED 19
+SUBCOMPONENT ~Restore original BG1 creatures' XP and items~
+GROUP ~Balancing XP and items of several mods~
+
+	/*********************************************
+	 - Restore original BG1 creatures' XP and
+	   items (incl. custom items)
+	*********************************************/
+	INCLUDE ~BP-Balancer\Lib\bg1_action_macro_creatures_restore.tph~
+	OUTER_SET ~patch_base~ = 100
+	LAUNCH_ACTION_MACRO ~bg1_action_macro_creatures_restore~
+
+
+
+/*********************************************
+COMPONENT: DSotSC (v1.95)
+*********************************************/ 
+
+	
+BEGIN ~Keep custom items~ 
+DESIGNATED 20
+DEPRECATED ~This component is not compatible with the newer DSotSC v3.0 and above~
+REQUIRE_PREDICATE (MOD_IS_INSTALLED ~SETUP-DSOTSC.TP2~ ~0~)
+                           OR (MOD_IS_INSTALLED ~SETUP-DSOTSC.TP2~ ~5~) ~Dark Side of the Sword Coast is not installed~
+SUBCOMPONENT ~Item and XP Balancing for 'Dark Side of the Sword Coast (v2.15)'~
+GROUP ~Balancing XP and items of several mods~
+	
+	INCLUDE ~BP-Balancer\Lib\dsotsc_action_macro_creatures.tph~
+	INCLUDE ~BP-Balancer\Lib\dsotsc_action_macro_areas.tph~
+	
+	/*******************************************************
+	DSotSC 1.95 (creatures)
+	- Alter experience and items w.o. custom items
+	*******************************************************/
+	PRINT "Altering the creatures' XP and items"
+	OUTER_SET ~patch_base~ = 0
+	LAUNCH_ACTION_MACRO ~dsotsc_action_macro_creatures~
+	
+	/*******************************************************
+	DSotSC 1.95 (areas)
+	- Alter Area items (containers)
+	*******************************************************/
+	PRINT "Altering the Areas' containers"
+	OUTER_SET ~patch_base~ = 0
+	LAUNCH_ACTION_MACRO ~dsotsc_action_macro_areas~	
+	
+	/*******************************************************
+	DSotSC 1.95 (scripts)
+	- Alter Addexperience in BCS files
+	*******************************************************/
+	PRINT "Altering the scripts' XP for 'Dark Side of the Sword Coast for BGT WeiDu (v2.15)'..."
+		COPY_EXISTING ~DSC002.BCS~ ~override~
+					~DSCOFF1.BCS~ ~override~
+					~DSCOFF2.BCS~ ~override~
+					~DSLICHD.BCS~ ~override~
+			DECOMPILE_BCS_TO_BAF
+				REPLACE_TEXTUALLY CASE_INSENSITIVE
+				~AddexperienceParty(9000)~ ~AddexperienceParty(3000)~
+				REPLACE_TEXTUALLY CASE_INSENSITIVE
+				~AddexperienceParty(9500)~ ~AddexperienceParty(3200)~
+			COMPILE_BAF_TO_BCS
+			BUT_ONLY_IF_IT_CHANGES
+	
+	/*******************************************************
+	DSotSC 1.95 (dialogs)
+	- Alter Addexperience in DLG files
+	*******************************************************/
+	PRINT "Altering the dialogs' XP for 'Dark Side of the Sword Coast for BGT WeiDu (v2.15)'..."
+		COMPILE ~BP-Balancer/DSotSC/XP.D~
+		
+	
+BEGIN ~Also randomly remove SOME overpowered custom items (will not affect quest relevanted items)~ 
+DESIGNATED 21
+DEPRECATED ~This component is not compatible with the newer DSotSC v3.0 and above~
+REQUIRE_PREDICATE (MOD_IS_INSTALLED ~SETUP-DSOTSC.TP2~ ~0~)
+                           OR (MOD_IS_INSTALLED ~SETUP-DSOTSC.TP2~ ~5~) ~Dark Side of the Sword Coast is not installed~
+SUBCOMPONENT ~Item and XP Balancing for 'Dark Side of the Sword Coast (v2.15)'~
+GROUP ~Balancing XP and items of several mods~	
+
+	INCLUDE ~BP-Balancer\Lib\dsotsc_action_macro_creatures.tph~
+	INCLUDE ~BP-Balancer\Lib\dsotsc_action_macro_areas.tph~
+
+	/*******************************************************
+	DSotSC 1.95 (creatures)
+	- Alter experience and items incl. random custom items
+	*******************************************************/
+	PRINT "Altering the creatures' XP and items"
+	OUTER_SET ~patch_base~ = 30
+	LAUNCH_ACTION_MACRO ~dsotsc_action_macro_creatures~
+	
+	/*******************************************************
+	DSotSC 1.95 (areas)
+	- Alter Area items (containers)
+	*******************************************************/
+	PRINT "Altering the Areas' containers"
+	OUTER_SET ~patch_base~ = 30
+	LAUNCH_ACTION_MACRO ~dsotsc_action_macro_areas~	
+	
+	/*******************************************************
+	DSotSC 1.95 (scripts)
+	- Alter Addexperience in BCS files
+	*******************************************************/
+	PRINT "Altering the scripts' XP for 'Dark Side of the Sword Coast for BGT WeiDu (v2.15)'..."
+		COPY_EXISTING ~DSC002.BCS~ ~override~
+					~DSCOFF1.BCS~ ~override~
+					~DSCOFF2.BCS~ ~override~
+					~DSLICHD.BCS~ ~override~
+			DECOMPILE_BCS_TO_BAF
+				REPLACE_TEXTUALLY CASE_INSENSITIVE
+				~AddexperienceParty(9000)~ ~AddexperienceParty(3000)~
+				REPLACE_TEXTUALLY CASE_INSENSITIVE
+				~AddexperienceParty(9500)~ ~AddexperienceParty(3200)~
+			COMPILE_BAF_TO_BCS
+			BUT_ONLY_IF_IT_CHANGES
+	
+	/*******************************************************
+	DSotSC 1.95 (dialogs)
+	- Alter Addexperience in DLG files
+	*******************************************************/
+	PRINT "Altering the dialogs' XP for 'Dark Side of the Sword Coast for BGT WeiDu (v2.15)'..."
+		COMPILE ~BP-Balancer/DSotSC/XP.D~		
+
+	
+BEGIN ~Also remove ALL overpowered custom items (will not affect quest relevanted items)~ 
+DESIGNATED 22
+DEPRECATED ~This component is not compatible with the newer DSotSC v3.0 and above~
+REQUIRE_PREDICATE (MOD_IS_INSTALLED ~SETUP-DSOTSC.TP2~ ~0~)
+                           OR (MOD_IS_INSTALLED ~SETUP-DSOTSC.TP2~ ~5~) ~Dark Side of the Sword Coast is not installed~
+SUBCOMPONENT ~Item and XP Balancing for 'Dark Side of the Sword Coast (v2.15)'~
+GROUP ~Balancing XP and items of several mods~	
+
+	INCLUDE ~BP-Balancer\Lib\dsotsc_action_macro_creatures.tph~
+	INCLUDE ~BP-Balancer\Lib\dsotsc_action_macro_areas.tph~
+
+	/*******************************************************
+	DSotSC 1.95 (creatures)
+	- Alter experience and items incl. all custom items
+	*******************************************************/
+	PRINT "Altering the creatures' XP and items"
+	OUTER_SET ~patch_base~ = 100
+	LAUNCH_ACTION_MACRO ~dsotsc_action_macro_creatures~		
+	
+	/*******************************************************
+	DSotSC 1.95 (areas)
+	- Alter Area items (containers)
+	*******************************************************/
+	PRINT "Altering the Areas' containers"
+	OUTER_SET ~patch_base~ = 100
+	LAUNCH_ACTION_MACRO ~dsotsc_action_macro_areas~	
+	
+	/*******************************************************
+	DSotSC 1.95 (scripts)
+	- Alter Addexperience in BCS files
+	*******************************************************/
+	PRINT "Altering the scripts' XP for 'Dark Side of the Sword Coast for BGT WeiDu (v2.15)'..."
+		COPY_EXISTING ~DSC002.BCS~ ~override~
+					~DSCOFF1.BCS~ ~override~
+					~DSCOFF2.BCS~ ~override~
+					~DSLICHD.BCS~ ~override~
+			DECOMPILE_BCS_TO_BAF
+				REPLACE_TEXTUALLY CASE_INSENSITIVE
+				~AddexperienceParty(9000)~ ~AddexperienceParty(3000)~
+				REPLACE_TEXTUALLY CASE_INSENSITIVE
+				~AddexperienceParty(9500)~ ~AddexperienceParty(3200)~
+			COMPILE_BAF_TO_BCS
+			BUT_ONLY_IF_IT_CHANGES
+	
+	/*******************************************************
+	DSotSC 1.95 (dialogs)
+	- Alter Addexperience in DLG files
+	*******************************************************/
+	PRINT "Altering the dialogs' XP for 'Dark Side of the Sword Coast for BGT WeiDu (v2.15)'..."
+		COMPILE ~BP-Balancer/DSotSC/XP.D~
+	
+	
+	
+	
+/*********************************************
+COMPONENT: NTotSC (v1.95)
+*********************************************/ 
+
+	
+BEGIN ~Keep custom items~ 
+DESIGNATED 23
+DEPRECATED ~This component is not compatible with the newer NTotSC v2.2 and above~
+REQUIRE_COMPONENT ~SETUP-NTOTSC.TP2~ ~0~ ~Northern Tales of the Sword Coast is not installed~
+SUBCOMPONENT ~Item and XP Balancing for 'Northern Tales of the Sword Coast (v1.70a)'~
+GROUP ~Balancing XP and items of several mods~
+	
+	INCLUDE ~BP-Balancer\Lib\ntotsc_action_macro_creatures.tph~
+	INCLUDE ~BP-Balancer\Lib\ntotsc_action_macro_areas.tph~
+	
+	/*******************************************************
+	NTotSC 1.95 (creatures)
+	- Alter experience and items w.o. custom items
+	*******************************************************/
+	PRINT "Altering the creatures' XP and items"
+	OUTER_SET ~patch_base~ = 0
+	LAUNCH_ACTION_MACRO ~ntotsc_action_macro_creatures~
+	
+	/*******************************************************
+	NTotSC 1.95 (areas)
+	- Alter Area items (containers)
+	*******************************************************/
+	PRINT "Altering the Areas' containers"
+	OUTER_SET ~patch_base~ = 0
+	LAUNCH_ACTION_MACRO ~ntotsc_action_macro_areas~	
+	
+	/*******************************************************
+	NTotSC 1.95 (dialogs)
+	- Alter Addexperience in DLG files
+	*******************************************************/
+	PRINT "Altering the dialogs' XP for 'Nothern Tales of the Sword Coast for BGT WeiDu (v1.55)'..."
+		COMPILE ~BP-Balancer/NTotSC/XP.D~
+		
+	
+BEGIN ~Also randomly remove SOME overpowered custom items (will not affect quest relevanted items)~ 
+DESIGNATED 24
+DEPRECATED ~This component is not compatible with the newer NTotSC v2.2 and above~
+REQUIRE_COMPONENT ~SETUP-NTOTSC.TP2~ ~0~ ~Nothern Tales of the Sword Coast is not installed~
+SUBCOMPONENT ~Item and XP Balancing for 'Northern Tales of the Sword Coast (v1.70a)'~
+GROUP ~Balancing XP and items of several mods~	
+
+	INCLUDE ~BP-Balancer\Lib\ntotsc_action_macro_creatures.tph~
+	INCLUDE ~BP-Balancer\Lib\ntotsc_action_macro_areas.tph~
+
+	/*******************************************************
+	NTotSC 1.95 (creatures)
+	- Alter experience and items incl. random custom items
+	*******************************************************/
+	PRINT "Altering the creatures' XP and items"
+	OUTER_SET ~patch_base~ = 30
+	LAUNCH_ACTION_MACRO ~ntotsc_action_macro_creatures~
+	
+	/*******************************************************
+	NTotSC 1.95 (areas)
+	- Alter Area items (containers)
+	*******************************************************/
+	PRINT "Altering the Areas' containers"
+	OUTER_SET ~patch_base~ = 30
+	LAUNCH_ACTION_MACRO ~ntotsc_action_macro_areas~	
+	
+	/*******************************************************
+	NTotSC 1.95 (dialogs)
+	- Alter Addexperience in DLG files
+	*******************************************************/
+	PRINT "Altering the dialogs' XP for 'Northern Tales of the Sword Coast for BGT WeiDu (v1.70a)'..."
+		COMPILE ~BP-Balancer/NTotSC/XP.D~		
+
+	
+BEGIN ~Also remove ALL overpowered custom items (will not affect quest relevanted items)~ 
+DESIGNATED 25
+DEPRECATED ~This component is not compatible with the newer NTotSC v2.2 and above~
+REQUIRE_COMPONENT ~SETUP-NTOTSC.TP2~ ~0~ ~Northern Tales of the Sword Coast is not installed~
+SUBCOMPONENT ~Item and XP Balancing for 'Northern Tales of the Sword Coast (v1.70a)'~
+GROUP ~Balancing XP and items of several mods~	
+
+	INCLUDE ~BP-Balancer\Lib\ntotsc_action_macro_creatures.tph~
+	INCLUDE ~BP-Balancer\Lib\ntotsc_action_macro_areas.tph~
+
+	/*******************************************************
+	NTotSC 1.95 (creatures)
+	- Alter experience and items incl. all custom items
+	*******************************************************/
+	PRINT "Altering the creatures' XP and items"
+	OUTER_SET ~patch_base~ = 100
+	LAUNCH_ACTION_MACRO ~ntotsc_action_macro_creatures~		
+	
+	/*******************************************************
+	NTotSC 1.95 (areas)
+	- Alter Area items (containers)
+	*******************************************************/
+	PRINT "Altering the Areas' containers"
+	OUTER_SET ~patch_base~ = 100
+	LAUNCH_ACTION_MACRO ~ntotsc_action_macro_areas~	
+	
+	/*******************************************************
+	NTotSC 1.95 (dialogs)
+	- Alter Addexperience in DLG files
+	*******************************************************/
+	PRINT "Altering the dialogs' XP for 'Northern Tales of the Sword Coast for BGT WeiDu (v1.70a)'..."
+		COMPILE ~BP-Balancer/NTotSC/XP.D~
+
+
+
+
+		
+/*******************************************************
+COMPONENT: SoBH 2.05WM6
+*******************************************************/
+
+BEGIN ~Keep custom items~
+REQUIRE_PREDICATE FILE_EXISTS_IN_GAME ~BHPELL.BCS~ ~Secret of Bone Hill is not installed~ 
+DESIGNATED 26
+SUBCOMPONENT ~Item and XP Balancing for 'Secret of Bone Hill (v2.75)'~
+GROUP ~Balancing XP and items of several mods~
+	
+	INCLUDE ~BP-Balancer\Lib\sobh_action_macro_areas.tph~
+	INCLUDE ~BP-Balancer\Lib\sobh_action_macro_creatures.tph~
+	
+	/*******************************************************
+	SoBH 2.05WM6 (Creatures)
+	- Replace too powerful Items  with less powerful ones
+	- Alter XpValue of creatures
+	*******************************************************/
+	PRINT "Altering the creatures' XP and items"
+	OUTER_SET ~patch_base~ = 0
+	LAUNCH_ACTION_MACRO ~sobh_action_macro_creatures~
+	
+	/*******************************************************
+	SoBH 2.05WM6 (areas)
+	- Alter Area items (containers)
+	*******************************************************/
+	PRINT "Altering the Areas' containers of 'Secret of Bone Hill (v2.75)'..."
+	OUTER_SET ~patch_base~ = 0
+	LAUNCH_ACTION_MACRO ~sobh_action_macro_areas~	
+	
+	/*******************************************************
+	SoBH 2.05WM6 (scripts)
+	- Alter Addexperience in BCS files
+	*******************************************************/
+	PRINT "Altering the scripts' XP of 'Secret of Bone Hill (v2.75)'..."
+	COPY_EXISTING ~BHPELL.BCS~ ~override/BHPELL.BCS~
+		DECOMPILE_BCS_TO_BAF
+			REPLACE_TEXTUALLY CASE_INSENSITIVE
+			~AddexperienceParty(12000)~ ~AddexperienceParty(2500)~
+			REPLACE_TEXTUALLY CASE_INSENSITIVE
+			~AddexperienceParty(15000)~ ~AddexperienceParty(5000)~
+		COMPILE_BAF_TO_BCS
+	BUT_ONLY_IF_IT_CHANGES
+	
+	/*******************************************************
+	SoBH 2.05WM6 (dialogs)
+	- Alter Addexperience in DLG files
+	*******************************************************/
+	PRINT "Altering the dialogs' XP of 'Secret of Bone Hill (v2.75)'..."
+	COMPILE ~BP-Balancer/SoBH/XP.D~
+
+
+BEGIN ~Also randomly remove SOME overpowered custom items (will not affect quest relevanted items)~ 
+DESIGNATED 27
+REQUIRE_PREDICATE FILE_EXISTS_IN_GAME ~BHPELL.BCS~ ~Secret of Bone Hill is not installed~
+SUBCOMPONENT ~Item and XP Balancing for 'Secret of Bone Hill (v2.75)'~
+GROUP ~Balancing XP and items of several mods~
+	
+	INCLUDE ~BP-Balancer\Lib\sobh_action_macro_areas.tph~
+	INCLUDE ~BP-Balancer\Lib\sobh_action_macro_creatures.tph~
+	
+	/*******************************************************
+	SoBH 2.05WM6 (Creatures)
+	- Replace too powerful Items  with less powerful ones
+	- Alter XpValue of creatures
+	*******************************************************/
+	PRINT "Altering the creatures' XP and items"
+	OUTER_SET ~patch_base~ = 30
+	LAUNCH_ACTION_MACRO ~sobh_action_macro_creatures~
+	
+	/*******************************************************
+	SoBH 2.05WM6 (areas)
+	- Alter Area items (containers)
+	*******************************************************/
+	PRINT "Altering the Areas' containers of 'Secret of Bone Hill (v2.75)'..."
+	OUTER_SET ~patch_base~ = 30
+	LAUNCH_ACTION_MACRO ~sobh_action_macro_areas~	
+	
+	/*******************************************************
+	SoBH 2.05WM6 (scripts)
+	- Alter Addexperience in BCS files
+	*******************************************************/
+	PRINT "Altering the scripts' XP of 'Secret of Bone Hill (v2.75)'..."
+	COPY_EXISTING ~BHPELL.BCS~ ~override/BHPELL.BCS~
+		DECOMPILE_BCS_TO_BAF
+			REPLACE_TEXTUALLY CASE_INSENSITIVE
+			~AddexperienceParty(12000)~ ~AddexperienceParty(2500)~
+			REPLACE_TEXTUALLY CASE_INSENSITIVE
+			~AddexperienceParty(15000)~ ~AddexperienceParty(5000)~
+		COMPILE_BAF_TO_BCS
+	BUT_ONLY_IF_IT_CHANGES
+
+	/*******************************************************
+	SoBH 2.05WM6 (dialogs)
+	- Alter Addexperience in DLG files
+	*******************************************************/
+	PRINT "Altering the dialogs' XP of 'Secret of Bone Hill (v2.75)'..."
+	COMPILE ~BP-Balancer/SoBH/XP.D~	
+
+
+BEGIN ~Also remove ALL overpowered custom items (will not affect quest relevanted items)~ 
+DESIGNATED 28
+REQUIRE_PREDICATE FILE_EXISTS_IN_GAME ~BHPELL.BCS~ ~Secret of Bone Hill is not installed~
+SUBCOMPONENT ~Item and XP Balancing for 'Secret of Bone Hill (v2.75)'~
+GROUP ~Balancing XP and items of several mods~
+	
+	INCLUDE ~BP-Balancer\Lib\sobh_action_macro_areas.tph~
+	INCLUDE ~BP-Balancer\Lib\sobh_action_macro_creatures.tph~
+	
+	/*******************************************************
+	SoBH 2.05WM6 (Creatures)
+	- Replace too powerful Items  with less powerful ones
+	- Alter XpValue of creatures
+	*******************************************************/
+	PRINT "Altering the creatures' XP and items"
+	OUTER_SET ~patch_base~ = 100
+	LAUNCH_ACTION_MACRO ~sobh_action_macro_creatures~
+	
+	/*******************************************************
+	SoBH 2.05WM6 (areas)
+	- Alter Area items (containers)
+	*******************************************************/
+	PRINT "Altering the Areas' containers of 'Secret of Bone Hill (v2.75)'..."
+	OUTER_SET ~patch_base~ = 100
+	LAUNCH_ACTION_MACRO ~sobh_action_macro_areas~	
+	
+	/*******************************************************
+	SoBH 2.05WM6 (scripts)
+	- Alter Addexperience in BCS files
+	*******************************************************/
+	PRINT "Altering the scripts' XP of 'Secret of Bone Hill (v2.75)'..."
+	COPY_EXISTING ~BHPELL.BCS~ ~override/BHPELL.BCS~
+		DECOMPILE_BCS_TO_BAF
+			REPLACE_TEXTUALLY CASE_INSENSITIVE
+			~AddexperienceParty(12000)~ ~AddexperienceParty(2500)~
+			REPLACE_TEXTUALLY CASE_INSENSITIVE
+			~AddexperienceParty(15000)~ ~AddexperienceParty(5000)~
+		COMPILE_BAF_TO_BCS
+	BUT_ONLY_IF_IT_CHANGES
+	
+	/*******************************************************
+	SoBH 2.05WM6 (dialogs)
+	- Alter Addexperience in DLG files
+	*******************************************************/
+	PRINT "Altering the dialogs' XP of 'Secret of Bone Hill (v2.75)'..."
+	COMPILE ~BP-Balancer/SoBH/XP.D~	
+
+
+
+
+
+
+/*******************************************************
+COMPONENT: DrizztSaga 1.0
+*******************************************************/
+
+BEGIN ~Keep custom items~ 
+DESIGNATED 29
+REQUIRE_PREDICATE FILE_EXISTS_IN_GAME ~F_POTN52.ITM~ ~Drizztsaga is not installed~
+SUBCOMPONENT ~Item and XP Balancing for 'DrizztSaga (v1.0)'~
+GROUP ~Balancing XP and items of several mods~
+	
+	INCLUDE ~BP-Balancer\Lib\drizztsaga_action_macro_areas.tph~
+	INCLUDE ~BP-Balancer\Lib\drizztsaga_action_macro_creatures.tph~
+	
+	/*******************************************************
+	DrizztSaga 1.0 (Creatures)
+	- Replace too powerful Items  with less powerful ones
+	- Alter XpValue of creatures
+	*******************************************************/
+	PRINT "Altering the creatures' XP and items"
+	OUTER_SET ~patch_base~ = 0
+	LAUNCH_ACTION_MACRO ~drizztsaga_action_macro_creatures~
+	
+	/*******************************************************
+	DrizztSaga 1.0 (areas)
+	- Alter Area items (containers)
+	*******************************************************/
+	PRINT "Altering the Areas' containers of 'DrizztSaga (v1.0)'..."
+	OUTER_SET ~patch_base~ = 0
+	LAUNCH_ACTION_MACRO ~drizztsaga_action_macro_areas~	
+	
+	/*******************************************************
+	DrizztSaga 1.0 (scripts)
+	- Alter Addexperience in BCS files
+	*******************************************************/
+	/*No XP in BCS here COPY_EXISTING ~XXX.BCS~ ~override/XXX.BCS~
+		DECOMPILE_BCS_TO_BAF
+			REPLACE_TEXTUALLY CASE_INSENSITIVE
+			~AddexperienceParty(12000)~ ~AddexperienceParty(2500)~
+			REPLACE_TEXTUALLY CASE_INSENSITIVE
+			~AddexperienceParty(15000)~ ~AddexperienceParty(5000)~
+		COMPILE_BAF_TO_BCS
+	BUT_ONLY_IF_IT_CHANGES */
+	
+	/*******************************************************
+	DrizztSaga 1.0 (dialogs)
+	- Alter Addexperience in DLG files
+	*******************************************************/
+	PRINT "Altering the dialogs' XP of 'DrizztSaga (v1.0)'..."
+	COMPILE ~BP-Balancer/DrizztSaga/XP.D~
+
+
+BEGIN ~Also randomly remove SOME overpowered custom items (will not affect quest relevanted items)~ 
+DESIGNATED 30
+REQUIRE_PREDICATE FILE_EXISTS_IN_GAME ~F_POTN52.ITM~ ~Secret of Bone Hill is not installed~
+SUBCOMPONENT ~Item and XP Balancing for 'DrizztSaga (v1.0)'~
+GROUP ~Balancing XP and items of several mods~
+	
+	INCLUDE ~BP-Balancer\Lib\drizztsaga_action_macro_areas.tph~
+	INCLUDE ~BP-Balancer\Lib\drizztsaga_action_macro_creatures.tph~
+	
+	/*******************************************************
+	DrizztSaga 1.0 (Creatures)
+	- Replace too powerful Items  with less powerful ones
+	- Alter XpValue of creatures
+	*******************************************************/
+	PRINT "Altering the creatures' XP and items"
+	OUTER_SET ~patch_base~ = 30
+	LAUNCH_ACTION_MACRO ~drizztsaga_action_macro_creatures~
+	
+	/*******************************************************
+	DrizztSaga 1.0 (areas)
+	- Alter Area items (containers)
+	*******************************************************/
+	PRINT "Altering the Areas' containers of 'DrizztSaga (v1.0)'..."
+	OUTER_SET ~patch_base~ = 30
+	LAUNCH_ACTION_MACRO ~drizztsaga_action_macro_areas~	
+	
+	/*******************************************************
+	DrizztSaga 1.0 (scripts)
+	- Alter Addexperience in BCS files
+	*******************************************************/
+	PRINT "Altering the scripts' XP of 'DrizztSaga (v1.0)'..."
+	/*No XP in BCS here COPY_EXISTING ~XXX.BCS~ ~override/XXX.BCS~
+		DECOMPILE_BCS_TO_BAF
+			REPLACE_TEXTUALLY CASE_INSENSITIVE
+			~AddexperienceParty(12000)~ ~AddexperienceParty(2500)~
+			REPLACE_TEXTUALLY CASE_INSENSITIVE
+			~AddexperienceParty(15000)~ ~AddexperienceParty(5000)~
+		COMPILE_BAF_TO_BCS
+	BUT_ONLY_IF_IT_CHANGES */
+
+	/*******************************************************
+	DrizztSaga 1.0 (dialogs)
+	- Alter Addexperience in DLG files
+	*******************************************************/
+	PRINT "Altering the dialogs' XP of 'DrizztSaga (v1.0)'..."
+	COMPILE ~BP-Balancer/DrizztSaga/XP.D~
+
+
+BEGIN ~Also remove ALL overpowered custom items (will not affect quest relevanted items)~ 
+DESIGNATED 31
+REQUIRE_PREDICATE FILE_EXISTS_IN_GAME ~F_POTN52.ITM~ ~Secret of Bone Hill is not installed~
+SUBCOMPONENT ~Item and XP Balancing for 'DrizztSaga (v1.0)'~
+GROUP ~Balancing XP and items of several mods~
+	
+	INCLUDE ~BP-Balancer\Lib\drizztsaga_action_macro_areas.tph~
+	INCLUDE ~BP-Balancer\Lib\drizztsaga_action_macro_creatures.tph~
+	
+	/*******************************************************
+	DrizztSaga 1.0 (Creatures)
+	- Replace too powerful Items  with less powerful ones
+	- Alter XpValue of creatures
+	*******************************************************/
+	PRINT "Altering the creatures' XP and items"
+	OUTER_SET ~patch_base~ = 100
+	LAUNCH_ACTION_MACRO ~drizztsaga_action_macro_creatures~
+	
+	/*******************************************************
+	DrizztSaga 1.0 (areas)
+	- Alter Area items (containers)
+	*******************************************************/
+	PRINT "Altering the Areas' containers of 'DrizztSaga (v1.0)'..."
+	OUTER_SET ~patch_base~ = 100
+	LAUNCH_ACTION_MACRO ~drizztsaga_action_macro_areas~	
+	
+	/*******************************************************
+	DrizztSaga 1.0 (scripts)
+	- Alter Addexperience in BCS files
+	*******************************************************/
+	PRINT "Altering the scripts' XP of 'DrizztSaga (v1.0)'..."
+	/*No XP in BCS here COPY_EXISTING ~XXX.BCS~ ~override/XXX.BCS~
+		DECOMPILE_BCS_TO_BAF
+			REPLACE_TEXTUALLY CASE_INSENSITIVE
+			~AddexperienceParty(12000)~ ~AddexperienceParty(2500)~
+			REPLACE_TEXTUALLY CASE_INSENSITIVE
+			~AddexperienceParty(15000)~ ~AddexperienceParty(5000)~
+		COMPILE_BAF_TO_BCS
+	BUT_ONLY_IF_IT_CHANGES */
+	
+	/*******************************************************
+	DrizztSaga 1.0 (dialogs)
+	- Alter Addexperience in DLG files
+	*******************************************************/
+	PRINT "Altering the dialogs' XP of 'DrizztSaga (v1.0)'..."
+	COMPILE ~BP-Balancer/DrizztSaga/XP.D~
+

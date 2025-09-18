@@ -1,0 +1,516 @@
+DEFINE_ACTION_MACRO ~ntotsc_action_macro_creatures~ BEGIN
+
+	LOCAL_SET "pl_base" = "%patch_base%"
+	LOCAL_SET "pl_plus1" = ((%patch_base% + (((100 - %patch_base%) / 4) * 1)) * %patch_base%) / %patch_base%
+	LOCAL_SET "pl_plus2" = ((%patch_base% + (((100 - %patch_base%) / 4) * 2)) * %patch_base%) / %patch_base%
+	LOCAL_SET "pl_plus3" = ((%patch_base% + (((100 - %patch_base%) / 4) * 3)) * %patch_base%) / %patch_base%
+	PRINT "Patch Basis: %pl_base% pct, Plus1: %pl_plus1%, Plus2: %pl_plus2%, Plus3: %pl_plus3%"	
+	
+	COPY_EXISTING ~NTABIGAI.cre~ ~override~
+		//Name: Mädchen
+		WRITE_SHORT 0x14 ~5~ //XP (was: 15)
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~NTAMELKA.cre~ ~override~
+		//Name: Amelka
+		WRITE_SHORT 0x14 ~360~ //XP (was: 900)
+		//SHLD04 (Mittlerer Schild +1)
+		REPLACE_CRE_ITEM ~SHLD03~ #0 #0 #0 ~NONE~ ~shield~
+		//BLUN03 (Flegel +1)
+		REPLACE_CRE_ITEM ~BLUN02~ #0 #0 #0 ~NONE~ ~weapon1~
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~NTARCHAN.cre~ ~override~
+		//Name: Archandra
+		WRITE_SHORT 0x14 ~390~ //XP (was: 975)
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~NTASCHMA.cre~ ~override~
+		//Name: Bruder Aschmaan
+		WRITE_SHORT 0x14 ~3200~ //XP (was: 8000)
+		//NTRING02 (Ring des Widerstands)
+		PATCH_IF (RANDOM(0 99) < %pl_base%) BEGIN
+			REPLACE_CRE_ITEM ~RING06~ #0 #0 #0 ~NONE~ ~rring~
+		END
+		//NTBLUN03 (Entsetzlicher Flegel)
+		PATCH_IF (RANDOM(0 99) < %pl_base%) BEGIN
+			REPLACE_CRE_ITEM ~BLUN03~ #0 #0 #0 ~NONE~ ~weapon1~
+		END
+		//BOW02 (Komposit-Langbogen +1)
+		REPLACE_CRE_ITEM ~BOW01~ #0 #0 #0 ~NONE~ ~weapon2~
+		//AROW06 (Pfeil der Detonation)
+		REPLACE_CRE_ITEM ~AROW01~ #0 #0 #0 ~NONE~ ~quiver1~
+		//AROW05 (Beißende Pfeile)
+		REPLACE_CRE_ITEM ~AROW02~ #0 #0 #0 ~NONE~ ~quiver2~
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~NTASSAIA.cre~ ~override~
+		//Name: Assaia
+		WRITE_SHORT 0x14 ~390~ //XP (was: 975)
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~NTAURELI.cre~ ~override~
+		//Name: Aurelinus
+		WRITE_SHORT 0x14 ~5~ //XP (was: 15)
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~NTBALEN.cre~ ~override~
+		//Name: Balen
+		WRITE_SHORT 0x14 ~120~ //XP (was: 300)
+		//SW1H22 (Krummsäbel +1)
+		REPLACE_CRE_ITEM ~SW1H20~ #0 #0 #0 ~NONE~ ~weapon2~
+		//AROW08 (Feuerpfeile)
+		REPLACE_CRE_ITEM ~AROW01~ #0 #0 #0 ~NONE~ ~quiver1~
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~NTBKNIGH.cre~ ~override~
+		//Name: Ritter des Grabes
+		WRITE_SHORT 0x14 ~4000~ //XP (was: 10000)
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~NTBLHCU1.cre~ ~override~
+		//Name: Anhänger des Kultes der Schwarzen Hand
+		WRITE_SHORT 0x14 ~1200~ //XP (was: 3000)
+		//BOW09 (Komposit-Langbogen +2)
+		REPLACE_CRE_ITEM ~BOW01~ #0 #0 #0 ~NONE~ ~weapon1~
+		//BLUN05 (Streitkolben +1)
+		REPLACE_CRE_ITEM ~BLUN04~ #0 #0 #0 ~NONE~ ~weapon2~
+		//AROW06 (Pfeil der Detonation)
+		REPLACE_CRE_ITEM ~AROW01~ #0 #0 #0 ~NONE~ ~quiver1~
+		//AROW10 (Pfeil der Durchbohrung)
+		REPLACE_CRE_ITEM ~AROW02~ #0 #0 #0 ~NONE~ ~quiver2~
+		//SCRL75 (Identifizieren) seems to be a questitem
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~NTBLHCUL.cre~ ~override~
+		//Name: Anhänger des Kultes der Schwarzen Hand
+		WRITE_SHORT 0x14 ~1000~ //XP (was: 2500)
+		//BOW09 (Komposit-Langbogen +2)
+		REPLACE_CRE_ITEM ~BOW01~ #0 #0 #0 ~NONE~ ~weapon1~
+		//BLUN05 (Streitkolben +1)
+		REPLACE_CRE_ITEM ~BLUN04~ #0 #0 #0 ~NONE~ ~weapon2~
+		//AROW10 (Pfeil der Durchbohrung)
+		REPLACE_CRE_ITEM ~AROW01~ #0 #0 #0 ~NONE~ ~quiver1~
+		//SCRL75 (Identifizieren) seems to be a questitem
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~NTBPWATC.cre~ ~override~
+		//Name: Wächter der Katakomben
+		WRITE_SHORT 0x14 ~3600~ //XP (was: 9000)
+		//NTAXE01 (Axt des Schockes )
+		PATCH_IF (RANDOM(0 99) < %pl_base%) BEGIN
+			REPLACE_CRE_ITEM ~NTAXE01~ #0 #0 #0 ~identified&undroppable~ ~weapon1~
+		END
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~NTBRENT1.cre~ ~override~
+		//Name: Brentaw
+		//WRITE_SHORT 0x14 ~0~ //XP (was: 0)
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~NTBRENTA.cre~ ~override~
+		//Name: Brentaw
+		//WRITE_SHORT 0x14 ~0~ //XP (was: 0)
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~NTBRIGAN.cre~ ~override~
+		//Name: Brigand
+		WRITE_SHORT 0x14 ~15~ //XP (was: 48)
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~NTCHOLGA.cre~ ~override~
+		//Name: Cholga
+		WRITE_SHORT 0x14 ~480~ //XP (was: 1200)
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~NTDEATH1.CRE~ ~override~
+		//Name: Dämonenritter
+		WRITE_SHORT 0x14 ~6000~ //XP (was: 15000)
+		//SW2H02 (Zweihänder +1)
+		REPLACE_CRE_ITEM ~SW2H01~ #0 #0 #0 ~NONE~ ~weapon1~
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~NTDEATHK.cre~ ~override~
+		//Name: Dämonenritter
+		//WRITE_SHORT 0x14 ~0~ //XP (was: 0)
+		//HELM02 (Helm der Gesinnungsumkehr)
+		//REPLACE_CRE_ITEM ~HELM02~ #0 #0 #0 ~NONE~ ~helmet~
+		//PLAT05 (Prunkharnisch +1)
+		REPLACE_CRE_ITEM ~PLAT04~ #0 #0 #0 ~NONE~ ~armor~
+		//SHLD06 (Langschild +1)
+		REPLACE_CRE_ITEM ~SHLD05~ #0 #0 #0 ~NONE~ ~shield~
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~NTDEMON.cre~ ~override~
+		//Name: Schwarzseher
+		//WRITE_SHORT 0x14 ~0~ //XP (was: 0)
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~NTDOOMBE.cre~ ~override~
+		//Name: Teddy der Schwarzseher
+		WRITE_SHORT 0x14 ~1000~ //XP (was: 2500)
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~NTDRAAGI.cre~ ~override~
+		//Name: Bruder Draagis
+		WRITE_SHORT 0x14 ~4000~ //XP (was: 10000)
+		//NAMJI (Namji's Robe)
+		PATCH_IF (RANDOM(0 99) < %pl_base%) BEGIN
+			REPLACE_CRE_ITEM ~CLCK13~ #0 #0 #0 ~NONE~ ~armor~
+		END
+		//NTSTAFF1 (Eron's Sense)
+		PATCH_IF (RANDOM(0 99) < %pl_base%) BEGIN
+			REPLACE_CRE_ITEM ~STAF02~ #0 #0 #0 ~NONE~ ~weapon1~
+		END
+		//SCRL1G (Feuerball)
+		//REPLACE_CRE_ITEM ~SCRL1G~ #0 #0 #0 ~NONE~ ~inv1~
+		//SCRL1Q (Vampirgriff) seems to be a questitem
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~NTDXTER.cre~ ~override~
+		//Name: Kleine Schwester
+		WRITE_SHORT 0x14 ~200~ //XP (was: 500)
+		//NTMIOTPB (Besen)
+		//PATCH_IF (RANDOM(0 99) < %pl_base%) BEGIN
+			//REPLACE_CRE_ITEM ~NTMIOTPB~ #0 #0 #0 ~NONE~ ~weapon1~
+		//END
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~nteldod.cre~ ~override~
+		//Name: Eldod
+		WRITE_SHORT 0x14 ~600~ //XP (was: 1500)
+		//SW2H02 (Zweihänder +1)
+		REPLACE_CRE_ITEM ~SW2H01~ #0 #0 #0 ~NONE~ ~weapon1~
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~NTELDOD1.cre~ ~override~
+		//Name: Eldod
+		WRITE_SHORT 0x14 ~600~ //XP (was: 1500)
+		//SW2H02 (Zweihänder +1)
+		REPLACE_CRE_ITEM ~SW2H01~ #0 #0 #0 ~NONE~ ~weapon1~
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~TELKA.cre~ ~override~
+		//Name: Elka
+		WRITE_SHORT 0x14 ~240~ //XP (was: 600)
+		//LEAT05 (Beschlagenes Lederwams +1)
+		REPLACE_CRE_ITEM ~LEAT04~ #0 #0 #0 ~NONE~ ~armor~
+		//AROW08 (Feuerpfeile)
+		//REPLACE_CRE_ITEM ~AROW08~ #0 #0 #0 ~NONE~ ~quiver1~
+		//AROW09 (Eispfeile)
+		REPLACE_CRE_ITEM ~AROW01~ #0 #0 #0 ~NONE~ ~quiver2~
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~NTESSILA.cre~ ~override~
+		//Name: Essila
+		WRITE_SHORT 0x14 ~390~ //XP (was: 975)
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~NTFALTON.cre~ ~override~
+		//Name: Falton
+		//WRITE_SHORT 0x14 ~0~ //XP (was: 7)
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~NTGGHOT1.cre~ ~override~
+		//Name: General Ghotal
+		WRITE_SHORT 0x14 ~10000~ //XP (was: 25000)
+		//SHLD06 (Langschild +1)
+		REPLACE_CRE_ITEM ~SHLD05~ #0 #0 #0 ~NONE~ ~shield~
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~NTGGHOTA.cre~ ~override~
+		//Name: General Ghotal
+		WRITE_SHORT 0x14 ~10000~ //XP (was: 25000)
+		//SHLD06 (Langschild +1)
+		REPLACE_CRE_ITEM ~SHLD05~ #0 #0 #0 ~NONE~ ~shield~
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~NTHAEBAL.cre~ ~override~
+		//Name: Haeball
+		WRITE_SHORT 0x14 ~3600~ //XP (was: 9000)
+		//NTSPEAR1 (Sense des Lykanthropen)
+		PATCH_IF (RANDOM(0 99) < %pl_base%) BEGIN
+			REPLACE_CRE_ITEM ~SPER01~ #0 #0 #0 ~NONE~ ~weapon1~
+		END
+		//DART03 (Betäubungspfeil)
+		//REPLACE_CRE_ITEM ~DART03~ #0 #0 #0 ~NONE~ ~weapon2~
+		//CLOAKSC (Umhang der Sprühenden Farben )
+		PATCH_IF (RANDOM(0 99) < %pl_base%) BEGIN
+			REPLACE_CRE_ITEM ~CLCK01~ #0 #0 #0 ~NONE~ ~cloak~
+		END
+		//SCRL1G (Feuerball)
+		//REPLACE_CRE_ITEM ~SCRL1G~ #0 #0 #0 ~NONE~ ~qitem3~
+		//SCRL1Q (Vampirgriff) seems to be a questitem
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~NTHALFGU.cre~ ~override~
+		//Name: Halbling-Kleriker
+		//WRITE_SHORT 0x14 ~0~ //XP (was: 7)
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~NTHASDAR.cre~ ~override~
+		//Name: Brother Hasdar
+		WRITE_SHORT 0x14 ~2400~ //XP (was: 6000)
+		//STAF07 (Stabspeer +2)
+		REPLACE_CRE_ITEM ~STAF01~ #0 #0 #0 ~NONE~ ~weapon1~
+		//DART03 (Betäubungspfeil)
+		REPLACE_CRE_ITEM ~DART01~ #0 #0 #0 ~NONE~ ~weapon2~
+		//CLCK26 (Spiegelumhang)
+		REPLACE_CRE_ITEM ~CLCK01~ #0 #0 #0 ~NONE~ ~cloak~
+		//SCRL1G (Feuerball)
+		//REPLACE_CRE_ITEM ~SCRL1G~ #0 #0 #0 ~NONE~ ~inv1~
+		//SCRL1Q (Vampirgriff) seems to be a questitem
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~NTHASTEN.cre~ ~override~
+		//Name: Hasten
+		//WRITE_SHORT 0x14 ~0~ //XP (was: 7)
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~NTHELLS1.CRE~ ~override~
+		//Name: Feuersalamander
+		WRITE_SHORT 0x14 ~830~ //XP (was: 2075)
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~nthells2.cre~ ~override~
+		//Name: Humbaba
+		WRITE_SHORT 0x14 ~830~ //XP (was: 2075)
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~nthellsa.cre~ ~override~
+		//Name: Oogoor
+		WRITE_SHORT 0x14 ~830~ //XP (was: 2075)
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~nthobgod.cre~ ~override~
+		//Name: Hobgod
+		WRITE_SHORT 0x14 ~140~ //XP (was: 350)
+		//BOW04 (Langbogen +1)
+		REPLACE_CRE_ITEM ~BOW03~ #0 #0 #0 ~NONE~ ~weapon1~
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~NTINDFI1.cre~ ~override~
+		//Name: Lesser Tanar'ri
+		WRITE_SHORT 0x14 ~4000~ //XP (was: 10000)
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~NTINDFI2.CRE~ ~override~
+		//Name: Lesser Tanar'ri
+		WRITE_SHORT 0x14 ~4000~ //XP (was: 10000)
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~NTINDFIG.cre~ ~override~
+		//Name: Lesser Tanar'ri
+		WRITE_SHORT 0x14 ~3105~ //XP (was: 7764)
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~NTKAMIRA.cre~ ~override~
+		//Name: Kamira
+		//WRITE_SHORT 0x14 ~0~ //XP (was: 0)
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~NTKEELOR.cre~ ~override~
+		//Name: Keelor
+		WRITE_SHORT 0x14 ~105~ //XP (was: 270)
+		//DSAXE04 (Streitaxt +3 "Schädelspalter") seems to be a questitem
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~NTKOLDAR.cre~ ~override~
+		//Name: Koldar
+		WRITE_SHORT 0x14 ~105~ //XP (was: 270)
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~NTKRESTI.cre~ ~override~
+		//Name: Krestian
+		WRITE_SHORT 0x14 ~105~ //XP (was: 270)
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~NTLEGIAN.cre~ ~override~
+		//Name: Legion
+		WRITE_SHORT 0x14 ~20~ //XP (was: 60)
+		//XBOW06 (Schnellschussarmbrust)
+		REPLACE_CRE_ITEM ~XBOW01~ #0 #0 #0 ~NONE~ ~weapon1~
+		//BOLT05 (Verwandlungsbolzen)
+		REPLACE_CRE_ITEM ~BOLT01~ #0 #0 #0 ~NONE~ ~quiver1~
+		//BOLT04 (Beißende Bolzen)
+		REPLACE_CRE_ITEM ~BOLT02~ #0 #0 #0 ~NONE~ ~quiver2~
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~NTLENORE.cre~ ~override~
+		//Name: Lenore
+		WRITE_SHORT 0x14 ~45~ //XP (was: 120)
+	BUT_ONLY_IF_IT_CHANGES
+	
+	COPY_EXISTING ~NTLLINDE.CRE~ ~override~
+		//Name: Llindelin
+		WRITE_SHORT 0x14 ~360~ //XP (was: 900)
+		//LEAT02 (Lederrüstung +1)
+		REPLACE_CRE_ITEM ~LEAT01~ #0 #0 #0 ~NONE~ ~armor~
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~NTLUCRET.cre~ ~override~
+		//Name: Lucretia
+		WRITE_SHORT 0x14 ~390~ //XP (was: 975)
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~NTMAGNAD.cre~ ~override~
+		//Name: Magnad
+		WRITE_SHORT 0x14 ~5~ //XP (was: 15)
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~NTMARIEL.cre~ ~override~
+		//Name: Mariel
+		WRITE_SHORT 0x14 ~400~ //XP (was: 1000)
+		//SW1H10 (Kurzschwert der Heimtücke)
+		REPLACE_CRE_ITEM ~SW1H07~ #0 #0 #0 ~NONE~ ~weapon1~
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~NTMILEA.cre~ ~override~
+		//Name: Milea
+		WRITE_SHORT 0x14 ~390~ //XP (was: 975)
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~ntmonkd2.cre~ ~override~
+		//Name: Mönch
+		WRITE_SHORT 0x14 ~45~ //XP (was: 120)
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~NTMONKDE.cre~ ~override~
+		//Name: Mönch
+		WRITE_SHORT 0x14 ~45~ //XP (was: 120)
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~NTMORDOR.cre~ ~override~
+		//Name: Mardoroan
+		WRITE_SHORT 0x14 ~60~ //XP (was: 150)
+		//AX1H06 (Wurfbeil +2)
+		REPLACE_CRE_ITEM ~AX1H04~ #0 #0 #0 ~NONE~ ~weapon1~
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~NTNADALI.cre~ ~override~
+		//Name: Nadalin
+		WRITE_SHORT 0x14 ~5~ //XP (was: 15)
+		//SCRL1H (Hast) seems to be a questitem
+		//SCRL1F (Flammenpfeil) seems to be a questitem
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~NATALK9.cre~ ~override~
+		//Name: Natalka
+		WRITE_SHORT 0x14 ~240~ //XP (was: 600)
+		//LEAT05 (Beschlagenes Lederwams +1)
+		REPLACE_CRE_ITEM ~LEAT04~ #0 #0 #0 ~NONE~ ~armor~
+		//AROW08 (Feuerpfeile)
+		//REPLACE_CRE_ITEM ~AROW08~ #0 #0 #0 ~NONE~ ~quiver1~
+		//AROW09 (Eispfeile)
+		REPLACE_CRE_ITEM ~AROW01~ #0 #0 #0 ~NONE~ ~quiver2~
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~NTNIMFUR.CRE~ ~override~
+		//Name: Nim Furlwing
+		WRITE_SHORT 0x14 ~240~ //XP (was: 600)
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~NTOGREDA.cre~ ~override~
+		//Name: Papa
+		WRITE_SHORT 0x14 ~260~ //XP (was: 650)
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~NTOGREMU.cre~ ~override~
+		//Name: Mama
+		WRITE_SHORT 0x14 ~165~ //XP (was: 420)
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~NTOLIVIA.CRE~ ~override~
+		//Name: Olivia
+		WRITE_SHORT 0x14 ~105~ //XP (was: 270)
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~NTORDOL.cre~ ~override~
+		//Name: Ordolath
+		WRITE_SHORT 0x14 ~60~ //XP (was: 150)
+		//WAND09 (Verwandlungsstab) seems to be a questitem
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~NTORPEHO.cre~ ~override~
+		//Name: Orpeho
+		//WRITE_SHORT 0x14 ~0~ //XP (was: 0)
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~NTOUPAST.cre~ ~override~
+		//Name: Oupaste
+		WRITE_SHORT 0x14 ~5~ //XP (was: 15)
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~NTPANDRI.cre~ ~override~
+		//Name: Pandris
+		WRITE_SHORT 0x14 ~5~ //XP (was: 15)
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~NTPAULIA.cre~ ~override~
+		//Name: Paulia
+		WRITE_SHORT 0x14 ~390~ //XP (was: 975)
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~NTPOOCH.cre~ ~override~
+		//Name: Köter
+		WRITE_SHORT 0x14 ~25~ //XP (was: 65)
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~NTREEDRI.cre~ ~override~
+		//Name: Reedrig
+		WRITE_SHORT 0x14 ~2400~ //XP (was: 6000)
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~NTROACH.cre~ ~override~
+		//Name: Lesser Tanar'ri
+		WRITE_SHORT 0x14 ~8800~ //XP (was: 22000)
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~NTRUDIER.cre~ ~override~
+		//Name: Rudier
+		WRITE_SHORT 0x14 ~45~ //XP (was: 120)
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~ntsalmi1.cre~ ~override~
+		//Name: Meandar
+		WRITE_SHORT 0x14 ~1200~ //XP (was: 3000)
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~NTSALMI2.cre~ ~override~
+		//Name: Kolchear
+		WRITE_SHORT 0x14 ~1200~ //XP (was: 3000)
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~NTSARQ.cre~ ~override~
+		//Name: Sar'garin Ve'xelt
+		WRITE_SHORT 0x14 ~200~ //XP (was: 500)
+		//DSAMUL08 (Amulett des Glaubens)
+		PATCH_IF (RANDOM(0 99) < %pl_base%) BEGIN
+			REPLACE_CRE_ITEM ~AMUL09~ #0 #0 #0 ~NONE~ ~amulet~
+		END
+		//STAF05 (Schlagstecken)
+		REPLACE_CRE_ITEM ~STAF01~ #0 #0 #0 ~NONE~ ~weapon1~
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~NTSELANI.cre~ ~override~
+		//Name: Sellanio
+		WRITE_SHORT 0x14 ~35~ //XP (was: 90)
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~NTSHAELL.cre~ ~override~
+		//Name: Shaella
+		WRITE_SHORT 0x14 ~240~ //XP (was: 600)
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~NTSIRINE.cre~ ~override~
+		//Name: Krestians Freund
+		WRITE_SHORT 0x14 ~5~ //XP (was: 20)
+		//AROW05 (Beißende Pfeile)
+		//REPLACE_CRE_ITEM ~AROW05~ #0 #0 #0 ~NONE~ ~quiver1~
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~NTSPIDER.cre~ ~override~
+		//Name: Phantomspinne
+		WRITE_SHORT 0x14 ~600~ //XP (was: 1500)
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~NTSVLAST.cre~ ~override~
+		//Name: Svlast
+		WRITE_SHORT 0x14 ~240~ //XP (was: 600)
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~NTSZYPER.cre~ ~override~
+		//Name: Schiffer
+		WRITE_SHORT 0x14 ~5~ //XP (was: 15)
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~NTTAMAEL.cre~ ~override~
+		//Name: Tamael
+		WRITE_SHORT 0x14 ~390~ //XP (was: 975)
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~NTTORDI1.cre~ ~override~
+		//Name: Torqion
+		WRITE_SHORT 0x14 ~2400~ //XP (was: 6000)
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~NTTORDI2.cre~ ~override~
+		//Name: Torqion
+		WRITE_SHORT 0x14 ~2400~ //XP (was: 6000)
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~NTTORDIO.cre~ ~override~
+		//Name: Torqion
+		WRITE_SHORT 0x14 ~2400~ //XP (was: 6000)
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~NTTYTUS.cre~ ~override~
+		//Name: Tytus
+		WRITE_SHORT 0x14 ~1000~ //XP (was: 2500)
+		//BELT08 (Gürtel der Frostriesenstärke)
+		REPLACE_CRE_ITEM ~BELT01~ #0 #0 #0 ~NONE~ ~belt~
+		//SW1H02 (Bastardschwert +1)
+		REPLACE_CRE_ITEM ~SW1H01~ #0 #0 #0 ~NONE~ ~weapon2~
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~NTVANESS.cre~ ~override~
+		//Name: Vanessa
+		//WRITE_SHORT 0x14 ~0~ //XP (was: 7)
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~NTWINORM.cre~ ~override~
+		//Name: Winorma
+		WRITE_SHORT 0x14 ~5~ //XP (was: 15)
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~NTWYVERN.cre~ ~override~
+		//Name: Feuerdrachen
+		WRITE_SHORT 0x14 ~3000~ //XP (was: 7500)
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~NTYNESS.cre~ ~override~
+		//Name: Yness
+		WRITE_SHORT 0x14 ~360~ //XP (was: 900)
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~NTZOMBIE.CRE~ ~override~
+		//Name: Zombie
+		WRITE_SHORT 0x14 ~30~ //XP (was: 85)
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~NTZOMBJU.CRE~ ~override~
+		//Name: Zombie
+		WRITE_SHORT 0x14 ~230~ //XP (was: 577)
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~NTWILL2.cre~ ~override~
+		//Name: Will Scarlet O'Hara
+		//WRITE_SHORT 0x14 ~0~ //XP (was: 0)
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~NTWILL4.cre~ ~override~
+		//Name: Will Scarlet O'Hara
+		//WRITE_SHORT 0x14 ~0~ //XP (was: 0)
+		//LEAT05 (Beschlagenes Lederwams +1)
+		REPLACE_CRE_ITEM ~LEAT04~ #0 #0 #0 ~NONE~ ~armor~
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~NTWILL6.cre~ ~override~
+		//Name: Will Scarlet O'Hara
+		//WRITE_SHORT 0x14 ~0~ //XP (was: 0)
+		//LEAT05 (Beschlagenes Lederwams +1)
+		REPLACE_CRE_ITEM ~LEAT04~ #0 #0 #0 ~NONE~ ~armor~
+	BUT_ONLY_IF_IT_CHANGES
+	
+END	

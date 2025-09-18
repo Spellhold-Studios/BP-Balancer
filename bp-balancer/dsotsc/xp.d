@@ -1,0 +1,24 @@
+
+REPLACE_ACTION_TEXT DSJAREN
+	~AddexperienceParty(2000)~ ~AddexperienceParty(800)~	
+	DSLENNAN
+	DSOTHO
+	DSPHANTM
+	
+REPLACE_ACTION_TEXT DSJAREN
+	~AddexperienceParty(3000)~ ~AddexperienceParty(1000)~
+	DSLENNAN
+	DSOTHO
+	DSPHANTM
+	
+REPLACE_ACTION_TEXT DSJAREN
+	~AddexperienceParty(4000)~ ~AddexperienceParty(1300)~
+	DSLENNAN
+	DSOTHO
+	DSPHANTM
+	
+REPLACE_ACTION_TEXT DSJAREN
+	~AddexperienceParty(5000)~ ~AddexperienceParty(1700)~
+	DSLENNAN
+	DSOTHO
+	DSPHANTM	

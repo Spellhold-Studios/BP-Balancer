@@ -1,0 +1,75 @@
+DEFINE_ACTION_MACRO ~2da_action_macro_xpbonus~ BEGIN			
+	
+	COPY_EXISTING ~XPBONUS.2da~ ~override/XPBONUS.2da~
+		COUNT_REGEXP_INSTANCES "40 +41 +42 +43 +44 +45 +46 +47 +48 +49 +50" "high"
+		SET "lvl_base" = 40
+		PATCH_IF ("%high%" = 1) BEGIN
+			SET "lvl_base" = 50
+		END
+		SET "row" = 3
+		
+		PATCH_IF ("%patch_base%" = 100) BEGIN //original BG1
+			WHILE ("%row%" > 0) BEGIN
+			  PATCH_IF ("%row%" > 0) BEGIN
+				  SET "column" = "%lvl_base%"
+				  WHILE ("%column%" > 0) BEGIN
+				    //pick lock
+				    PATCH_IF ("%row%" = 1) AND ("%column%" < 6) BEGIN
+				    	SET_2DA_ENTRY "%row%" "%column%" "%lvl_base%" 250
+				    END	
+				    PATCH_IF ("%row%" = 1) AND ("%column%" > 5) AND ("%column%" < 11) BEGIN
+				    	SET_2DA_ENTRY "%row%" "%column%" "%lvl_base%" 400
+				    END	
+				    PATCH_IF ("%row%" = 1) AND ("%column%" > 10) BEGIN
+				    	SET_2DA_ENTRY "%row%" "%column%" "%lvl_base%" 1550
+				    END
+				    //disarm trap
+				    PATCH_IF ("%row%" = 2) AND ("%column%" < 6) BEGIN
+				    	SET_2DA_ENTRY "%row%" "%column%" "%lvl_base%" 1000
+				    END
+				    PATCH_IF ("%row%" = 2) AND ("%column%" > 5) AND ("%column%" < 11) BEGIN
+				    	SET_2DA_ENTRY "%row%" "%column%" "%lvl_base%" 1750
+				    END
+				    PATCH_IF ("%row%" = 2) AND ("%column%" > 10) AND ("%column%" < 16) BEGIN
+				    	SET_2DA_ENTRY "%row%" "%column%" "%lvl_base%" 2750
+				    END
+				    PATCH_IF ("%row%" = 2) AND ("%column%" > 15) BEGIN
+				    	SET_2DA_ENTRY "%row%" "%column%" "%lvl_base%" 3250
+				    END
+				    //learn spell
+				    PATCH_IF ("%row%" = 3) AND ("%column%" < 10) BEGIN
+				    	SET "new_xp_value" = ("%column%" * 1000)
+				    	SET_2DA_ENTRY "%row%" "%column%" "%lvl_base%" "%new_xp_value%"
+				    END
+						PATCH_IF ("%row%" = 3) AND ("%column%" > 9) BEGIN
+				    	SET_2DA_ENTRY "%row%" "%column%" "%lvl_base%" 0
+				    END
+				    SET "column" = ("%column%" - 1)
+				  END
+			  END
+			  
+			  SET "row" = ("%row%" - 1)
+			END
+		END ELSE BEGIN //percentages of current
+			WHILE ("%row%" > 0) BEGIN
+			  PATCH_IF ("%row%" = "%patch_row%") BEGIN
+				  SET "column" = "%lvl_base%"
+				  WHILE ("%column%" > 0) BEGIN
+				    READ_2DA_ENTRY "%row%" "%column%" "%lvl_base%" "old_xp_value"
+				    SET "new_xp_value" = (("%old_xp_value%" * "%patch_base%") /100)
+				    SET "new_xp_value" = ("%new_xp_value%" / 5)
+				    SET "new_xp_value" = ("%new_xp_value%" * 5)
+					PATCH_IF ("%new_xp_value%" = 0) THEN BEGIN
+					  SET "new_xp_value" = 5
+					END
+				    SET_2DA_ENTRY "%row%" "%column%" "%lvl_base%" "%new_xp_value%"
+				    SET "column" = ("%column%" - 1)
+				  END
+			  END
+			  SET "row" = ("%row%" - 1)
+			END		
+		END
+	
+	BUT_ONLY_IF_IT_CHANGES
+	
+END		

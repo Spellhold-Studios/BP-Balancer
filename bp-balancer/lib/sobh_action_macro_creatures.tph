@@ -1,0 +1,1333 @@
+/*******************************************************
+SoBH 2.05WM6 (creatures' items and XP)
+*******************************************************/
+
+DEFINE_ACTION_MACRO ~sobh_action_macro_creatures~ BEGIN
+	
+	LOCAL_SET "pl_base" = "%patch_base%"
+	LOCAL_SET "pl_plus1" = ((%patch_base% + (((100 - %patch_base%) / 4) * 1)) * %patch_base%) / %patch_base%
+	LOCAL_SET "pl_plus2" = ((%patch_base% + (((100 - %patch_base%) / 4) * 2)) * %patch_base%) / %patch_base%
+	LOCAL_SET "pl_plus3" = ((%patch_base% + (((100 - %patch_base%) / 4) * 3)) * %patch_base%) / %patch_base%
+	PRINT "Patch Basis: %pl_base% pct, Plus1: %pl_plus1%, Plus2: %pl_plus2%, Plus3: %pl_plus3%"	
+	
+	COPY_EXISTING ~BHABRAC.cre~ ~override~
+		//Name: Abracus 
+		//WRITE_SHORT 0x14 ~0~ //XP (was: 0)
+		//BRAC01 (Abwehrarmschützer RK 8)
+		//REPLACE_CRE_ITEM ~BRAC01~ #0 #0 #0 ~NONE~ ~gloves~
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~BHABRAHA.cre~ ~override~
+		//Name: Abraham 
+		//WRITE_SHORT 0x14 ~0~ //XP (was: 0)
+		//BRAC13 (Abwehrarmschützer RK 5)
+	    REPLACE_CRE_ITEM ~BRAC13~ #0 #0 #0 ~unstealable&undroppable~ ~gloves~
+		ADD_CRE_ITEM ~BRAC01~ #0 #0 #0 ~unstealable~ ~inv2~
+		//SW1H05 (Langschwert +1)
+		PATCH_IF (RANDOM(0 99) < %pl_base%) BEGIN
+		  REPLACE_CRE_ITEM ~SW1H04~ #0 #0 #0 ~NONE~ ~weapon2~
+		END
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~BHALMAX.cre~ ~override~
+		//Name: Almax 
+		//WRITE_SHORT 0x14 ~0~ //XP (was: 0)
+		//LEAT05 (Beschlagenes Lederwams +1)
+		PATCH_IF (RANDOM(0 99) < %pl_base%) BEGIN
+		  REPLACE_CRE_ITEM ~LEAT04~ #0 #0 #0 ~NONE~ ~armor~
+		END
+		//RING34 (Zauberwendering)
+		//REPLACE_CRE_ITEM ~RING34~ #0 #0 #0 ~NONE~ ~lring~
+		//BLUN10 (Keule gegen unnatürliche Wesen)
+		REPLACE_CRE_ITEM ~BLUN10~ #0 #0 #0 ~unstealable&undroppable~ ~weapon1~ EQUIP
+		ADD_CRE_ITEM ~BLUN01~ #0 #0 #0 ~unstealable~ ~inv4~
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~bhalmon.cre~ ~override~
+		//Name: Almon 
+		//WRITE_SHORT 0x14 ~0~ //XP (was: 0)
+		//BLUN05 (Streitkolben +1)
+		PATCH_IF (RANDOM(0 99) < %pl_base%) BEGIN
+		  REPLACE_CRE_ITEM ~BLUN04~ #0 #0 #0 ~NONE~ ~weapon1~ EQUIP
+		END
+		//SHLD04 (Mittlerer Schild +1)
+		PATCH_IF (RANDOM(0 99) < %pl_base%) BEGIN
+		  REPLACE_CRE_ITEM ~SHLD03~ #0 #0 #0 ~NONE~ ~shield~
+		END
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~bhalton.cre~ ~override~
+		//Name: Alton 
+		//WRITE_SHORT 0x14 ~0~ //XP (was: 0)
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~BHAMOS.cre~ ~override~
+		//Name: Amos 
+		//WRITE_SHORT 0x14 ~0~ //XP (was: 0)
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~BHANDRE.cre~ ~override~
+		//Name: Andrella 
+		//WRITE_SHORT 0x14 ~0~ //XP (was: 0)
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~bharmax.cre~ ~override~
+		//Name: Armax 
+		WRITE_SHORT 0x14 ~1200~ //XP (was: 3000)
+		//CLCK14 (Robe des Abenteurers)
+		//REPLACE_CRE_ITEM ~CLCK14~ #0 #0 #0 ~NONE~ ~armor~
+		//BRAC03 (Abwehrarmschützer RK 6)
+		REPLACE_CRE_ITEM ~BRAC03~ #0 #0 #0 ~unstealable&undroppable~ ~gloves~
+		ADD_CRE_ITEM ~BRAC01~ #0 #0 #0 ~unstealable~ ~inv1~
+		//BOOT04 (Stiefel der Vermeidung)
+		REPLACE_CRE_ITEM ~BOOT04~ #0 #0 #0 ~unstealable&undroppable~ ~boots~
+		ADD_CRE_ITEM ~BOOT06~ #0 #0 #0 ~unstealable~ ~inv2~
+		//WAND10 (Stab der Monsterherbeirufung)
+		//REPLACE_CRE_ITEM ~WAND10~ #0 #0 #0 ~NONE~ ~qitem1~
+		//SCRL8R (Mordenkainens Schwert)
+		//REPLACE_CRE_ITEM ~SCRL8R~ #0 #0 #0 ~NONE~ ~qitem2~
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~BHARRNES.cre~ ~override~
+		//Name: Bürgermeisterin Arrness 
+		WRITE_SHORT 0x14 ~400~ //XP (was: 1000)
+		//HELM19 (Rosafarbener Ionenstein)
+		PATCH_IF (RANDOM(0 99) < %pl_base%) BEGIN
+		  REPLACE_CRE_ITEM ~HELM19~ #0 #0 #0 ~unstealable&undroppable~ ~helmet~
+		END
+		//CLCK17 (Robe der bösen Erzmagier)
+		REPLACE_CRE_ITEM ~CLCK17~ #0 #0 #0 ~unstealable&undroppable~ ~armor~
+		ADD_CRE_ITEM ~CLCK10~ #0 #0 #0 ~unstealable~ ~inv4~
+		//BRAC15 (Abwehrarmschützer RK 3)
+		REPLACE_CRE_ITEM ~BRAC15~ #0 #0 #0 ~unstealable&undroppable~ ~gloves~
+		ADD_CRE_ITEM ~BRAC01~ #0 #0 #0 ~unstealable~ ~inv5~
+		//DAGG17 (Dolch +2)
+		REPLACE_CRE_ITEM ~DAGG17~ #0 #0 #0 ~unstealable&undroppable~ ~weapon1~ EQUIP
+		ADD_CRE_ITEM ~DAGG02~ #0 #0 #0 ~unstealable~ ~inv6~
+		PATCH_IF (RANDOM(0 99) < %pl_base%) BEGIN
+		  REPLACE_CRE_ITEM ~DAGG01~ #0 #0 #0 ~unstealable~ ~inv6~
+		END
+		//WAND08 (Stab des Schlafes)
+		//REPLACE_CRE_ITEM ~WAND08~ #0 #0 #0 ~NONE~ ~qitem1~
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~BHARTHUR.cre~ ~override~
+		//Name: Arthur 
+		//WRITE_SHORT 0x14 ~0~ //XP (was: 0)
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~BHASCUE.cre~ ~override~
+		//Name: Ascue 
+		WRITE_SHORT 0x14 ~300~ //XP (was: 750)
+		//CHAN08 (Kettenhemd +2)
+		REPLACE_CRE_ITEM ~CHAN08~ #0 #0 #0 ~unstealable&undroppable~ ~armor~
+		ADD_CRE_ITEM ~CHAN02~ #0 #0 #0 ~unstealable~ ~inv2~
+		PATCH_IF (RANDOM(0 99) < %pl_base%) BEGIN
+		  REPLACE_CRE_ITEM ~CHAN01~ #0 #0 #0 ~unstealable~ ~inv2~
+		END
+		//SHLD29 (Mittlerer Schild +2)
+		REPLACE_CRE_ITEM ~SHLD29~ #0 #0 #0 ~unstealable&undroppable~ ~shield~
+		ADD_CRE_ITEM ~SHLD04~ #0 #0 #0 ~unstealable~ ~inv3~
+		PATCH_IF (RANDOM(0 99) < %pl_base%) BEGIN
+		  REPLACE_CRE_ITEM ~SHLD14~ #0 #0 #0 ~unstealable~ ~inv3~
+		END
+		//BLUN16 (Morgenstern +2)
+		REPLACE_CRE_ITEM ~BLUN16~ #0 #0 #0 ~unstealable&undroppable~ ~weapon1~ EQUIP
+		ADD_CRE_ITEM ~BLUN07~ #0 #0 #0 ~unstealable~ ~inv4~
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~bhbalmar.cre~ ~override~
+		//Name: Balmar 
+		WRITE_SHORT 0x14 ~5~ //XP (was: 15)
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~bhbalmor.cre~ ~override~
+		//Name: Balmorrow 
+		//WRITE_SHORT 0x14 ~0~ //XP (was: 0)
+		//CHAN08 (Kettenhemd +2)
+		REPLACE_CRE_ITEM ~CHAN08~ #0 #0 #0 ~unstealable&undroppable~ ~armor~
+		ADD_CRE_ITEM ~CHAN02~ #0 #0 #0 ~unstealable~ ~inv4~
+		PATCH_IF (RANDOM(0 99) < %pl_base%) BEGIN
+		  REPLACE_CRE_ITEM ~CHAN01~ #0 #0 #0 ~unstealable~ ~inv2~
+		END
+		//BOOT01 (Siebenmeilenstiefel)
+		REPLACE_CRE_ITEM ~BOOT01~ #0 #0 #0 ~unstealable&undroppable~ ~boots~
+		ADD_CRE_ITEM ~BOOT06~ #0 #0 #0 ~unstealable~ ~inv5~
+		//SW1H33 (Langschwert +2)
+		REPLACE_CRE_ITEM ~SW1H33~ #0 #0 #0 ~unstealable&undroppable~ ~weapon1~ EQUIP
+		ADD_CRE_ITEM ~SW1H05~ #0 #0 #0 ~unstealable~ ~inv6~
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~bhbandt1.cre~ ~override~
+		//Name: Räuber
+		WRITE_SHORT 0x14 ~120~ //XP (was: 300)
+		//LEAT11 (Lederrüstung +2)
+		REPLACE_CRE_ITEM ~LEAT11~ #0 #0 #0 ~unstealable&undroppable~ ~armor~
+		ADD_CRE_ITEM ~LEAT01~ #0 #0 #0 ~unstealable~ ~inv2~
+		//SW1H09 (Kurzschwert +2)
+		REPLACE_CRE_ITEM ~SW1H09~ #0 #0 #0 ~unstealable&undroppable~ ~weapon1~ EQUIP
+		ADD_CRE_ITEM ~SW1H07~ #0 #0 #0 ~unstealable~ ~inv3~
+		//XBOW06 (Schnellschussarmbrust)
+		REPLACE_CRE_ITEM ~XBOW06~ #0 #0 #0 ~unstealable&undroppable~ ~weapon2~
+		ADD_CRE_ITEM ~XBOW01~ #0 #0 #0 ~unstealable~ ~inv4~
+		//BOLT02 (Bolzen +1)
+		//REPLACE_CRE_ITEM ~BOLT02~ #0 #0 #0 ~NONE~ ~quiver3~
+		//POTN10 (Unsichtbarkeitstrank)
+		//REPLACE_CRE_ITEM ~POTN10~ #0 #0 #0 ~NONE~ ~qitem2~
+		//POTN14 (Schnelligkeitsöl)
+		//REPLACE_CRE_ITEM ~POTN14~ #0 #0 #0 ~NONE~ ~qitem3~
+		//POTN36 (Trank der Meisterdiebeskunst)
+		//REPLACE_CRE_ITEM ~POTN36~ #0 #0 #0 ~NONE~ ~inv1~
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~bhbandt2.cre~ ~override~
+		//Name: Räuber
+		WRITE_SHORT 0x14 ~120~ //XP (was: 300)
+		//LEAT11 (Lederrüstung +2)
+		REPLACE_CRE_ITEM ~LEAT11~ #0 #0 #0 ~unstealable&undroppable~ ~armor~
+		ADD_CRE_ITEM ~LEAT01~ #0 #0 #0 ~unstealable~ ~inv2~
+		//SW1H09 (Kurzschwert +2)
+		REPLACE_CRE_ITEM ~SW1H09~ #0 #0 #0 ~unstealable&undroppable~ ~weapon1~
+		ADD_CRE_ITEM ~SW1H07~ #0 #0 #0 ~unstealable~ ~inv3~
+		//XBOW06 (Schnellschussarmbrust)
+		REPLACE_CRE_ITEM ~XBOW06~ #0 #0 #0 ~unstealable&undroppable~ ~weapon2~ EQUIP
+		ADD_CRE_ITEM ~XBOW01~ #0 #0 #0 ~unstealable~ ~inv4~
+		//BOLT02 (Bolzen +1)
+		//REPLACE_CRE_ITEM ~BOLT02~ #0 #0 #0 ~NONE~ ~quiver3~
+		//POTN10 (Unsichtbarkeitstrank)
+		//REPLACE_CRE_ITEM ~POTN10~ #0 #0 #0 ~NONE~ ~qitem2~
+		//POTN14 (Schnelligkeitsöl)
+		//REPLACE_CRE_ITEM ~POTN14~ #0 #0 #0 ~NONE~ ~qitem3~
+		//POTN36 (Trank der Meisterdiebeskunst)
+		//REPLACE_CRE_ITEM ~POTN36~ #0 #0 #0 ~NONE~ ~inv1~
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~bhbandt3.cre~ ~override~
+		//Name: Räuber
+		WRITE_SHORT 0x14 ~120~ //XP (was: 300)
+		//LEAT11 (Lederrüstung +2)
+		REPLACE_CRE_ITEM ~LEAT11~ #0 #0 #0 ~unstealable&undroppable~ ~armor~
+		ADD_CRE_ITEM ~LEAT01~ #0 #0 #0 ~unstealable~ ~inv2~
+		//SW1H09 (Kurzschwert +2)
+		REPLACE_CRE_ITEM ~SW1H09~ #0 #0 #0 ~unstealable&undroppable~ ~weapon1~
+		ADD_CRE_ITEM ~SW1H07~ #0 #0 #0 ~unstealable~ ~inv3~
+		//XBOW06 (Schnellschussarmbrust)
+		REPLACE_CRE_ITEM ~XBOW06~ #0 #0 #0 ~unstealable&undroppable~ ~weapon2~ EQUIP
+		ADD_CRE_ITEM ~XBOW01~ #0 #0 #0 ~unstealable~ ~inv4~
+		//BOLT02 (Bolzen +1)
+		//REPLACE_CRE_ITEM ~BOLT02~ #0 #0 #0 ~NONE~ ~quiver3~
+		//POTN10 (Unsichtbarkeitstrank)
+		//REPLACE_CRE_ITEM ~POTN10~ #0 #0 #0 ~NONE~ ~qitem2~
+		//POTN14 (Schnelligkeitsöl)
+		//REPLACE_CRE_ITEM ~POTN14~ #0 #0 #0 ~NONE~ ~qitem3~
+		//POTN36 (Trank der Meisterdiebeskunst)
+		//REPLACE_CRE_ITEM ~POTN36~ #0 #0 #0 ~NONE~ ~inv1~
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~bhbasil.cre~ ~override~
+		//Name: Basil 
+		//WRITE_SHORT 0x14 ~0~ //XP (was: 0)
+		//CHAN03 (Kettenhemd +2)
+		REPLACE_CRE_ITEM ~CHAN03~ #0 #0 #0 ~unstealable&undroppable~ ~armor~
+		ADD_CRE_ITEM ~CHAN02~ #0 #0 #0 ~unstealable~ ~inv2~
+		PATCH_IF (RANDOM(0 99) < %pl_base%) BEGIN
+		  REPLACE_CRE_ITEM ~CHAN01~ #0 #0 #0 ~unstealable~ ~inv2~
+		END
+		//RING07 (Schutzring +2)
+		REPLACE_CRE_ITEM ~RING07~ #0 #0 #0 ~unstealable&undroppable~ ~rring~
+		ADD_CRE_ITEM ~RING06~ #0 #0 #0 ~unstealable~ ~inv3~
+		//BLUN05 (Streitkolben +1)
+		PATCH_IF (RANDOM(0 99) < %pl_base%) BEGIN
+		  REPLACE_CRE_ITEM ~BLUN04~ #0 #0 #0 ~NONE~ ~weapon1~
+		END
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~bhbasmar.cre~ ~override~
+		//Name: Basmar 
+		WRITE_SHORT 0x14 ~200~ //XP (was: 500)
+		//SW1H02 (Bastardschwert +1)
+		PATCH_IF (RANDOM(0 99) < %pl_base%) BEGIN
+		  REPLACE_CRE_ITEM ~SW1H01~ #0 #0 #0 ~NONE~ ~weapon1~
+		END
+		//CLCK02 (Schutzumhang +2)
+		REPLACE_CRE_ITEM ~CLCK02~ #0 #0 #0 ~unstealable&undroppable~ ~cloak~
+		ADD_CRE_ITEM ~CLCK01~ #0 #0 #0 ~unstealable~ ~inv1~
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~BHBBOB.cre~ ~override~
+		//Name: Herr BillyBob 
+		//WRITE_SHORT 0x14 ~0~ //XP (was: 0)
+		//WA2ROBE (Vecnas Robe)
+		REPLACE_CRE_ITEM ~WA2ROBE~ #0 #0 #0 ~unstealable&undroppable~ ~armor~
+		ADD_CRE_ITEM ~CLCK14~ #0 #0 #0 ~unstealable~ ~inv2~
+		//BRAC21 (Fertigkeitshandschuhe)
+		//REPLACE_CRE_ITEM ~BRAC21~ #0 #0 #0 ~NONE~ ~gloves~
+		//RING39 (Ring von Gaxx)
+		REPLACE_CRE_ITEM ~RING39~ #0 #0 #0 ~unstealable&undroppable~ ~lring~
+		ADD_CRE_ITEM ~RING07~ #0 #0 #0 ~unstealable~ ~inv3~
+		PATCH_IF (RANDOM(0 99) < %pl_base%) BEGIN
+		  REPLACE_CRE_ITEM ~RING10~ #0 #0 #0 ~unstealable~ ~inv3~
+		END
+		//AMUL21 (Amulett der Macht)
+		//REPLACE_CRE_ITEM ~AMUL21~ #0 #0 #0 ~NONE~ ~amulet~
+		//BELT07 (Gürtel der Steinriesenstärke)
+		//REPLACE_CRE_ITEM ~BELT07~ #0 #0 #0 ~NONE~ ~belt~
+		//BOOT01 (Siebenmeilenstiefel)
+		REPLACE_CRE_ITEM ~BOOT01~ #0 #0 #0 ~unstealable&undroppable~ ~boots~
+		ADD_CRE_ITEM ~BOOT06~ #0 #0 #0 ~unstealable~ ~inv4~
+		//STAF11 (Stecken der Magister)
+		REPLACE_CRE_ITEM ~STAF11~ #0 #0 #0 ~unstealable&undroppable~ ~weapon1~ EQUIP
+		ADD_CRE_ITEM ~STAF05~ #0 #0 #0 ~unstealable~ ~inv5~
+		//CLCK02 (Schutzumhang +2)
+		PATCH_IF (RANDOM(0 99) < %pl_base%) BEGIN
+		  REPLACE_CRE_ITEM ~CLCK01~ #0 #0 #0 ~NONE~ ~cloak~
+		END
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~bhberser.cre~ ~override~
+		//Name: Berserker-Krieger
+		WRITE_SHORT 0x14 ~1200~ //XP (was: 3000)
+		//LEAT08 (Schattenrüstung)
+		REPLACE_CRE_ITEM ~LEAT08~ #0 #0 #0 ~unstealable&undroppable~ ~armor~
+		ADD_CRE_ITEM ~LEAT05~ #0 #0 #0 ~unstealable~ ~inv4~
+		PATCH_IF (RANDOM(0 99) < %pl_base%) BEGIN
+		  REPLACE_CRE_ITEM ~LEAT01~ #0 #0 #0 ~unstealable~ ~inv4~
+		END
+		//AX1H02 (Streitaxt +1)
+		PATCH_IF (RANDOM(0 99) < %pl_base%) BEGIN
+		  REPLACE_CRE_ITEM ~AX1H01~ #0 #0 #0 ~NONE~ ~shield~
+		END
+		//AX1H02 (Streitaxt +1)
+		PATCH_IF (RANDOM(0 99) < %pl_base%) BEGIN
+		  REPLACE_CRE_ITEM ~AX1H01~ #0 #0 #0 ~NONE~ ~weapon1~
+		END
+		//POTN52 (Konzentrierter Heiltrank)
+		//REPLACE_CRE_ITEM ~POTN52~ #0 #0 #0 ~NONE~ ~qitem1~
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~BHBESHKA.cre~ ~override~
+		//Name: Beshkar 
+		WRITE_SHORT 0x14 ~20~ //XP (was: 50)
+		//CLCK10 (Feuerschutzrobe)
+		//REPLACE_CRE_ITEM ~CLCK10~ #0 #0 #0 ~NONE~ ~armor~
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~BHBESS.cre~ ~override~
+		//Name: Bess 
+		//WRITE_SHORT 0x14 ~0~ //XP (was: 0)
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~bhblacki.cre~ ~override~
+		//Name: Vogel
+		//WRITE_SHORT 0x14 ~0~ //XP (was: 0)
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~bhbomarc.cre~ ~override~
+		//Name: Bomarc 
+		//WRITE_SHORT 0x14 ~0~ //XP (was: 0)
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~bhcleri1.cre~ ~override~
+		//Name: Messdiener von Osprem 
+		//WRITE_SHORT 0x14 ~0~ //XP (was: 0)
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~BHCLERI2.cre~ ~override~
+		//Name: Messdiener 
+		WRITE_SHORT 0x14 ~20~ //XP (was: 50)
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~bhcleric.cre~ ~override~
+		//Name: Messdiener von Phaulkon 
+		//WRITE_SHORT 0x14 ~0~ //XP (was: 0)
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~BHCOMB01.CRE~ ~override~
+		//Name: Junge 
+		//WRITE_SHORT 0x14 ~0~ //XP (was: 0)
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~BHCOMB02.CRE~ ~override~
+		//Name: Junge 
+		//WRITE_SHORT 0x14 ~0~ //XP (was: 0)
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~BHCOMF01.CRE~ ~override~
+		//Name: Bürgerliche
+		//WRITE_SHORT 0x14 ~0~ //XP (was: 0)
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~BHCOMF02.CRE~ ~override~
+		//Name: Bürgerliche
+		//WRITE_SHORT 0x14 ~0~ //XP (was: 0)
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~BHCOMG01.CRE~ ~override~
+		//Name: Mädchen
+		//WRITE_SHORT 0x14 ~0~ //XP (was: 0)
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~BHCOMG02.CRE~ ~override~
+		//Name: Mädchen
+		//WRITE_SHORT 0x14 ~0~ //XP (was: 0)
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~BHCOMM01.CRE~ ~override~
+		//Name: Bürger 
+		//WRITE_SHORT 0x14 ~0~ //XP (was: 0)
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~BHCOMM02.CRE~ ~override~
+		//Name: Bürger 
+		//WRITE_SHORT 0x14 ~0~ //XP (was: 0)
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~BHCOMM05.CRE~ ~override~
+		//Name: Fischer
+		//WRITE_SHORT 0x14 ~0~ //XP (was: 0)
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~BHCOMM06.cre~ ~override~
+		//Name: Bürgerliche
+		//WRITE_SHORT 0x14 ~0~ //XP (was: 0)
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~BHCOMM07.cre~ ~override~
+		//Name: Fischer
+		//WRITE_SHORT 0x14 ~0~ //XP (was: 0)
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~BHCOMM08.cre~ ~override~
+		//Name: Baurbeiter 
+		//WRITE_SHORT 0x14 ~0~ //XP (was: 0)
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~BHCOOK1.cre~ ~override~
+		//Name: Koch
+		//WRITE_SHORT 0x14 ~0~ //XP (was: 0)
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~BHCOOK2.cre~ ~override~
+		//Name: Dienstmädchen 
+		//WRITE_SHORT 0x14 ~0~ //XP (was: 0)
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~BHELESS.cre~ ~override~
+		//Name: Eless 
+		//WRITE_SHORT 0x14 ~0~ //XP (was: 0)
+	BUT_ONLY_IF_IT_CHANGES
+/*	COPY_EXISTING ~bhfabi10.cre~ ~override~
+		//Name: Fabio 
+		//WRITE_SHORT 0x14 ~0~ //XP (was: 0)
+		//CHAN13 (Elfenkettenhemd +1)
+		REPLACE_CRE_ITEM ~CHAN01~ #0 #0 #0 ~NONE~ ~armor~
+		//RING30 (Beeinflussungsring)
+		REPLACE_CRE_ITEM ~RING10~ #0 #0 #0 ~NONE~ ~lring~
+		//BHBARDR (Ring des Barden)
+		PATCH_IF (RANDOM(0 99) < %pl_base%) BEGIN
+			REPLACE_CRE_ITEM ~RING12~ #0 #0 #0 ~NONE~ ~rring~
+		END
+		//SW1H05 (Langschwert +1)
+		//REPLACE_CRE_ITEM ~SW1H05~ #0 #0 #0 ~NONE~ ~weapon1~
+		//SLNG02 (Schleuder +1)
+		REPLACE_CRE_ITEM ~SLNG01~ #0 #0 #0 ~NONE~ ~weapon2~
+		//BHFABLUT (Fabios Laute )
+		//PATCH_IF (RANDOM(0 99) < %pl_base%) BEGIN
+			//REPLACE_CRE_ITEM ~BHFABLUT~ #0 #0 #0 ~NONE~ ~qitem2~
+		//END
+		//POTN14 (Schnelligkeitsöl)
+		//REPLACE_CRE_ITEM ~POTN14~ #0 #0 #0 ~NONE~ ~qitem3~
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~bhfabi6.cre~ ~override~
+		//Name: Fabio 
+		//WRITE_SHORT 0x14 ~0~ //XP (was: 0)
+		//CHAN13 (Elfenkettenhemd +1)
+		REPLACE_CRE_ITEM ~CHAN01~ #0 #0 #0 ~NONE~ ~armor~
+		//RING30 (Beeinflussungsring)
+		REPLACE_CRE_ITEM ~RING10~ #0 #0 #0 ~NONE~ ~lring~
+		//BHBARDR (Ring des Barden)
+		PATCH_IF (RANDOM(0 99) < %pl_base%) BEGIN
+			REPLACE_CRE_ITEM ~RING14~ #0 #0 #0 ~NONE~ ~rring~
+		END
+		//SW1H05 (Langschwert +1)
+		//REPLACE_CRE_ITEM ~SW1H05~ #0 #0 #0 ~NONE~ ~weapon1~
+		//SLNG02 (Schleuder +1)
+		REPLACE_CRE_ITEM ~SLNG01~ #0 #0 #0 ~NONE~ ~weapon2~
+		//BHFABLUT (Fabios Laute )
+		//PATCH_IF (RANDOM(0 99) < %pl_base%) BEGIN
+			//REPLACE_CRE_ITEM ~BHFABLUT~ #0 #0 #0 ~NONE~ ~qitem2~
+		//END
+		//POTN14 (Schnelligkeitsöl)
+		//REPLACE_CRE_ITEM ~POTN14~ #0 #0 #0 ~NONE~ ~qitem3~
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~bhfabi8.cre~ ~override~
+		//Name: Fabio 
+		//WRITE_SHORT 0x14 ~0~ //XP (was: 0)
+		//CHAN13 (Elfenkettenhemd +1)
+		REPLACE_CRE_ITEM ~CHAN01~ #0 #0 #0 ~NONE~ ~armor~
+		//RING30 (Beeinflussungsring)
+		REPLACE_CRE_ITEM ~RING10~ #0 #0 #0 ~NONE~ ~lring~
+		//BHBARDR (Ring des Barden)
+		PATCH_IF (RANDOM(0 99) < %pl_base%) BEGIN
+			REPLACE_CRE_ITEM ~RING14~ #0 #0 #0 ~NONE~ ~rring~
+		END
+		//SW1H05 (Langschwert +1)
+		//REPLACE_CRE_ITEM ~SW1H05~ #0 #0 #0 ~NONE~ ~weapon1~
+		//SLNG02 (Schleuder +1)
+		REPLACE_CRE_ITEM ~SLNG01~ #0 #0 #0 ~NONE~ ~weapon2~
+		//BHFABLUT (Fabios Laute )
+		//PATCH_IF (RANDOM(0 99) < %pl_base%) BEGIN
+			//REPLACE_CRE_ITEM ~BHFABLUT~ #0 #0 #0 ~NONE~ ~qitem2~
+		//END
+		//POTN14 (Schnelligkeitsöl)
+		//REPLACE_CRE_ITEM ~POTN14~ #0 #0 #0 ~NONE~ ~qitem3~
+	BUT_ONLY_IF_IT_CHANGES */
+	COPY_EXISTING ~bhfabio.cre~ ~override~
+		//Name: Fabio 
+		//WRITE_SHORT 0x14 ~0~ //XP (was: 0)
+		//CHAN13 (Elfenkettenhemd +1)
+		REPLACE_CRE_ITEM ~CHAN13~ #0 #0 #0 ~unstealable&undroppable~ ~armor~
+		PATCH_IF (RANDOM(0 99) < %pl_base%) BEGIN
+		  REPLACE_CRE_ITEM ~CHAN01~ #0 #0 #0 ~NONE~ ~armor~
+		END
+		//RING30 (Beeinflussungsring)
+		REPLACE_CRE_ITEM ~RING30~ #0 #0 #0 ~unstealable&undroppable~ ~lring~
+		PATCH_IF (RANDOM(0 99) < %pl_base%) BEGIN
+		  REPLACE_CRE_ITEM ~RING10~ #0 #0 #0 ~NONE~ ~lring~
+		END
+		//BHBARDR (Ring des Barden)
+		REPLACE_CRE_ITEM ~BHBARDR~ #0 #0 #0 ~unstealable&undroppable~ ~rring~
+		PATCH_IF (RANDOM(0 99) < %pl_base%) BEGIN
+			REPLACE_CRE_ITEM ~RING14~ #0 #0 #0 ~NONE~ ~rring~
+		END
+		//SW1H05 (Langschwert +1)
+		//REPLACE_CRE_ITEM ~SW1H05~ #0 #0 #0 ~NONE~ ~weapon1~
+		//SLNG02 (Schleuder +1)
+		PATCH_IF (RANDOM(0 99) < %pl_base%) BEGIN
+			REPLACE_CRE_ITEM ~SLNG01~ #0 #0 #0 ~NONE~ ~weapon2~
+		END
+		//BHFABLUT (Fabios Laute )
+		//PATCH_IF (RANDOM(0 99) < %pl_base%) BEGIN
+			//REPLACE_CRE_ITEM ~BHFABLUT~ #0 #0 #0 ~NONE~ ~qitem2~
+		//END
+		//POTN14 (Schnelligkeitsöl)
+		//REPLACE_CRE_ITEM ~POTN14~ #0 #0 #0 ~NONE~ ~qitem3~
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~BHFAIR.cre~ ~override~
+		//Name: Fairwind 
+		//WRITE_SHORT 0x14 ~0~ //XP (was: 0)
+		//RING07 (Schutzring +2)
+		REPLACE_CRE_ITEM ~RING07~ #0 #0 #0 ~unstealable&undroppable~ ~lring~
+		ADD_CRE_ITEM ~RING06~ #0 #0 #0 ~unstealable~ ~inv2~
+		//WAND03 (Stab der magischen Geschosse)
+		//REPLACE_CRE_ITEM ~WAND03~ #0 #0 #0 ~NONE~ ~inv1~
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~bhfalco.cre~ ~override~
+		//Name: Falco 
+		//WRITE_SHORT 0x14 ~0~ //XP (was: 0)
+		//RING07 (Schutzring +2)
+		REPLACE_CRE_ITEM ~RING07~ #0 #0 #0 ~unstealable&undroppable~ ~lring~
+		ADD_CRE_ITEM ~RING06~ #0 #0 #0 ~unstealable~ ~inv2~
+		//SW1H08 (Kurzschwert +1)
+		//REPLACE_CRE_ITEM ~SW1H08~ #0 #0 #0 ~NONE~ ~weapon2~
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~BHFALPIR.cre~ ~override~
+		//Name: Falpir 
+		//WRITE_SHORT 0x14 ~0~ //XP (was: 0)
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~BHFARM.CRE~ ~override~
+		//Name: Bürgerliche
+		//WRITE_SHORT 0x14 ~0~ //XP (was: 0)
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~BHFELWIN.cre~ ~override~
+		//Name: Felwin 
+		//WRITE_SHORT 0x14 ~0~ //XP (was: 0)
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~BHFGIANT.CRE~ ~override~
+		//Name: Feuerriese 
+		WRITE_SHORT 0x14 ~1720~ //XP (was: 4300)
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~BHFLIBAN.CRE~ ~override~
+		//Name: Fliban 
+		//WRITE_SHORT 0x14 ~0~ //XP (was: 0)
+		//BRAC01 (Abwehrarmschützer RK 8)
+		//REPLACE_CRE_ITEM ~BRAC01~ #0 #0 #0 ~NONE~ ~gloves~
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~bhgap.cre~ ~override~
+		//Name: Gap 
+		//WRITE_SHORT 0x14 ~0~ //XP (was: 0)
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~bhgelliu.cre~ ~override~
+		//Name: Gellius 
+		WRITE_SHORT 0x14 ~360~ //XP (was: 900)
+		//LEAT11 (Lederrüstung +2)
+		REPLACE_CRE_ITEM ~LEAT11~ #0 #0 #0 ~unstealable&undroppable~ ~armor~
+		ADD_CRE_ITEM ~LEAT02~ #0 #0 #0 ~unstealable~ ~inv2~
+		PATCH_IF (RANDOM(0 99) < %pl_base%) BEGIN
+		  REPLACE_CRE_ITEM ~LEAT01~ #0 #0 #0 ~unstealable~ ~inv2~
+		END
+		//SW1H08 (Kurzschwert +1)
+		//REPLACE_CRE_ITEM ~SW1H08~ #0 #0 #0 ~NONE~ ~weapon1~
+		//DART03 (Betäubungspfeil)
+		//REPLACE_CRE_ITEM ~DART03~ #0 #0 #0 ~NONE~ ~weapon2~
+		//DART05 (Giftpfeil +1)
+		//REPLACE_CRE_ITEM ~DART05~ #0 #0 #0 ~NONE~ ~weapon3~
+		//POTN14 (Schnelligkeitsöl)
+		//REPLACE_CRE_ITEM ~POTN14~ #0 #0 #0 ~NONE~ ~qitem1~
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~BHGELMAR.cre~ ~override~
+		//Name: Gelmark 
+		//WRITE_SHORT 0x14 ~0~ //XP (was: 0)
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~BHGELPAS.cre~ ~override~
+		//Name: Gelpas 
+		//WRITE_SHORT 0x14 ~0~ //XP (was: 0)
+		//CHAN08 (Kettenhemd +2)
+		REPLACE_CRE_ITEM ~CHAN08~ #0 #0 #0 ~unstealable&undroppable~ ~armor~
+		ADD_CRE_ITEM ~CHAN02~ #0 #0 #0 ~unstealable~ ~inv4~
+		PATCH_IF (RANDOM(0 99) < %pl_base%) BEGIN
+		  REPLACE_CRE_ITEM ~CHAN01~ #0 #0 #0 ~unstealable~ ~inv4~
+		END
+		//SW1H05 (Langschwert +1)
+		//REPLACE_CRE_ITEM ~SW1H05~ #0 #0 #0 ~NONE~ ~weapon1~
+		//POTN52 (Konzentrierter Heiltrank)
+		//REPLACE_CRE_ITEM ~POTN52~ #0 #0 #0 ~NONE~ ~qitem1~
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~BHGILMI.cre~ ~override~
+		//Name: Gilmi 
+		WRITE_SHORT 0x14 ~200~ //XP (was: 500)
+		//PLAT02 (Plattenpanzer +1)
+		PATCH_IF (RANDOM(0 99) < %pl_base%) BEGIN
+		  REPLACE_CRE_ITEM ~PLAT01~ #0 #0 #0 ~NONE~ ~armor~
+		END
+		//HAMM03 (Kriegshammer +2)
+		REPLACE_CRE_ITEM ~HAMM03~ #0 #0 #0 ~unstealable&undroppable~ ~weapon1~ EQUIP
+		ADD_CRE_ITEM ~HAMM02~ #0 #0 #0 ~unstealable~ ~inv6~
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~BHGLAMI.cre~ ~override~
+		//Name: Glami 
+		WRITE_SHORT 0x14 ~120~ //XP (was: 300)
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~BHGOLEM.CRE~ ~override~
+		//Name: Golem 
+		WRITE_SHORT 0x14 ~2800~ //XP (was: 7000)
+		//GOLBRA (<Invalid Strref -1>)
+		//REPLACE_CRE_ITEM ~GOLBRA~ #0 #0 #0 ~NONE~ ~weapon1~
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~BHGORHRG.CRE~ ~override~
+		//Name: Gorharg 
+		WRITE_SHORT 0x14 ~240~ //XP (was: 600)
+		//LEAT02 (Lederrüstung +1)
+		PATCH_IF (RANDOM(0 99) < %pl_base%) BEGIN
+		  REPLACE_CRE_ITEM ~LEAT01~ #0 #0 #0 ~NONE~ ~armor~
+		END
+		//POTN10 (Unsichtbarkeitstrank)
+		//REPLACE_CRE_ITEM ~POTN10~ #0 #0 #0 ~NONE~ ~qitem1~
+		//SW1H05 (Langschwert +1)
+		REPLACE_CRE_ITEM ~SW1H04~ #0 #0 #0 ~NONE~ ~inv1~
+		//BOOT02 (Stiefel der List)
+		REPLACE_CRE_ITEM ~BOOT02~ #0 #0 #0 ~unstealable&undroppable~ ~boots~
+		ADD_CRE_ITEM ~BOOT06~ #0 #0 #0 ~unstealable~ ~inv2~
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~BHGRECKO.cre~ ~override~
+		//Name: Grecko 
+		//WRITE_SHORT 0x14 ~0~ //XP (was: 0)
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~BHGRELU1.cre~ ~override~
+		//Name: Baron Grellus 
+		//WRITE_SHORT 0x14 ~0~ //XP (was: 0)
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~BHGRELUS.cre~ ~override~
+		//Name: Baron Grellus 
+		//WRITE_SHORT 0x14 ~0~ //XP (was: 0)
+		//CHAN08 (Kettenhemd +2)
+		REPLACE_CRE_ITEM ~CHAN08~ #0 #0 #0 ~unstealable&undroppable~ ~armor~
+		ADD_CRE_ITEM ~CHAN02~ #0 #0 #0 ~unstealable~ ~inv2~
+		PATCH_IF (RANDOM(0 99) < %pl_base%) BEGIN
+		  REPLACE_CRE_ITEM ~CHAN01~ #0 #0 #0 ~unstealable~ ~inv2~
+		END
+		//SHLD06 (Langschild +1)
+		PATCH_IF (RANDOM(0 99) < %pl_base%) BEGIN
+		  REPLACE_CRE_ITEM ~SHLD05~ #0 #0 #0 ~NONE~ ~shield~
+		END
+		//RING20 (Energiering)
+		REPLACE_CRE_ITEM ~RING06~ #0 #0 #0 ~NONE~ ~lring~
+		PATCH_IF (RANDOM(0 99) < %pl_base%) BEGIN
+		  REPLACE_CRE_ITEM ~RING14~ #0 #0 #0 ~NONE~ ~lring~
+		END
+		//SW1H24 (Flammenzunge)
+		REPLACE_CRE_ITEM ~SW1H24~ #0 #0 #0 ~unstealable&undroppable~ ~weapon1~ EQUIP
+		ADD_CRE_ITEM ~SW1H05~ #0 #0 #0 ~unstealable~ ~inv4~
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~BHGRIST.cre~ ~override~
+		//Name: Gristla 
+		//WRITE_SHORT 0x14 ~0~ //XP (was: 0)
+		//BRAC01 (Abwehrarmschützer RK 8)
+		//REPLACE_CRE_ITEM ~BRAC01~ #0 #0 #0 ~NONE~ ~gloves~
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~BHGSKEL.cre~ ~override~
+		//Name: Skelett 
+		//WRITE_SHORT 0x14 ~0~ //XP (was: 0)
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~bhguarde.cre~ ~override~
+		//Name: Wachenmietling
+		WRITE_SHORT 0x14 ~65~ //XP (was: 165)
+		//BOW02 (Komposit-Langbogen +1)
+		REPLACE_CRE_ITEM ~BOW02~ #0 #0 #0 ~unstealable&undroppable~ ~weapon2~ EQUIP
+		ADD_CRE_ITEM ~BOW01~ #0 #0 #0 ~unstealable~ ~inv4~
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~BHGUARDG.cre~ ~override~
+		//Name: Wache 
+		WRITE_SHORT 0x14 ~65~ //XP (was: 165)
+		//BOW02 (Komposit-Langbogen +1)
+		REPLACE_CRE_ITEM ~BOW02~ #0 #0 #0 ~unstealable&undroppable~ ~weapon2~ EQUIP
+		ADD_CRE_ITEM ~BOW01~ #0 #0 #0 ~unstealable~ ~inv4~
+		//AROW02 (Pfeile +1)
+		//REPLACE_CRE_ITEM ~AROW02~ #0 #0 #0 ~NONE~ ~quiver1~
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~BHGUILD1.cre~ ~override~
+		//Name: Mörder-Lehrling 
+		WRITE_SHORT 0x14 ~120~ //XP (was: 300)
+		//DART02 (Wurfpfeil +1)
+		//REPLACE_CRE_ITEM ~DART02~ #0 #0 #0 ~NONE~ ~weapon1~
+		//SW1H08 (Kurzschwert +1)
+		REPLACE_CRE_ITEM ~SW1H07~ #0 #0 #0 ~NONE~ ~weapon2~
+		//POTN10 (Unsichtbarkeitstrank)
+		//REPLACE_CRE_ITEM ~POTN10~ #0 #0 #0 ~NONE~ ~qitem1~
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~BHHAKI.cre~ ~override~
+		//Name: Haki 
+		//WRITE_SHORT 0x14 ~0~ //XP (was: 0)
+		//BRAC01 (Abwehrarmschützer RK 8)
+		//REPLACE_CRE_ITEM ~BRAC01~ #0 #0 #0 ~NONE~ ~gloves~
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~BHHARMIN.cre~ ~override~
+		//Name: Harmin 
+		//WRITE_SHORT 0x14 ~0~ //XP (was: 0)
+		//PLAT02 (Plattenpanzer +1)
+		PATCH_IF (RANDOM(0 99) < %pl_base%) BEGIN
+		  REPLACE_CRE_ITEM ~PLAT01~ #0 #0 #0 ~NONE~ ~armor~
+		END
+		//RING09 (Ring der Handlungsfreiheit)
+		REPLACE_CRE_ITEM ~RING09~ #0 #0 #0 ~unstealable&undroppable~ ~lring~
+		ADD_CRE_ITEM ~RING06~ #0 #0 #0 ~unstealable~ ~inv2~
+		//RING07 (Schutzring +2)
+		REPLACE_CRE_ITEM ~RING07~ #0 #0 #0 ~unstealable&undroppable~ ~rring~
+		ADD_CRE_ITEM ~RING11~ #0 #0 #0 ~unstealable~ ~inv3~
+		//BLUN13 (Flegel +2)
+		REPLACE_CRE_ITEM ~BLUN13~ #0 #0 #0 ~unstealable&undroppable~ ~weapon1~ EQUIP
+		ADD_CRE_ITEM ~BLUN03~ #0 #0 #0 ~unstealable~ ~inv4~
+		PATCH_IF (RANDOM(0 99) < %pl_base%) BEGIN
+		  REPLACE_CRE_ITEM ~BLUNT02~ #0 #0 #0 ~unstealable~ ~inv4~
+		END
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~bhharper.cre~ ~override~
+		//Name: Harfner 
+		//WRITE_SHORT 0x14 ~0~ //XP (was: 0)
+		//BRAC15 (Abwehrarmschützer RK 3)
+		REPLACE_CRE_ITEM ~BRAC15~ #0 #0 #0 ~unstealable&undroppable~ ~gloves~
+		ADD_CRE_ITEM ~BRAC01~ #0 #0 #0 ~unstealable~ ~inv5~
+		//RING34 (Zauberwendering)
+		REPLACE_CRE_ITEM ~RING34~ #0 #0 #0 ~unstealable&undroppable~ ~lring~
+		ADD_CRE_ITEM ~RING14~ #0 #0 #0 ~unstealable~ ~inv6~
+		//RING07 (Schutzring +2)
+		PATCH_IF (RANDOM(0 99) < %pl_base%) BEGIN
+		  REPLACE_CRE_ITEM ~RING06~ #0 #0 #0 ~NONE~ ~rring~
+		END
+		//STAF05 (Schlagstecken)
+		REPLACE_CRE_ITEM ~STAF05~ #0 #0 #0 ~unstealable&undroppable~ ~weapon1~ EQUIP
+		ADD_CRE_ITEM ~STAF02~ #0 #0 #0 ~unstealable~ ~inv7~
+		//HAMM03 (Kriegshammer +2)
+		REPLACE_CRE_ITEM ~HAMM03~ #0 #0 #0 ~unstealable&undroppable~ ~weapon2~
+		ADD_CRE_ITEM ~HAMM02~ #0 #0 #0 ~unstealable~ ~inv8~
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~BHHESTAL.cre~ ~override~
+		//Name: Hestal 
+		//WRITE_SHORT 0x14 ~0~ //XP (was: 0)
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~bhhoirag.cre~ ~override~
+		//Name: Hoirag 
+		//WRITE_SHORT 0x14 ~0~ //XP (was: 0)
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~bhholga.cre~ ~override~
+		//Name: Holga 
+		WRITE_SHORT 0x14 ~100~ //XP (was: 250)
+		//CLCK13 (Robe des Reisenden)
+		//REPLACE_CRE_ITEM ~CLCK13~ #0 #0 #0 ~NONE~ ~armor~
+		//DART03 (Betäubungspfeil)
+		//REPLACE_CRE_ITEM ~DART03~ #0 #0 #0 ~NONE~ ~weapon1~
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~BHKRAK.CRE~ ~override~
+		//Name: Krak 
+		WRITE_SHORT 0x14 ~400~ //XP (was: 1000)
+		//CHAN21 (Kettenhemd +3)
+		REPLACE_CRE_ITEM ~CHAN21~ #0 #0 #0 ~unstealable&undroppable~ ~armor~
+		ADD_CRE_ITEM ~CHAN02~ #0 #0 #0 ~unstealable~ ~inv2~
+		//BHSW1H01 (Ninja +2, +6 gegen Rechtschaffen Gute )
+		PATCH_IF (RANDOM(0 99) < %pl_base%) BEGIN
+			REPLACE_CRE_ITEM ~SW1H49~ #0 #0 #0 ~NONE~ ~weapon2~
+		END
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~BHKRELUS.CRE~ ~override~
+		//Name: Krellus 
+		WRITE_SHORT 0x14 ~300~ //XP (was: 750)
+		//CHAN08 (Kettenhemd +2)
+		REPLACE_CRE_ITEM ~CHAN08~ #0 #0 #0 ~unstealable&undroppable~ ~armor~
+		ADD_CRE_ITEM ~CHAN02~ #0 #0 #0 ~unstealable~ ~inv2~
+		//SHLD06 (Langschild +1)
+		PATCH_IF (RANDOM(0 99) < %pl_base%) BEGIN
+		  REPLACE_CRE_ITEM ~SHLD05~ #0 #0 #0 ~NONE~ ~shield~
+		END
+		//BELT06 (Gürtel der Hügelriesenstärke)
+		REPLACE_CRE_ITEM ~BELT06~ #0 #0 #0 ~unstealable&undroppable~ ~boots~
+		ADD_CRE_ITEM ~BELT01~ #0 #0 #0 ~unstealable~ ~inv3~
+		//BLUN13 (Flegel +2)
+		REPLACE_CRE_ITEM ~BLUN13~ #0 #0 #0 ~unstealable&undroppable~ ~weapon1~ EQUIP
+		ADD_CRE_ITEM ~BLUN03~ #0 #0 #0 ~unstealable~ ~inv4~
+		PATCH_IF (RANDOM(0 99) < %pl_base%) BEGIN
+		  REPLACE_CRE_ITEM ~BLUN02~ #0 #0 #0 ~unstealable~ ~inv4~
+		END
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~BHLIZGRD.cre~ ~override~
+		//Name: Echsenmensch 
+		WRITE_SHORT 0x14 ~170~ //XP (was: 425)
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~BHLIZKNG.cre~ ~override~
+		//Name: Echsenmenschen-König
+		WRITE_SHORT 0x14 ~2320~ //XP (was: 5800)
+		//HALB03 (Hellebarde +2)
+		PATCH_IF (RANDOM(0 99) < %pl_base%) BEGIN
+		  REPLACE_CRE_ITEM ~HALB01~ #0 #0 #0 ~NONE~ ~weapon1~ EQUIP
+		END
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~BHLIZSHA.cre~ ~override~
+		//Name: Echsenmenschen-Schamane 
+		WRITE_SHORT 0x14 ~990~ //XP (was: 2480)
+		//WAND02 (Stab der Furcht)
+		//REPLACE_CRE_ITEM ~WAND02~ #0 #0 #0 ~NONE~ ~qitem1~
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~BHLOCIDA.CRE~ ~override~
+		//Name: Locinda 
+		//WRITE_SHORT 0x14 ~0~ //XP (was: 0)
+		//SW1H02 (Bastardschwert +1)
+		PATCH_IF (RANDOM(0 99) < %pl_base%) BEGIN
+		  REPLACE_CRE_ITEM ~SW1H01~ #0 #0 #0 ~NONE~ ~weapon1~ EQUIP
+		END
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~BHLOTHAR.cre~ ~override~
+		//Name: Lothar 
+		WRITE_SHORT 0x14 ~280~ //XP (was: 700)
+		//LEAT02 (Lederrüstung +1)
+		PATCH_IF (RANDOM(0 99) < %pl_base%) BEGIN
+		  REPLACE_CRE_ITEM ~LEAT01~ #0 #0 #0 ~NONE~ ~armor~
+		END
+		//BRAC17 (Handschuhe des Taschendiebstahls)
+		REPLACE_CRE_ITEM ~BRAC17~ #0 #0 #0 ~unstealable&undroppable~ ~gloves~
+		ADD_CRE_ITEM ~BRAC05~ #0 #0 #0 ~unstealable~ ~inv1~
+		//RING07 (Schutzring +2)
+		REPLACE_CRE_ITEM ~RING07~ #0 #0 #0 ~unstealable&undroppable~ ~lring~
+		ADD_CRE_ITEM ~RING06~ #0 #0 #0 ~unstealable~ ~inv2~
+		//SW1H02 (Bastardschwert +1) does not fit for a thief
+		REPLACE_CRE_ITEM ~SW1H05~ #0 #0 #0 ~NONE~ ~weapon1~		
+		PATCH_IF (RANDOM(0 99) < %pl_base%) BEGIN
+		  REPLACE_CRE_ITEM ~SW1H04~ #0 #0 #0 ~NONE~ ~weapon1~
+		END
+		//AX1H06 (Wurfbeil +2) does not fit for a thief
+		REPLACE_CRE_ITEM ~DAGG16~ #0 #0 #0 ~NONE~ ~weapon2~ EQUIP
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~BHLYDIA.CRE~ ~override~
+		//Name: Lydia 
+		//WRITE_SHORT 0x14 ~0~ //XP (was: 0)
+		//BRAC14 (Abwehrarmschützer RK 4)
+		REPLACE_CRE_ITEM ~BRAC14~ #0 #0 #0 ~unstealable&undroppable~ ~gloves~
+		ADD_CRE_ITEM ~BRAC02~ #0 #0 #0 ~unstealable~ ~inv1~
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~BHMARTI1.CRE~ ~override~
+		//Name: Martin 
+		//WRITE_SHORT 0x14 ~0~ //XP (was: 0)
+		//RING06 (Schutzring +1)
+		REPLACE_CRE_ITEM ~RING15~ #0 #0 #0 ~NONE~ ~lring~
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~BHMARTIN.CRE~ ~override~
+		//Name: Martin 
+		WRITE_SHORT 0x14 ~80~ //XP (was: 200)
+		//ISHLD02 (Kleiner Schild +1)
+		PATCH_IF (RANDOM(0 99) < %pl_base%) BEGIN
+		  REPLACE_CRE_ITEM ~SHLD01~ #0 #0 #0 ~NONE~ ~shield~
+		END
+		//SW1H05 (Langschwert +1)
+		PATCH_IF (RANDOM(0 99) < %pl_base%) BEGIN
+		  REPLACE_CRE_ITEM ~SW1H04~ #0 #0 #0 ~NONE~ ~weapon1~
+		END
+		//IPOTN08 (Heiltrank)
+		//REPLACE_CRE_ITEM ~IPOTN08~ #0 #0 #0 ~NONE~ ~qitem1~
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~BHMARVIN.cre~ ~override~
+		//Name: Marvin 
+		//WRITE_SHORT 0x14 ~0~ //XP (was: 0)
+	BUT_ONLY_IF_IT_CHANGES
+/*	COPY_EXISTING ~BHOGRE.CRE~ ~override~
+		//Name: Oger 
+		WRITE_SHORT 0x14 ~105~ //XP (was: 270)
+		//AMUL15 (Schildamulett)
+		REPLACE_CRE_ITEM ~AMUL07~ #0 #0 #0 ~NONE~ ~amulet~
+		//BLUN24 (Keule +2)
+		REPLACE_CRE_ITEM ~BLUN01~ #0 #0 #0 ~NONE~ ~weapon1~
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~BHOGUARD.cre~ ~override~
+		//Name: Ogerwache 
+		WRITE_SHORT 0x14 ~50~ //XP (was: 125)
+		//AROW02 (Pfeile +1)
+		REPLACE_CRE_ITEM ~AROW01~ #0 #0 #0 ~NONE~ ~weapon4~
+	BUT_ONLY_IF_IT_CHANGES */
+	COPY_EXISTING ~BHOHLATT.cre~ ~override~
+		//Name: Ohlatta 
+		//WRITE_SHORT 0x14 ~0~ //XP (was: 0)
+		//BRAC01 (Abwehrarmschützer RK 8)
+		//REPLACE_CRE_ITEM ~BRAC01~ #0 #0 #0 ~NONE~ ~gloves~
+		//BOOT01 (Siebenmeilenstiefel)
+		REPLACE_CRE_ITEM ~BOOT01~ #0 #0 #0 ~unstealable&undroppable~ ~boots~
+		ADD_CRE_ITEM ~BOOT06~ #0 #0 #0 ~unstealable~ ~inv1~
+		//DAGG03 (Dolch +2) seems to be a questitem
+		//WAND02 (Stab der Furcht)
+		//REPLACE_CRE_ITEM ~WAND02~ #0 #0 #0 ~NONE~ ~qitem1~
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~BHOLIEUT.CRE~ ~override~
+		//Name: Ogerleutnant 
+		WRITE_SHORT 0x14 ~160~ //XP (was: 400)
+		//CHAN08 (Kettenhemd +2)
+		REPLACE_CRE_ITEM ~CHAN08~ #0 #0 #0 ~unstealable&undroppable~ ~armor~
+		ADD_CRE_ITEM ~CHAN02~ #0 #0 #0 ~unstealable~ ~inv4~
+		PATCH_IF (RANDOM(0 99) < %pl_base%) BEGIN
+		  REPLACE_CRE_ITEM ~CHAN01~ #0 #0 #0 ~unstealable~ ~inv4~
+		END
+		//SW1H05 (Langschwert +1)
+		PATCH_IF (RANDOM(0 99) < %pl_base%) BEGIN
+		  REPLACE_CRE_ITEM ~SW1H04~ #0 #0 #0 ~NONE~ ~weapon1~
+		END
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~BHORC01.CRE~ ~override~
+		//Name: Oger 
+		SAY NAME1 ~Ork~
+		SAY NAME2 ~Ork~
+		WRITE_SHORT 0x14 ~50~ //XP (was: 125)
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~BHORC01D.CRE~ ~override~
+		//Name: Oger 
+		WRITE_SHORT 0x14 ~50~ //XP (was: 125)
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~BHORC03.CRE~ ~override~
+		//Name: Ogerführer 
+		WRITE_SHORT 0x14 ~1600~ //XP (was: 4000)
+		//RING09 (Ring der Handlungsfreiheit)
+		REPLACE_CRE_ITEM ~RING09~ #0 #0 #0 ~unstealable&undroppable~ ~lring~
+		ADD_CRE_ITEM ~RING06~ #0 #0 #0 ~unstealable~ ~inv3~
+		PATCH_IF (RANDOM(0 99) < %pl_base%) BEGIN
+		  REPLACE_CRE_ITEM ~RING10~ #0 #0 #0 ~NONE~ ~inv3~
+		END
+		//SW1H06 (Langschwert +2)
+		REPLACE_CRE_ITEM ~SW1H06~ #0 #0 #0 ~unstealable&undroppable~ ~weapon1~ EQUIP
+		ADD_CRE_ITEM ~SW1H05~ #0 #0 #0 ~unstealable~ ~inv5~
+		//HAMM03 (Kriegshammer +2)
+		REPLACE_CRE_ITEM ~HAMM01~ #0 #0 #0 ~NONE~ ~inv1~
+		//SW1H55 (Katana +2)
+		REPLACE_CRE_ITEM ~SW1H43~ #0 #0 #0 ~NONE~ ~inv2~
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~BHOSCAR.cre~ ~override~
+		//Name: Oskar 
+		WRITE_SHORT 0x14 ~120~ //XP (was: 300)
+		//SLNG02 (Schleuder +1)
+		PATCH_IF (RANDOM(0 99) < %pl_base%) BEGIN
+		  REPLACE_CRE_ITEM ~SLNG01~ #0 #0 #0 ~NONE~ ~weapon1~
+		END
+		//SW1H09 (Kurzschwert +2)
+		REPLACE_CRE_ITEM ~SW1H09~ #0 #0 #0 ~unstealable&undroppable~ ~weapon1~ EQUIP
+		ADD_CRE_ITEM ~SW1H08~ #0 #0 #0 ~unstealable~ ~inv1~
+		PATCH_IF (RANDOM(0 99) < %pl_base%) BEGIN
+		  REPLACE_CRE_ITEM ~SW1H07~ #0 #0 #0 ~unstealable~ ~inv1~
+		END
+		//BULL02 (Kugeln +1)
+		//REPLACE_CRE_ITEM ~BULL02~ #0 #0 #0 ~NONE~ ~quiver1~
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~bhpell.cre~ ~override~
+		//Name: Pelltar 
+		//WRITE_SHORT 0x14 ~0~ //XP (was: 0)
+		//BRAC14 (Abwehrarmschützer RK 4)
+		REPLACE_CRE_ITEM ~BRAC15~ #0 #0 #0 ~unstealable&undroppable~ ~gloves~
+		ADD_CRE_ITEM ~BRAC02~ #0 #0 #0 ~unstealable~ ~inv2~
+		//BOOT01 (Siebenmeilenstiefel)
+		REPLACE_CRE_ITEM ~BOOT01~ #0 #0 #0 ~unstealable&undroppable~ ~boots~
+		ADD_CRE_ITEM ~BOOT06~ #0 #0 #0 ~unstealable~ ~inv3~
+		//DAGG24 (Dolch +3)
+		REPLACE_CRE_ITEM ~DAGG24~ #0 #0 #0 ~unstealable&undroppable~ ~weapon1~ EQUIP
+		ADD_CRE_ITEM ~DAGG02~ #0 #0 #0 ~unstealable~ ~inv4~
+		//CLCK02 (Schutzumhang +2)
+		REPLACE_CRE_ITEM ~CLCK02~ #0 #0 #0 ~unstealable&undroppable~ ~cloak~
+		ADD_CRE_ITEM ~CLCK01~ #0 #0 #0 ~unstealable~ ~inv5~
+		//WAND07 (Stab der Blitze)
+		//REPLACE_CRE_ITEM ~WAND07~ #0 #0 #0 ~NONE~ ~qitem1~
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~BHPERK.cre~ ~override~
+		//Name: Perk 
+		//WRITE_SHORT 0x14 ~0~ //XP (was: 0)
+		//LEAT02 (Lederrüstung +1)
+		REPLACE_CRE_ITEM ~LEAT01~ #0 #0 #0 ~NONE~ ~armor~
+		//BOW04 (Langbogen +1)
+		REPLACE_CRE_ITEM ~BOW03~ #0 #0 #0 ~NONE~ ~weapon1~
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~BHPHILMA.cre~ ~override~
+		//Name: Philmar 
+		WRITE_SHORT 0x14 ~120~ //XP (was: 300)
+		//DART02 (Wurfpfeil +1)
+		//REPLACE_CRE_ITEM ~DART02~ #0 #0 #0 ~NONE~ ~weapon1~
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~BHPHYLLI.cre~ ~override~
+		//Name: Phyllis 
+		//WRITE_SHORT 0x14 ~0~ //XP (was: 0)
+		//CLCK10 (Feuerschutzrobe)
+		//REPLACE_CRE_ITEM ~CLCK10~ #0 #0 #0 ~NONE~ ~armor~
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~BHPRISKA.cre~ ~override~
+		//Name: Priska 
+		WRITE_SHORT 0x14 ~80~ //XP (was: 200)
+		//RING07 (Schutzring +2)
+		REPLACE_CRE_ITEM ~RING07~ #0 #0 #0 ~unstealable&undroppable~ ~lring~
+		ADD_CRE_ITEM ~RING06~ #0 #0 #0 ~unstealable~ ~inv1~
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~bhqual.cre~ ~override~
+		//Name: Qualton 
+		WRITE_SHORT 0x14 ~320~ //XP (was: 800)
+		//CHAN08 (Kettenhemd +2)
+		REPLACE_CRE_ITEM ~CHAN08~ #0 #0 #0 ~unstealable&undroppable~ ~armor~
+		ADD_CRE_ITEM ~CHAN02~ #0 #0 #0 ~unstealable~ ~inv4~
+		PATCH_IF (RANDOM(0 99) < %pl_base%) BEGIN
+		  REPLACE_CRE_ITEM ~CHAN01~ #0 #0 #0 ~unstealable~ ~inv4~
+		END
+		//SHLD04 (Mittlerer Schild +1)
+		PATCH_IF (RANDOM(0 99) < %pl_base%) BEGIN
+		  REPLACE_CRE_ITEM ~SHLD03~ #0 #0 #0 ~NONE~ ~shield~
+		END
+		//BLUN12 (Streitkolben gegen Untote)
+		REPLACE_CRE_ITEM ~BLUN12~ #0 #0 #0 ~unstealable&undroppable~ ~weapon1~ EQUIP
+		ADD_CRE_ITEM ~BLUN05~ #0 #0 #0 ~unstealable~ ~inv5~
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~BHQUENEX.cre~ ~override~
+		//Name: Quenex 
+		//WRITE_SHORT 0x14 ~0~ //XP (was: 0)
+		//CHAN03 (Kettenhemd +2)
+		REPLACE_CRE_ITEM ~CHAN03~ #0 #0 #0 ~unstealable&undroppable~ ~armor~
+		ADD_CRE_ITEM ~CHAN02~ #0 #0 #0 ~unstealable~ ~inv4~		
+		PATCH_IF (RANDOM(0 99) < %pl_base%) BEGIN
+		  REPLACE_CRE_ITEM ~CHAN01~ #0 #0 #0 ~NONE~ ~inv4~
+		END
+		//BLUN05 (Streitkolben +1)
+		PATCH_IF (RANDOM(0 99) < %pl_base%) BEGIN
+		  REPLACE_CRE_ITEM ~BLUN04~ #0 #0 #0 ~NONE~ ~weapon1~
+		END
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~BHRAT.CRE~ ~override~
+		//Name: Riesenratte 
+		WRITE_SHORT 0x14 ~5~ //XP (was: 14)
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~bhravela.cre~ ~override~
+		//Name: Ravella 
+		WRITE_SHORT 0x14 ~65~ //XP (was: 165)
+		//BOW02 (Komposit-Langbogen +1)
+		REPLACE_CRE_ITEM ~BOW02~ #0 #0 #0 ~unstealable&undroppable~ ~weapon2~ EQUIP
+		ADD_CRE_ITEM ~BOW01~ #0 #0 #0 ~unstealable~ ~inv4~
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~BHRELBA.cre~ ~override~
+		//Name: Relba 
+		//WRITE_SHORT 0x14 ~0~ //XP (was: 0)
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~bhrgslep.cre~ ~override~
+		//Name: Wache 
+		WRITE_SHORT 0x14 ~65~ //XP (was: 165)
+		//BOW02 (Komposit-Langbogen +1)
+		REPLACE_CRE_ITEM ~BOW02~ #0 #0 #0 ~unstealable&undroppable~ ~weapon2~ EQUIP
+		ADD_CRE_ITEM ~BOW01~ #0 #0 #0 ~unstealable~ ~inv4~
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~bhrguard.cre~ ~override~
+		//Name: Wache 
+		WRITE_SHORT 0x14 ~65~ //XP (was: 165)
+		//BOW02 (Komposit-Langbogen +1)
+		REPLACE_CRE_ITEM ~BOW02~ #0 #0 #0 ~unstealable&undroppable~ ~weapon2~ EQUIP
+		ADD_CRE_ITEM ~BOW01~ #0 #0 #0 ~unstealable~ ~inv4~
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~BHROGAN.cre~ ~override~
+		//Name: Rogan 
+		WRITE_SHORT 0x14 ~100~ //XP (was: 250)
+		//LEAT05 (Beschlagenes Lederwams +1)
+		PATCH_IF (RANDOM(0 99) < %pl_base%) BEGIN
+		  REPLACE_CRE_ITEM ~LEAT04~ #0 #0 #0 ~NONE~ ~armor~
+		END
+		//SW1H09 (Kurzschwert +2)
+		REPLACE_CRE_ITEM ~SW1H09~ #0 #0 #0 ~unstealable&undroppable~ ~weapon1~
+		ADD_CRE_ITEM ~SW1H07~ #0 #0 #0 ~unstealable~ ~inv3~
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~BHSANGST.cre~ ~override~
+		//Name: Sänger 
+		WRITE_SHORT 0x14 ~160~ //XP (was: 400)
+		//LEAT20 (Lederharnisch +3)
+		REPLACE_CRE_ITEM ~LEAT20~ #0 #0 #0 ~unstealable&undroppable~ ~armor~
+		ADD_CRE_ITEM ~LEAT05~ #0 #0 #0 ~unstealable~ ~inv2~
+		PATCH_IF (RANDOM(0 99) < %pl_base%) BEGIN
+		  REPLACE_CRE_ITEM ~LEAT10~ #0 #0 #0 ~NONE~ ~inv2~
+		END		
+		//RING05 (Unsichtbarkeitsring)
+		REPLACE_CRE_ITEM ~RING06~ #0 #0 #0 ~NONE~ ~lring~
+		PATCH_IF (RANDOM(0 99) < %pl_base%) BEGIN
+		  REPLACE_CRE_ITEM ~RING12~ #0 #0 #0 ~NONE~ ~lring~
+		END
+		//SW1H09 (Kurzschwert +2)
+		REPLACE_CRE_ITEM ~SW1H09~ #0 #0 #0 ~unstealable&undroppable~ ~weapon1~
+		ADD_CRE_ITEM ~SW1H07~ #0 #0 #0 ~unstealable~ ~inv3~
+		//CLCK23 (Elfenumhang) seems to be a questitem
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~bhselmo.cre~ ~override~
+		//Name: Selmo 
+		//WRITE_SHORT 0x14 ~0~ //XP (was: 0)
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~BHSHARG1.cre~ ~override~
+		//Name: Söldner 
+		WRITE_SHORT 0x14 ~160~ //XP (was: 400)
+		//CHAN08 (Kettenhemd +2)
+		REPLACE_CRE_ITEM ~CHAN08~ #0 #0 #0 ~unstealable&undroppable~ ~armor~
+		ADD_CRE_ITEM ~CHAN02~ #0 #0 #0 ~unstealable~ ~inv1~
+		PATCH_IF (RANDOM(0 99) < %pl_base%) BEGIN
+		  REPLACE_CRE_ITEM ~CHAN01~ #0 #0 #0 ~unstealable~ ~inv1~
+		END
+		//SW1H05 (Langschwert +1)
+		PATCH_IF (RANDOM(0 99) < %pl_base%) BEGIN
+		  REPLACE_CRE_ITEM ~SW1H04~ #0 #0 #0 ~NONE~ ~weapon1~
+		END
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~BHSHARG2.cre~ ~override~
+		//Name: Söldner 
+		WRITE_SHORT 0x14 ~150~ //XP (was: 375)
+		//LEAT02 (Lederrüstung +1)
+		PATCH_IF (RANDOM(0 99) < %pl_base%) BEGIN
+		  REPLACE_CRE_ITEM ~LEAT01~ #0 #0 #0 ~NONE~ ~armor~
+		END
+		//BOOT02 (Stiefel der List)
+		REPLACE_CRE_ITEM ~BOOT02~ #0 #0 #0 ~unstealable&undroppable~ ~boots~
+		ADD_CRE_ITEM ~BOOT06~ #0 #0 #0 ~unstealable~ ~inv2~
+		//DAGG03 (Dolch +2) seems to be a questitem
+		REPLACE_CRE_ITEM ~DAGG03~ #0 #0 #0 ~unstealable&undroppable~ ~weapon1~ EQUIP
+		ADD_CRE_ITEM ~DAGG01~ #0 #0 #0 ~unstealable~ ~inv3~
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~BHSHARG3.cre~ ~override~
+		//Name: Söldner 
+		WRITE_SHORT 0x14 ~1600~ //XP (was: 4000)
+		//CHAN08 (Kettenhemd +2)
+		REPLACE_CRE_ITEM ~CHAN08~ #0 #0 #0 ~unstealable&undroppable~ ~armor~
+		ADD_CRE_ITEM ~CHAN02~ #0 #0 #0 ~unstealable~ ~inv2~
+		PATCH_IF (RANDOM(0 99) < %pl_base%) BEGIN
+		  REPLACE_CRE_ITEM ~CHAN01~ #0 #0 #0 ~unstealable~ ~inv2~
+		END
+		//SHLD06 (Langschild +1)
+		PATCH_IF (RANDOM(0 99) < %pl_base%) BEGIN
+		  REPLACE_CRE_ITEM ~SHLD05~ #0 #0 #0 ~NONE~ ~shield~
+		END
+		//BLUN13 (Flegel +2)
+		REPLACE_CRE_ITEM ~BLUN13~ #0 #0 #0 ~unstealable&undroppable~ ~weapon1~ EQUIP
+		ADD_CRE_ITEM ~BLUN03~ #0 #0 #0 ~unstealable~ ~inv3~
+		PATCH_IF (RANDOM(0 99) < %pl_base%) BEGIN
+		  REPLACE_CRE_ITEM ~BLUN02~ #0 #0 #0 ~unstealable~ ~inv3~
+		END
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~BHSHARGR.cre~ ~override~
+		//Name: Shargrailar 
+		WRITE_SHORT 0x14 ~800~ //XP (was: 2000)
+		//BOOT01 (Siebenmeilenstiefel)
+		REPLACE_CRE_ITEM ~BOOT01~ #0 #0 #0 ~unstealable&undroppable~ ~boots~
+		ADD_CRE_ITEM ~BOOT06~ #0 #0 #0 ~unstealable~ ~inv3~
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~bhsirius.cre~ ~override~
+		//Name: Sirius 
+		WRITE_SHORT 0x14 ~240~ //XP (was: 600)
+		//LEAT08 (Schattenrüstung)
+		REPLACE_CRE_ITEM ~LEAT08~ #0 #0 #0 ~unstealable&undroppable~ ~armor~
+		ADD_CRE_ITEM ~LEAT05~ #0 #0 #0 ~unstealable~ ~inv7~
+		PATCH_IF (RANDOM(0 99) < %pl_base%) BEGIN
+		  REPLACE_CRE_ITEM ~LEAT02~ #0 #0 #0 ~unstealable~ ~inv7~
+		END
+		//BRAC15 (Abwehrarmschützer RK 3)
+		REPLACE_CRE_ITEM ~BRAC15~ #0 #0 #0 ~unstealable&undroppable~ ~gloves~
+		ADD_CRE_ITEM ~BRAC03~ #0 #0 #0 ~unstealable~ ~inv8~
+		//RING31 (Regenerationsring)
+		REPLACE_CRE_ITEM ~RING31~ #0 #0 #0 ~NONE~ ~lring~
+		//SW1H25 (Kurzschwert +2)
+		REPLACE_CRE_ITEM ~SW1H25~ #0 #0 #0 ~unstealable&undroppable~ ~weapon1~ EQUIP
+		ADD_CRE_ITEM ~SW1H09~ #0 #0 #0 ~unstealable~ ~inv9~
+		PATCH_IF (RANDOM(0 99) < %pl_base%) BEGIN
+		  REPLACE_CRE_ITEM ~SW1H07~ #0 #0 #0 ~unstealable~ ~inv9~
+		END
+		//XBOW06 (Schnellschussarmbrust)
+		REPLACE_CRE_ITEM ~XBOW06~ #0 #0 #0 ~unstealable&undroppable~ ~weapon2~ EQUIP
+		ADD_CRE_ITEM ~XBOW05~ #0 #0 #0 ~unstealable~ ~inv10~
+		PATCH_IF (RANDOM(0 99) < %pl_base%) BEGIN
+		  REPLACE_CRE_ITEM ~XBOW01~ #0 #0 #0 ~unstealable~ ~inv10~
+		END
+		//BHGHAND (Ruhmreiche Hand) seems to be a questitem
+		//BHWAND1 (Schwere Wunden verursachender Zauberstab )
+		PATCH_IF (RANDOM(0 99) < %pl_base%) BEGIN
+			REPLACE_CRE_ITEM ~potn52~ #0 #0 #0 ~NONE~ ~qitem3~
+		END
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~bhsmyth.cre~ ~override~
+		//Name: Schmied 
+		//WRITE_SHORT 0x14 ~0~ //XP (was: 0)
+		//RING06 (Schutzring +1)
+		//REPLACE_CRE_ITEM ~RING06~ #0 #0 #0 ~NONE~ ~lring~
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~BHSOOT.cre~ ~override~
+		//Name: Ruß 
+		//WRITE_SHORT 0x14 ~0~ //XP (was: 0)
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~bhst0102.cre~ ~override~
+		//Name: Pheldman 
+		//WRITE_SHORT 0x14 ~0~ //XP (was: 0)
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~BHTELLI1.cre~ ~override~
+		//Name: Unbekannter Angreifer 
+		//WRITE_SHORT 0x14 ~0~ //XP (was: 0)
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~bhtellis.cre~ ~override~
+		//Name: Tellish 
+		WRITE_SHORT 0x14 ~320~ //XP (was: 800)
+		//LEAT13 (Lederrüstung +4)
+		REPLACE_CRE_ITEM ~LEAT13~ #0 #0 #0 ~unstealable&undroppable~ ~armor~
+		ADD_CRE_ITEM ~LEAT02~ #0 #0 #0 ~unstealable~ ~inv3~
+		//AMUL15 (Schildamulett)
+		PATCH_IF (RANDOM(0 99) < %pl_base%) BEGIN
+		  REPLACE_CRE_ITEM ~AMUL07~ #0 #0 #0 ~NONE~ ~amulet~
+		END
+		//BOOT02 (Stiefel der List)
+		REPLACE_CRE_ITEM ~BOOT02~ #0 #0 #0 ~unstealable&undroppable~ ~boots~
+		ADD_CRE_ITEM ~BOOT06~ #0 #0 #0 ~unstealable~ ~inv4~
+		//BHCLUB01 (Keule +2, der Helfer des Mörders )
+		PATCH_IF (RANDOM(0 99) < %pl_base%) BEGIN
+			REPLACE_CRE_ITEM ~blun01~ #0 #0 #0 ~NONE~ ~weapon1~
+		END
+		//BHCLCK01 (Umhang des Mörders )
+		PATCH_IF (RANDOM(0 99) < %pl_plus1%) BEGIN
+			REPLACE_CRE_ITEM ~CLCK01~ #0 #0 #0 ~NONE~ ~cloak~
+		END
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~bhtelv.cre~ ~override~
+		//Name: Telvar 
+		WRITE_SHORT 0x14 ~240~ //XP (was: 600)
+		//CLCK14 (Robe des Abenteurers)
+		//REPLACE_CRE_ITEM ~CLCK14~ #0 #0 #0 ~NONE~ ~armor~
+		//DAGG04 (Langzahndolch)
+		REPLACE_CRE_ITEM ~DAGG04~ #0 #0 #0 ~unstealable&undroppable~ ~weapon1~ EQUIP
+		ADD_CRE_ITEM ~sw1h09~ #0 #0 #0 ~unstealable~ ~inv3~
+		PATCH_IF (RANDOM(0 99) < %pl_base%) BEGIN
+		  REPLACE_CRE_ITEM ~DAGG02~ #0 #0 #0 ~unstealable~ ~inv3~
+		END
+		//CLCK02 (Schutzumhang +2)
+		REPLACE_CRE_ITEM ~CLCK02~ #0 #0 #0 ~unstealable&undroppable~ ~cloak~
+		ADD_CRE_ITEM ~CLCK01~ #0 #0 #0 ~unstealable~ ~inv4~
+		//WAND02 (Stab der Furcht)
+		//REPLACE_CRE_ITEM ~WAND02~ #0 #0 #0 ~NONE~ ~qitem1~
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~bhthief.cre~ ~override~
+		//Name: Schurke 
+		//WRITE_SHORT 0x14 ~5~ //XP (was: 15)
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~BHTHIEF1.CRE~ ~override~
+		//Name: Schurke 
+		WRITE_SHORT 0x14 ~140~ //XP (was: 350)
+		//CLCK14 (Robe des Abenteurers)
+		//REPLACE_CRE_ITEM ~CLCK14~ #0 #0 #0 ~NONE~ ~armor~
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~BHTOLVAR.CRE~ ~override~
+		//Name: Tolvar 
+		//WRITE_SHORT 0x14 ~0~ //XP (was: 0)
+		//CLCK13 (Robe des Reisenden)
+		//REPLACE_CRE_ITEM ~CLCK13~ #0 #0 #0 ~NONE~ ~armor~
+		//BRAC01 (Abwehrarmschützer RK 8)
+		//REPLACE_CRE_ITEM ~BRAC01~ #0 #0 #0 ~NONE~ ~gloves~
+		//RING06 (Schutzring +1)
+		PATCH_IF (RANDOM(0 99) < %pl_base%) BEGIN
+		  REPLACE_CRE_ITEM ~RING14~ #0 #0 #0 ~NONE~ ~lring~
+		END
+		//SCRL81 (Schlaf)
+		//REPLACE_CRE_ITEM ~SCRL81~ #0 #0 #0 ~NONE~ ~inv1~
+		//SCRL69 (Personen bezaubern)
+		//REPLACE_CRE_ITEM ~SCRL69~ #0 #0 #0 ~NONE~ ~inv2~
+		//SCRL90 (Unsichtbarkeit)
+		//REPLACE_CRE_ITEM ~SCRL90~ #0 #0 #0 ~NONE~ ~inv3~
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~BHTWEN01.CRE~ ~override~
+		//Name: Tavernenhure 
+		//WRITE_SHORT 0x14 ~0~ //XP (was: 0)
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~BHVOICE.cre~ ~override~
+		//Name: Statue 
+		//WRITE_SHORT 0x14 ~0~ //XP (was: 0)
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~BHVOLCFR.CRE~ ~override~
+		//Name: Volcifar 
+		//WRITE_SHORT 0x14 ~0~ //XP (was: 0)
+		//LEAT05 (Beschlagenes Lederwams +1)
+		//REPLACE_CRE_ITEM ~LEAT05~ #0 #0 #0 ~NONE~ ~armor~
+		//RING06 (Schutzring +1)
+		//REPLACE_CRE_ITEM ~RING06~ #0 #0 #0 ~NONE~ ~lring~
+		//RING34 (Zauberwendering)
+		REPLACE_CRE_ITEM ~RING34~ #0 #0 #0 ~unstealable&undroppable~ ~lring~
+		ADD_CRE_ITEM ~RING06~ #0 #0 #0 ~unstealable~ ~inv3~
+		PATCH_IF (RANDOM(0 99) < %pl_base%) BEGIN
+		  REPLACE_CRE_ITEM ~RING18~ #0 #0 #0 ~unstealable~ ~inv3~
+		END
+		//MISC75 (Giftdolch)
+		REPLACE_CRE_ITEM ~MISC75~ #0 #0 #0 ~unstealable&undroppable~ ~weapon1~
+		ADD_CRE_ITEM ~DAGG02~ #0 #0 #0 ~unstealable~ ~inv4~
+		//SLNG07 (Schleuder +2)
+		REPLACE_CRE_ITEM ~SLNG07~ #0 #0 #0 ~unstealable&undroppable~ ~weapon2~ EQUIP
+		ADD_CRE_ITEM ~SLNG02~ #0 #0 #0 ~unstealable~ ~inv5~
+		PATCH_IF (RANDOM(0 99) < %pl_base%) BEGIN
+		  REPLACE_CRE_ITEM ~SLNG01~ #0 #0 #0 ~unstealable~ ~inv5~
+		END
+		//BULL02 (Kugeln +1)
+		//REPLACE_CRE_ITEM ~BULL02~ #0 #0 #0 ~NONE~ ~quiver2~
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~BHWARDOG.CRE~ ~override~
+		//Name: Wachhund 
+		WRITE_SHORT 0x14 ~25~ //XP (was: 65)
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~BHWATCHR.cre~ ~override~
+		//Name: Beobachter 
+		//WRITE_SHORT 0x14 ~0~ //XP (was: 0)
+		//SW1H02 (Bastardschwert +1)
+		PATCH_IF (RANDOM(0 99) < %pl_base%) BEGIN
+		  REPLACE_CRE_ITEM ~SW1H01~ #0 #0 #0 ~NONE~ ~weapon1~
+		END
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~BHWELCAR.cre~ ~override~
+		//Name: Welcar 
+		WRITE_SHORT 0x14 ~50~ //XP (was: 125)
+		//LEAT11 (Lederrüstung +2)
+		REPLACE_CRE_ITEM ~LEAT11~ #0 #0 #0 ~unstealable&undroppable~ ~armor~
+		ADD_CRE_ITEM ~LEAT02~ #0 #0 #0 ~unstealable~ ~inv2~
+		PATCH_IF (RANDOM(0 99) < %pl_base%) BEGIN
+		  REPLACE_CRE_ITEM ~LEAT01~ #0 #0 #0 ~unstealable~ ~inv2~
+		END
+		//RING09 (Ring der Handlungsfreiheit)
+		REPLACE_CRE_ITEM ~RING09~ #0 #0 #0 ~unstealable&undroppable~ ~lring~
+		ADD_CRE_ITEM ~RING10~ #0 #0 #0 ~unstealable~ ~inv3~
+		//SW1H05 (Langschwert +1)
+		PATCH_IF (RANDOM(0 99) < %pl_base%) BEGIN
+		  REPLACE_CRE_ITEM ~SW1H04~ #0 #0 #0 ~NONE~ ~weapon1~
+		END
+		//WAND14 (Spinnwebensack)
+		REPLACE_CRE_ITEM ~potn52~ #0 #0 #0 ~NONE~ ~qitem1~
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~bhwilbur.cre~ ~override~
+		//Name: Wilbur 
+		//WRITE_SHORT 0x14 ~0~ //XP (was: 0)
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~BHWILFON.cre~ ~override~
+		//Name: Wilfong 
+		//WRITE_SHORT 0x14 ~0~ //XP (was: 0)
+		//RING06 (Schutzring +1)
+		//REPLACE_CRE_ITEM ~RING06~ #0 #0 #0 ~NONE~ ~lring~
+		//AMUL17 (Grünsteinamulett)
+		REPLACE_CRE_ITEM ~AMUL17~ #0 #0 #0 ~unstealable&undroppable~ ~amulet~
+		ADD_CRE_ITEM ~AMUL07~ #0 #0 #0 ~unstealable~ ~inv1~
+		//SW1H05 (Langschwert +1)
+		REPLACE_CRE_ITEM ~SW1H04~ #0 #0 #0 ~NONE~ ~weapon1~
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~BHWILLIS.cre~ ~override~
+		//Name: Willis 
+		//WRITE_SHORT 0x14 ~0~ //XP (was: 0)
+		//BRAC13 (Abwehrarmschützer RK 5)
+		REPLACE_CRE_ITEM ~BRAC01~ #0 #0 #0 ~NONE~ ~gloves~
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~BHWOLFD.CRE~ ~override~
+		//Name: Schreckenswolf
+		WRITE_SHORT 0x14 ~220~ //XP (was: 557)
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~BHWRAITH.cre~ ~override~
+		//Name: Gespenst 
+		WRITE_SHORT 0x14 ~800~ //XP (was: 2000)
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~BHYALTA.cre~ ~override~
+		//Name: Yalta 
+		//WRITE_SHORT 0x14 ~0~ //XP (was: 0)
+		//SHLD04 (Mittlerer Schild +1)
+		REPLACE_CRE_ITEM ~SHLD03~ #0 #0 #0 ~NONE~ ~shield~
+		//BLUN05 (Streitkolben +1)
+		REPLACE_CRE_ITEM ~BLUN04~ #0 #0 #0 ~NONE~ ~weapon1~
+		//STAF05 (Schlagstecken)
+		REPLACE_CRE_ITEM ~STAF01~ #0 #0 #0 ~NONE~ ~inv1~
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~BHZAHR.cre~ ~override~
+		//Name: Zahrdahl 
+		WRITE_SHORT 0x14 ~40~ //XP (was: 100)
+		//BRAC13 (Abwehrarmschützer RK 5)
+		REPLACE_CRE_ITEM ~BRAC02~ #0 #0 #0 ~NONE~ ~gloves~
+		//DAGG13 (Dolch +3)
+		REPLACE_CRE_ITEM ~DAGG01~ #0 #0 #0 ~NONE~ ~weapon2~ EQUIP
+	BUT_ONLY_IF_IT_CHANGES
+END		

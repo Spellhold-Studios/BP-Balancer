@@ -1,0 +1,347 @@
+DEFINE_ACTION_MACRO ~bg1_action_macro_creatures_restore~ BEGIN
+
+	LOCAL_SET "pl_base" = "%patch_base%"
+	LOCAL_SET "pl_plus1" = ((%patch_base% + (((100 - %patch_base%) / 4) * 1)) * %patch_base%) / %patch_base%
+	LOCAL_SET "pl_plus2" = ((%patch_base% + (((100 - %patch_base%) / 4) * 2)) * %patch_base%) / %patch_base%
+	LOCAL_SET "pl_plus3" = ((%patch_base% + (((100 - %patch_base%) / 4) * 3)) * %patch_base%) / %patch_base%
+	PRINT "Patch Basis: %pl_base% pct, Plus1: %pl_plus1%, Plus2: %pl_plus2%, Plus3: %pl_plus3%"
+	
+	//DSotSC
+	COPY_EXISTING ~AMARAN.cre~ ~override~ //Amarande
+		  WRITE_SHORT 0x14 ~120~
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~ANDRIS.cre~ ~override~ //Andris
+		  WRITE_SHORT 0x14 ~6000~
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~ARLIN.cre~ ~override~ //Arlin
+		  WRITE_SHORT 0x14 ~850~
+		  REPLACE_CRE_ITEM ~STAF01~ #0 #0 #0 ~unstealable~ ~WEAPON1~ EQUIP 
+		  //custom items
+		  //DSROBESO (Robe des Magiers)
+		  //PATCH_IF (RANDOM(0 99) < %pl_base%) BEGIN
+		  //  REPLACE_CRE_ITEM ~CLCK14~ #0 #0 #0 ~unstealable~ ~ARMOR~
+		  //END  
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~BOR.cre~ ~override~ //Bor
+		  REPLACE_CRE_ITEM ~PLAT01~ #0 #0 #0 ~unstealable~ ~ARMOR~ 
+		  //custom items
+		  //DSAXE02 (Streitaxt+2 'Der Erzürner')
+		  PATCH_IF (RANDOM(0 99) < %pl_base%) BEGIN
+		    REPLACE_CRE_ITEM ~DART03~ #0 #0 #0 ~unstealable~ ~WEAPON1~
+		  END  
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~BRUNOS.cre~ ~override~ //Brunos
+		  REPLACE_CRE_ITEM ~CHAN02~ #0 #0 #0 ~unstealable~ ~ARMOR~ 
+		  REPLACE_CRE_ITEM ~rndtre01~ #0 #0 #0 ~NONE~ ~INV1~ //Ausbügeln von ADD_CRE bei DSotSC
+		  REPLACE_CRE_ITEM ~rndtre01~ #0 #0 #0 ~NONE~ ~INV2~ //Ausbügeln von ADD_CRE bei DSotSC
+		  REPLACE_CRE_ITEM ~rndtre01~ #0 #0 #0 ~NONE~ ~INV3~ //Ausbügeln von ADD_CRE bei DSotSC
+		  //custom items
+		  //DSSHLD54 (Kelubs Langschild gegen Geschosse)
+		  REPLACE_CRE_ITEM ~SHLD04~ #0 #0 #0 ~unstealable~ ~SHIELD~
+		  //DSBRACDX (Gechicklichkeitshandschuhe+2 zu Armmschützer)
+		  REPLACE_CRE_ITEM ~BRAC05~ #0 #0 #0 ~unstealable~ ~GLOVES~
+		  //DSBOOT02 (Stiefel des Mustes +5 gg. stumpfe Waffen)
+		  PATCH_IF (RANDOM(0 99) < %pl_base%) BEGIN
+		    REPLACE_CRE_ITEM ~BOOT06~ #0 #0 #0 ~unstealable~ ~BOOTS~
+		  END  
+		  //DSKATAN1 (Katana+2 'Masmamune')
+		  PATCH_IF (RANDOM(0 99) < %pl_base%) BEGIN
+		    REPLACE_CRE_ITEM ~DART03~ #0 #0 #0 ~unstealable~ ~WEAPON1~ EQUIP
+		  END  
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~COKSMTH.cre~ ~override~ //Peter aus dem Norden
+		  REPLACE_CRE_ITEM ~CHAN04~ #0 #0 #0 ~unstealable~ ~ARMOR~ 
+		  REPLACE_CRE_ITEM ~rndtre01~ #0 #0 #0 ~NONE~ ~INV1~ //Ausbügeln von ADD_CRE bei DSotSC
+		  REPLACE_CRE_ITEM ~rndtre01~ #0 #0 #0 ~NONE~ ~INV2~ //Ausbügeln von ADD_CRE bei DSotSC
+		  REPLACE_CRE_ITEM ~rndtre01~ #0 #0 #0 ~NONE~ ~INV3~ //Ausbügeln von ADD_CRE bei DSotSC
+		  //custom items
+		  //DSAXE05 (Stangenaxt+2 'Killther')
+		  PATCH_IF (RANDOM(0 99) < %pl_base%) BEGIN
+		    REPLACE_CRE_ITEM ~SW1H04~ #0 #0 #0 ~unstealable~ ~WEAPON1~
+		  END  
+		  //DSBOW01 (Langbogen der Kraft)
+		  PATCH_IF (RANDOM(0 99) < %pl_base%) BEGIN
+		    REPLACE_CRE_ITEM ~BOW03~ #0 #0 #0 ~unstealable~ ~WEAPON1~
+		  END  
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~CORSONE.cre~ ~override~ //Corsone
+		  REPLACE_CRE_ITEM ~LEAT01~ #0 #0 #0 ~unstealable~ ~ARMOR~
+		  REPLACE_CRE_ITEM ~rndtre01~ #0 #0 #0 ~NONE~ ~INV1~ //Ausbügeln von ADD_CRE bei DSotSC
+		  REPLACE_CRE_ITEM ~rndtre01~ #0 #0 #0 ~NONE~ ~INV2~ //Ausbügeln von ADD_CRE bei DSotSC
+		  //custom items
+		  //DSBOOT01 (Stiefel des Waldes)
+		  PATCH_IF (RANDOM(0 99) < %pl_base%) BEGIN
+		  	REPLACE_CRE_ITEM ~BOOT06~ #0 #0 #0 ~unstealable~ ~BOOTS~
+		  END	
+		  //DSPERF (Feuerlanze, Speer+2 +Feuerschaden)
+		  PATCH_IF (RANDOM(0 99) < %pl_base%) BEGIN
+		  	REPLACE_CRE_ITEM ~STAF01~ #0 #0 #0 ~unstealable~ ~WEAPON1~ EQUIP
+		  END	
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~DENAK.cre~ ~override~ //Denak
+		  WRITE_SHORT 0x14 ~1200~
+		  REPLACE_CRE_ITEM ~STAF01~ #0 #0 #0 ~unstealable~ ~WEAPON1~ EQUIP 
+		  REPLACE_CRE_ITEM ~rndtre01~ #0 #0 #0 ~NONE~ ~INV1~ //Ausbügeln von ADD_CRE bei DSotSC
+		  REPLACE_CRE_ITEM ~rndtre01~ #0 #0 #0 ~NONE~ ~INV2~ //Ausbügeln von ADD_CRE bei DSotSC
+		  //custom items
+		  //DSROBESO (Robe des Magiers) 
+		  PATCH_IF (RANDOM(0 99) < %pl_base%) BEGIN
+		  	REPLACE_CRE_ITEM ~CLCK11~ #0 #0 #0 ~unstealable~ ~ARMOR~
+		  END	
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~DRAKAR.cre~ ~override~ //Drakar
+		  WRITE_SHORT 0x14 ~1200~
+		  REPLACE_CRE_ITEM ~rndtre01~ #0 #0 #0 ~NONE~ ~INV1~ //Ausbügeln von ADD_CRE bei DSotSC
+		  REPLACE_CRE_ITEM ~rndtre01~ #0 #0 #0 ~NONE~ ~INV2~ //Ausbügeln von ADD_CRE bei DSotSC
+		  REPLACE_CRE_ITEM ~rndtre01~ #0 #0 #0 ~NONE~ ~INV3~ //Ausbügeln von ADD_CRE bei DSotSC
+		  //custom items
+		  //DSEBHELM (Ebener Helm)
+		  PATCH_IF (RANDOM(0 99) < %pl_base%) BEGIN
+		  	REPLACE_CRE_ITEM ~HELM01~ #0 #0 #0 ~unstealable~ ~HELMET~
+		  END
+		  //DSEBPLAT (Ebener Prunkharnisch)
+		  PATCH_IF (RANDOM(0 99) < %pl_base%) BEGIN
+		  	REPLACE_CRE_ITEM ~CHAN01~ #0 #0 #0 ~unstealable~ ~ARMOR~
+		  END
+		  //DSSHLD51 (Kleiner Schild+2 'Sonnen...'
+		  PATCH_IF (RANDOM(0 99) < 65) BEGIN
+		  	REPLACE_CRE_ITEM ~SHLD03~ #0 #0 #0 ~unstealable~ ~SHIELD~
+		  END
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~DRASUS.cre~ ~override~ //Drasus
+		  WRITE_SHORT 0x14 ~1400~
+		  REPLACE_CRE_ITEM ~CHAN01~ #0 #0 #0 ~unstealable~ ~ARMOR~ 
+		  REPLACE_CRE_ITEM ~BOOT06~ #0 #0 #0 ~unstealable~ ~BOOTS~
+		  REPLACE_CRE_ITEM ~rndtre01~ #0 #0 #0 ~NONE~ ~INV1~ //Ausbügeln von ADD_CRE bei DSotSC
+		  REPLACE_CRE_ITEM ~rndtre01~ #0 #0 #0 ~NONE~ ~INV2~ //Ausbügeln von ADD_CRE bei DSotSC
+		  REPLACE_CRE_ITEM ~rndtre01~ #0 #0 #0 ~NONE~ ~INV3~ //Ausbügeln von ADD_CRE bei DSotSC
+		  REPLACE_CRE_ITEM ~rndtre01~ #0 #0 #0 ~NONE~ ~INV4~ //Ausbügeln von ADD_CRE bei DSotSC
+		  //custom items
+		  //DSSHLD53 (Mittlerer Schild+2 'Herz d...')'
+		  PATCH_IF (RANDOM(0 99) < %pl_base%) BEGIN
+		  	REPLACE_CRE_ITEM ~SHLD03~ #0 #0 #0 ~unstealable~ ~SHIELD~
+		  END
+		  //DSVFLAIL (Chaos Flegel)
+		  //PATCH_IF (RANDOM(0 99) < 35) BEGIN
+		  	//REPLACE_CRE_ITEM ~BLUN07~ #0 #0 #0 ~unstealable~ ~WEAPON1~
+		  //END
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~GALDOR.cre~ ~override~ //Angelo
+		  WRITE_SHORT 0x14 ~9800~
+		  REPLACE_CRE_ITEM ~rndtre01~ #0 #0 #0 ~NONE~ ~INV1~ //Ausbügeln von ADD_CRE bei DSotSC
+		  //custom items
+		  //DSBOW01 (Lanbogen der Kraft)
+		  REPLACE_CRE_ITEM ~BOW04~ #0 #0 #0 ~unstealable~ ~WEAPON1~
+		  //DSKORIM (Schienenpanzer+4 -  Korins Haut + Regeneration)
+		  REPLACE_CRE_ITEM ~CLCK12~ #0 #0 #0 ~unstealable~ ~ARMOR~
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~IZEFIA.cre~ ~override~ //Izefia
+		  WRITE_SHORT 0x14 ~120~
+		  REPLACE_CRE_ITEM ~rndtre01~ #0 #0 #0 ~NONE~ ~INV1~ //Ausbügeln von ADD_CRE bei DSotSC
+		  REPLACE_CRE_ITEM ~rndtre01~ #0 #0 #0 ~NONE~ ~INV2~ //Ausbügeln von ADD_CRE bei DSotSC
+		  //custom items
+		  //DSTHRARM (Dornenrüstung)
+		  PATCH_IF (RANDOM(0 99) < %pl_base%) BEGIN
+		  	REPLACE_CRE_ITEM ~LEAT04~ #0 #0 #0 ~unstealable~ ~ARMOR~
+		  END
+		  //DSAMUL01 (Schutz vor Säure) lassen wir
+		  //DSSPERF (Feuerlanze)
+		  PATCH_IF (RANDOM(0 99) < %pl_base%) BEGIN
+		  	REPLACE_CRE_ITEM ~STAF01~ #0 #0 #0 ~unstealable~ ~WEAPON1~ EQUIP
+		  END
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~KESTOR.cre~ ~override~ //Kestor
+		  WRITE_SHORT 0x14 ~1200~
+		  REPLACE_CRE_ITEM ~LEAT04~ #0 #0 #0 ~unstealable~ ~ARMOR~
+		  REPLACE_CRE_ITEM ~rndtre01~ #0 #0 #0 ~NONE~ ~INV1~ //Ausbügeln von ADD_CRE bei DSotSC
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~KRYSTI.cre~ ~override~ //Krystin
+		  WRITE_SHORT 0x14 ~3000~
+		  REPLACE_CRE_ITEM ~rndtre01~ #0 #0 #0 ~NONE~ ~INV6~ //Ausbügeln von ADD_CRE bei DSotSC
+		  //custom items
+		  //DSDAGG01 (Dolch +3 Schlangenzunge)
+		  PATCH_IF (RANDOM(0 99) < 40) BEGIN
+		  	REPLACE_CRE_ITEM ~DAGG04~ #0 #0 #0 ~unstealable~ ~WEAPON1~ EQUIP
+		  END
+		  //DSBULL01 (Kugeln der Detonation)
+		  PATCH_IF (RANDOM(0 99) < 40) BEGIN
+		  	REPLACE_CRE_ITEM ~BULL01~ #0 #0 #0 ~unstealable~ ~QUIVER3~
+		  END
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~LASALA.cre~ ~override~ //Lasala
+		  WRITE_SHORT 0x14 ~300~
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~LASKAL.cre~ ~override~ //Laskal
+		  WRITE_SHORT 0x14 ~1000~
+		  REPLACE_CRE_ITEM ~rndtre01~ #0 #0 #0 ~NONE~ ~INV2~ //Ausbügeln von ADD_CRE bei DSotSC
+		  REPLACE_CRE_ITEM ~rndtre01~ #0 #0 #0 ~NONE~ ~INV3~ //Ausbügeln von ADD_CRE bei DSotSC
+		  //custom items
+		  //DSSWD02 (Thorn - Schwert des grünen Meisters)
+		  PATCH_IF (RANDOM(0 99) < 30) BEGIN
+		  	REPLACE_CRE_ITEM ~rndtre01~ #0 #0 #0 ~unstealable~ ~INV1~
+		  END
+		  //DSSTAF01 (Stab des Lebens)
+		  PATCH_IF (RANDOM(0 99) < 75) BEGIN
+		  	REPLACE_CRE_ITEM ~STAF01~ #0 #0 #0 ~unstealable~ ~WEAPON1~ EQUIP
+		  END
+		  //DSTHRARM (Dornenrüstung)
+		  PATCH_IF (RANDOM(0 99) < %pl_base%) BEGIN
+		  	REPLACE_CRE_ITEM ~LEAT01~ #0 #0 #0 ~unstealable~ ~ARMOR~
+		  END
+		  //DSTDRUID (Tiara von...)
+		  PATCH_IF (RANDOM(0 99) < 30) BEGIN
+		  	REPLACE_CRE_ITEM ~HELM01~ #0 #0 #0 ~unstealable~ ~HELMET~
+		  END
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~MOLKAR.cre~ ~override~ //Molkar
+		  WRITE_SHORT 0x14 ~1200~
+		  REPLACE_CRE_ITEM ~rndtre01~ #0 #0 #0 ~NONE~ ~INV1~ //Ausbügeln von ADD_CRE bei DSotSC
+		  //custom items
+		  //DSSWD03 (Entersäbel+2 'O-T...')
+		  PATCH_IF (RANDOM(0 99) < %pl_base%) BEGIN
+		  	REPLACE_CRE_ITEM ~SW1H05~ #0 #0 #0 ~unstealable~ ~WEAPON1~ EQUIP
+		  END
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~MORVIN.cre~ ~override~ //Morvin
+		  WRITE_SHORT 0x14 ~650~
+		  REPLACE_CRE_ITEM ~rndtre01~ #0 #0 #0 ~NONE~ ~INV1~ //Ausbügeln von ADD_CRE bei DSotSC
+		  REPLACE_CRE_ITEM ~rndtre01~ #0 #0 #0 ~NONE~ ~INV2~ //Ausbügeln von ADD_CRE bei DSotSC
+		  REPLACE_CRE_ITEM ~rndtre01~ #0 #0 #0 ~NONE~ ~INV3~ //Ausbügeln von ADD_CRE bei DSotSC
+		  //custom items
+		  //DSBRACDX (Gechicklichkeitshandschuhe)
+		  REPLACE_CRE_ITEM ~BRAC05~  #0 #0 #0 ~unstealable~ ~GLOVES~ //Die waren in BG1 nicht da, aber DSotSC macht da zu fette Dinger hin
+		  //DSCRYHLM + DSCRYARM (Kristallhelm + Kristallpanzer)
+		  PATCH_IF (RANDOM(0 99) < %pl_base%) BEGIN
+		  	REPLACE_CRE_ITEM ~HELM01~ #0 #0 #0 ~unstealable~ ~HELMET~
+		    REPLACE_CRE_ITEM ~CHAN04~ #0 #0 #0 ~unstealable~ ~ARMOR~
+		  END
+		  //DSAXE03 (Zwergische Stangenaxt)
+		  PATCH_IF (RANDOM(0 99) < %pl_base%) BEGIN
+		   REPLACE_CRE_ITEM ~AX1H01~ #0 #0 #0 ~unstealable~ ~WEAPON1~ EQUIP
+		  END
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~MULAHE.cre~ ~override~ //Mulahey
+		  WRITE_SHORT 0x14 ~650~
+		  REPLACE_CRE_ITEM ~CHAN01~ #0 #0 #0 ~unstealable~ ~ARMOR~ 
+		  REPLACE_CRE_ITEM ~BLUN06~ #0 #0 #0 ~unstealable~ ~WEAPON1~ EQUIP  
+		  REPLACE_CRE_ITEM ~rndtre01~ #0 #0 #0 ~NONE~ ~INV1~ //Ausbügeln von ADD_CRE bei DSotSC
+		  REPLACE_CRE_ITEM ~rndtre01~ #0 #0 #0 ~NONE~ ~INV2~ //Ausbügeln von ADD_CRE bei DSotSC
+		  //custom items
+		  REPLACE_CRE_ITEM ~rndtre01~ #0 #0 #0 ~NONE~ ~INV16~ //Nimmervoller Beutel weg
+		  //DSBRACDX
+		  REPLACE_CRE_ITEM ~BRAC05~  #0 #0 #0 ~unstealable~ ~GLOVES~ //Die waren in BG1 nicht da, aber DSotSC macht da zu fette Dinger hin
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~OSMADI.cre~ ~override~ //Osmadi
+		  WRITE_SHORT 0x14 ~1000~
+		  REPLACE_CRE_ITEM ~LEAT01~ #0 #0 #0 ~unstealable~ ~ARMOR~ 
+		  REPLACE_CRE_ITEM ~rndtre01~ #0 #0 #0 ~NONE~ ~INV1~ //Ausbügeln von ADD_CRE bei DSotSC
+		  REPLACE_CRE_ITEM ~rndtre01~ #0 #0 #0 ~NONE~ ~INV2~ //Ausbügeln von ADD_CRE bei DSotSC
+		  //custom items
+		  //DSBRAC02 (Geschenk des Waldes)
+		  PATCH_IF (RANDOM(0 99) < %pl_base%) BEGIN
+		   REPLACE_CRE_ITEM ~BRAC05~ #0 #0 #0 ~unstealable~ ~GLOVES~
+		  END
+		  //DSCLUB01 (Elgenons Dornenkeule)
+		  PATCH_IF (RANDOM(0 99) < %pl_base%) BEGIN
+		   REPLACE_CRE_ITEM ~STAF01~ #0 #0 #0 ~unstealable~ ~WEAPON1~ EQUIP
+		  END
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~RAGEFA.cre~ ~override~ //Ragefast
+		  WRITE_SHORT 0x14 ~2000~
+		  REPLACE_CRE_ITEM ~DAGG01~ #0 #0 #0 ~unstealable~ ~WEAPON1~ EQUIP
+		  REPLACE_CRE_ITEM ~rndtre01~ #0 #0 #0 ~NONE~ ~INV2~ //Ausbügeln von ADD_CRE bei DSotSC
+		  REPLACE_CRE_ITEM ~rndtre01~ #0 #0 #0 ~NONE~ ~INV3~ //Ausbügeln von ADD_CRE bei DSotSC
+		  REPLACE_CRE_ITEM ~rndtre01~ #0 #0 #0 ~NONE~ ~INV4~ //Ausbügeln von ADD_CRE bei DSotSC
+		  //custom items
+		  //DSROBE04 (Drakelors Robe)
+		  PATCH_IF (RANDOM(0 99) < 40) BEGIN
+		   REPLACE_CRE_ITEM ~CLCK12~ #0 #0 #0 ~unstealable~ ~ARMOR~
+		  END
+		  //DSAMUL10 (Amulet des Lehrlings)
+		  PATCH_IF (RANDOM(0 99) < 40) BEGIN
+		   REPLACE_CRE_ITEM ~AMUL14~ #0 #0 #0 ~unstealable~ ~AMULET~
+		  END
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~RIELTA.cre~ ~override~ //Riealtar
+		  WRITE_SHORT 0x14 ~975~
+		  REPLACE_CRE_ITEM ~rndtre01~ #0 #0 #0 ~NONE~ ~INV2~ //Ausbügeln von ADD_CRE bei DSotSC
+		  //custom items
+		  //Krone lassen wir
+		  //DSKORIM (Schienenpanzer+4 -  Korins Haut + Regeneration)
+		  REPLACE_CRE_ITEM ~CLCK12~ #0 #0 #0 ~unstealable~ ~ARMOR~
+		  //DSBRAC01 (Otrad Atwah Arsmschützer der Magie)
+		  PATCH_IF (RANDOM(0 99) < %pl_base%) BEGIN
+		   REPLACE_CRE_ITEM ~BRAC05~ #0 #0 #0 ~unstealable~ ~GLOVES~
+		  END
+		  //DSRNG06 (Mystischer Ring)
+		  PATCH_IF (RANDOM(0 99) < %pl_base%) BEGIN
+		   REPLACE_CRE_ITEM ~RING11~ #0 #0 #0 ~unstealable~ ~LRING~
+		  END
+		  //DSAMUL07 (Blausteinhalskette der Geschicklichkeit)
+		  REPLACE_CRE_ITEM ~AMUL05~ #0 #0 #0 ~unstealable~ ~AMULET~
+		  //DSDAGG03 (Drwo Adamntit Dolch +3)
+		  REPLACE_CRE_ITEM ~DAGG01~ #0 #0 #0 ~unstealable~ ~WEAPON1~ EQUIP
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~SLYTHE.cre~ ~override~ //Slythe
+		  WRITE_SHORT 0x14 ~5000~
+		  REPLACE_CRE_ITEM ~LEAT04~ #0 #0 #0 ~unstealable~ ~ARMOR~ 
+		  REPLACE_CRE_ITEM ~rndtre01~ #0 #0 #0 ~NONE~ ~INV2~ //Ausbügeln von ADD_CRE bei DSotSC
+		  REPLACE_CRE_ITEM ~rndtre01~ #0 #0 #0 ~NONE~ ~INV3~ //Ausbügeln von ADD_CRE bei DSotSC
+		  //custom items
+		  //DSAMUL06 (Amulett der Segoy, Schutz vor Feuer) lassen wir
+		  //DSSWD01 (Krummsäbel+2)
+		  REPLACE_CRE_ITEM ~SW1H10~ #0 #0 #0 ~unstealable~ ~WEAPON1~ 
+		  //DSXBOW01 (Schattenarmbrust) lassen wir
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~TAKIYAH.cre~ ~override~ //Takiyah
+		  WRITE_SHORT 0x14 ~120~
+		  REPLACE_CRE_ITEM ~rndtre01~ #0 #0 #0 ~NONE~ ~INV1~ //Ausbügeln von ADD_CRE bei DSotSC
+		  REPLACE_CRE_ITEM ~rndtre01~ #0 #0 #0 ~NONE~ ~INV2~ //Ausbügeln von ADD_CRE bei DSotSC
+		  //custom items
+		  //DSBOOT01 (Stiefel des Waldes)
+		  PATCH_IF (RANDOM(0 99) < %pl_base%) BEGIN
+		   REPLACE_CRE_ITEM ~BOOT06~ #0 #0 #0 ~unstealable~ ~BOOTS~
+		  END
+		  //DSTHEARM (Dornenrüstung)
+		  PATCH_IF (RANDOM(0 99) < %pl_base%) BEGIN
+		   REPLACE_CRE_ITEM ~LEAT04~ #0 #0 #0 ~unstealable~ ~ARMOR~
+		  END
+		  //DSSPERF (Feuerlanze)
+		  PATCH_IF (RANDOM(0 99) < %pl_base%) BEGIN
+		   REPLACE_CRE_ITEM ~STAF01~ #0 #0 #0 ~unstealable~ ~WEAPON1~ EQUIP
+		  END
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~ZEELA.cre~ ~override~ //Zeela
+		  REPLACE_CRE_ITEM ~CHAN04~ #0 #0 #0 ~unstealable~ ~ARMOR~ 
+		  REPLACE_CRE_ITEM ~BRAC05~ #0 #0 #0 ~unstealable~ ~GLOVES~
+		  REPLACE_CRE_ITEM ~rndtre01~ #0 #0 #0 ~NONE~ ~INV1~ //Ausbügeln von ADD_CRE bei DSotSC
+		  REPLACE_CRE_ITEM ~rndtre01~ #0 #0 #0 ~NONE~ ~INV2~ //Ausbügeln von ADD_CRE bei DSotSC
+		  //custom items
+		  //DSSTAF06 (Kampfstab+2 Estaroils Knochenbrecher)
+		  PATCH_IF (RANDOM(0 99) < %pl_base%) BEGIN	
+			REPLACE_CRE_ITEM ~STAF01~ #0 #0 #0 ~unstealable~ ~WEAPON2~ 
+		  END
+		  
+		//NTotSCBUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~TELKA.cre~ ~override~ //Telka
+		  REPLACE_CRE_ITEM ~rndtre01~ #0 #0 #0 ~NONE~ ~INV1~ //Ausbügeln von ADD_CRE bei DSotSC
+		  REPLACE_CRE_ITEM ~rndtre01~ #0 #0 #0 ~NONE~ ~INV2~ //Ausbügeln von ADD_CRE bei DSotSC
+		  //custom items
+		  //NTBOW03 (Kurzbogen der strömenden Energie)
+		  REPLACE_CRE_ITEM ~BOW03~ #0 #0 #0 ~unstealable~ ~WEAPON1~ 
+	BUT_ONLY_IF_IT_CHANGES
+	COPY_EXISTING ~ORC03.CRE~ ~override~ //Ork-Priester
+		  WRITE_SHORT 0x14 ~1000~
+		  REPLACE_CRE_ITEM ~rndtre01~ #0 #0 #0 ~NONE~ ~INV1~ //Ausbügeln von ADD_CRE bei DSotSC
+		  //custom items
+		  //NTROBE02~ (Robe)
+		  PATCH_IF (RANDOM(0 99) < %pl_base%) BEGIN	
+		    REPLACE_CRE_ITEM ~LEAT04~ #0 #0 #0 ~unstealable~ ~ARMOR~
+		  END
+	BUT_ONLY_IF_IT_CHANGES	  
+	COPY_EXISTING ~clck01.itm~ ~override~ //Correct price for Protection Cloak +1 (was: 5000)
+		WRITE_LONG 0x34 500
+	BUT_ONLY_IF_IT_CHANGES
+
+
+END	  
